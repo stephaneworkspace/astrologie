@@ -31,9 +31,14 @@ class DrawAstro extends CustomPainter {
     /// Trait à partir du centre
     double x = 2 * pi;
     //double radius = radiusCircleExt3 * 2.0;
-    double dx = centre.dx + cos(0 / CIRC * pi) * -1 * Radius.circular(radiusCircleExt3).x;
-    double dy = centre.dy + sin(0 / CIRC * pi) * -1 * Radius.circular(radiusCircleExt3).y;
-    canvas.drawLine(centre, new Offset(dx, dy), paint);
+    double dx = centre.dx + cos(45 / CIRC * pi) * -1 * Radius.circular(radiusCircleExt3).x;
+    double dy = centre.dy + sin(45 / CIRC * pi) * Radius.circular(radiusCircleExt3).y;
+    //canvas.drawLine(centre, new Offset(dx, dy), paint);
+
+    Offset centre2 = new Offset(dx, dy);
+    double dx2 = centre.dx + cos(45 / CIRC * pi) * -1 * Radius.circular(radiusCircleExt0).x;
+    double dy2 = centre.dy + sin(45 / CIRC * pi) * Radius.circular(radiusCircleExt0).y;
+    canvas.drawLine(centre2, new Offset(dx2, dy2), paint);
   }
 
   @override
