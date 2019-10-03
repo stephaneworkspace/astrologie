@@ -29,7 +29,7 @@ class DrawAstro extends CustomPainter {
     canvas.drawCircle(centre, radiusCircleExt2, paint);
     canvas.drawCircle(centre, radiusCircleExt3, paint);
     /// Trait à partir du centre
-    double x = 2 * pi;
+    // double x = 2 * pi;
     //double radius = radiusCircleExt3 * 2.0;
     double dx = centre.dx + cos(45 / CIRC * pi) * -1 * Radius.circular(radiusCircleExt3).x;
     double dy = centre.dy + sin(45 / CIRC * pi) * Radius.circular(radiusCircleExt3).y;

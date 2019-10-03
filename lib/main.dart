@@ -75,13 +75,20 @@ class _MyHomePageState extends State<MyHomePage> {
       body: Center(
         // Center is a layout widget. It takes a single child and positions it
         // in the middle of the parent.
-        child: Align(
-          alignment: FractionalOffset.center,
-          child: new CustomPaint(
-            size: Size(375, 375), // 375, 736 max iphone6s
-            painter: new DrawAstro()
+        child: Column(
+          children: <Widget>[
+          Align(
+            alignment: FractionalOffset.center,
+            child: new CustomPaint(
+              size: Size(375, 375), // 375, 736 max iphone6s
+              painter: new DrawAstro()
+            ),
           ),
-        ),
+          Align(
+            child: new Text('Hello world')
+          ),
+          ]
+        )
       ),
         // child: Column(
           // Column is also a layout widget. It takes a list of children and
