@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'draw_astro.dart';
 
 void main() => runApp(MyApp());
 
@@ -74,7 +75,15 @@ class _MyHomePageState extends State<MyHomePage> {
       body: Center(
         // Center is a layout widget. It takes a single child and positions it
         // in the middle of the parent.
-        child: Column(
+        child: Align(
+          alignment: FractionalOffset.center,
+          child: new CustomPaint(
+            size: Size(375, 375), // 375, 736 max iphone6s
+            painter: new DrawAstro()
+          ),
+        ),
+      ),
+        // child: Column(
           // Column is also a layout widget. It takes a list of children and
           // arranges them vertically. By default, it sizes itself to fit its
           // children horizontally, and tries to be as tall as its parent.
@@ -89,8 +98,8 @@ class _MyHomePageState extends State<MyHomePage> {
           // center the children vertically; the main axis here is the vertical
           // axis because Columns are vertical (the cross axis would be
           // horizontal).
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
+          // mainAxisAlignment: MainAxisAlignment.center,
+          /*children: <Widget>[
             Text(
               'You have pushed the button this many times:',
             ),
@@ -98,9 +107,7 @@ class _MyHomePageState extends State<MyHomePage> {
               '$_counter',
               style: Theme.of(context).textTheme.display1,
             ),
-          ],
-        ),
-      ),
+          ],*/
       floatingActionButton: FloatingActionButton(
         onPressed: _incrementCounter,
         tooltip: 'Increment',
