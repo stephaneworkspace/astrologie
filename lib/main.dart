@@ -74,7 +74,6 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   int _counter = 0;
   AscReturn _ascReturn;
-  String _signe = '';
 
   void _incrementCounter() {
     setState(() {
@@ -91,7 +90,6 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
     CalcAsc calcAsc = new CalcAsc(new DateTime.utc(1986, 3, 4, 4 , 54));
     _ascReturn = calcAsc.getAsc();
-    _signe = _ascReturn.sign.toString();
     // This method is rerun every time setState is called, for instance as done
     // by the _incrementCounter method above.
     //
@@ -117,8 +115,11 @@ class _MyHomePageState extends State<MyHomePage> {
             ),
           ),
           Align(
-            child: new Text('Hello world '+ _signe)
+            child: new Text(_ascReturn.sign.toString())
           ),
+          Align(
+            child: new Text(_ascReturn.degre.toString())
+          )
           ]
         )
       ),

@@ -146,7 +146,7 @@ class CalcAsc {
         int maxMin = 24 * 60;
         int hourCalc = _hourMinNatal.hour * 60;
         int minCalc = _hourMinNatal.minute;
-        degreInSign = ((hourCalc * minCalc) / maxMin) * 30;
+        degreInSign = ((hourCalc + minCalc) / maxMin) * 30.0;
       }
     }
     return new AscReturn(sign, degreInSign);
