@@ -32,8 +32,8 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     // main();
-    print('test');
-    var x = new CalcAsc();
+    CalcAsc calcAsc = new CalcAsc(new DateTime.utc(1986, 3, 4, 4 , 54));
+    calcAsc.getAsc();
     return MaterialApp(
       title: 'Flutter Demo',
       theme: ThemeData(

@@ -319,8 +319,8 @@
         }] 
     }, {
         "month": 3,
-        "dayBegin": "1",
-        "dayEnd": "10",
+        "dayBegin": 1,
+        "dayEnd": 10,
         "sign": [{
             "sign": "Belier",
             "hourBegin": "07:15",
@@ -478,8 +478,8 @@
         }] 
     }, {
         "month": 4,
-        "dayBegin": "1",
-        "dayEnd": "10",
+        "dayBegin": 1,
+        "dayEnd": 10,
         "sign": [{
             "sign": "Belier",
             "hourBegin": "05:00",
@@ -637,8 +637,8 @@
         }] 
     }, {
         "month": 5,
-        "dayBegin": "1",
-        "dayEnd": "10",
+        "dayBegin": 1,
+        "dayEnd": 10,
         "sign": [{
             "sign": "Belier",
             "hourBegin": "03:00",
@@ -747,7 +747,7 @@
         "dayEnd": 31,
         "sign": [{
             "sign": "Belier",
-            "hourBegin": "01:450",
+            "hourBegin": "01:45",
             "hourEnd": "02:44"
         }, {
             "sign": "Taureau",
@@ -796,8 +796,8 @@
         }] 
     }, {
         "month": 6,
-        "dayBegin": "1",
-        "dayEnd": "10",
+        "dayBegin": 1,
+        "dayEnd": 10,
         "sign": [{
             "sign": "Belier",
             "hourBegin": "01:00",
@@ -955,8 +955,8 @@
         }] 
     }, {
         "month": 7,
-        "dayBegin": "1",
-        "dayEnd": "10",
+        "dayBegin": 1,
+        "dayEnd": 10,
         "sign": [{
             "sign": "Belier",
             "hourBegin": "23:10",
@@ -1114,8 +1114,8 @@
         }] 
     }, {
         "month": 8,
-        "dayBegin": "1",
-        "dayEnd": "10",
+        "dayBegin": 1,
+        "dayEnd": 10,
         "sign": [{
             "sign": "Belier",
             "hourBegin": "21:00",
@@ -1273,8 +1273,8 @@
         }] 
     }, {
         "month": 9,
-        "dayBegin": "1",
-        "dayEnd": "10",
+        "dayBegin": 1,
+        "dayEnd": 10,
         "sign": [{
             "sign": "Belier",
             "hourBegin": "19:00",
@@ -1432,8 +1432,8 @@
         }] 
     }, {
         "month": 10,
-        "dayBegin": "1",
-        "dayEnd": "10",
+        "dayBegin": 1,
+        "dayEnd": 10,
         "sign": [{
             "sign": "Belier",
             "hourBegin": "17:00",
@@ -1591,8 +1591,8 @@
         }] 
     }, {
         "month": 11,
-        "dayBegin": "1",
-        "dayEnd": "10",
+        "dayBegin": 1,
+        "dayEnd": 10,
         "sign": [{
             "sign": "Belier",
             "hourBegin": "15:00",
@@ -1750,8 +1750,8 @@
         }] 
     }, {
         "month": 12,
-        "dayBegin": "1",
-        "dayEnd": "10",
+        "dayBegin": 1,
+        "dayEnd": 10,
         "sign": [{
             "sign": "Belier",
             "hourBegin": "13:10",
