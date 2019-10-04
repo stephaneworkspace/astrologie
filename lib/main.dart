@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import './asc/calc_asc.dart';
 import './asc/s_asc_return.dart';
+import './zodiac/calc_zodiac.dart';
 import 'draw_astro.dart';
 
 void main() => runApp(MyApp());
@@ -66,6 +67,7 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
     CalcAsc calcAsc = new CalcAsc(new DateTime.utc(1986, 3, 4, 4 , 54));
     _ascReturn = calcAsc.getAsc();
+    new CalcZodiac(_ascReturn.degre, _ascReturn.sign.index + 1);
     // This method is rerun every time setState is called, for instance as done
     // by the _incrementCounter method above.
     //
