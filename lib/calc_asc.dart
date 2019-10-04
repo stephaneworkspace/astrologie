@@ -1,5 +1,5 @@
-@JS()
-library eph;
+/*@JS()
+library eph;*/
 
 //import 'dart:ffi';
 //import 'dart:ui';
@@ -9,13 +9,16 @@ import 'package:intl/intl.dart';
 //initializeDateFormatting("fr_CH", null).then((_) => runMyCode());
 //import 'package:date_format/date_format.dart';
 // https://github.com/dart-lang/sdk/tree/master/pkg/js
-import 'package:js/js.dart';
+//import 'package:js/js.dart';
 
-@JS('getAllPlanets')
+/*@JS('getAllPlanets')
 //external set _getAllPlanets(void Function(String '1986-04-03', -71.13, 42.27, 30) f);
 external void getAllPlanets(String date, double long, double lat, double height);
+*/
 
-
+import 'dart:async' show Future;
+import 'dart:convert';
+import 'package:flutter/services.dart' show rootBundle;
 
 const BELIER = 0;
 const TAUREAU = 1;
@@ -79,7 +82,26 @@ class CalcAsc {
     initData();
   }
 
+  Future<String> _loadJsonAscAsset() async {
+    return await rootBundle.loadString('assets/data/asc.json');
+  }
+
+  Future loadJsonAsc() async {
+    String jsonString = await _loadJsonAscAsset();
+    _parseJsonAsc(jsonString);
+  }
+
+  void _parseJsonAsc(String jsonString) {
+    Map decoded = jsonDecode(jsonString);
+
+    for (var i in decoded['data']) {
+      print(i['month'].toString());
+    }
+    
+  }
+
   initData() {
+    loadJsonAsc();
     List<SignHour> sign = [];
     SignHour signHour;
     MonthDaySignHour monthDaySignHour;
