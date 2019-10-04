@@ -20,75 +20,21 @@ import 'dart:async' show Future;
 import 'dart:convert';
 import 'package:flutter/services.dart' show rootBundle;
 
-/*
-const BELIER = 0;
-const TAUREAU = 1;
-const GEMAUX = 2;
-const CANCER = 3;
-const LION = 4;
-const VIERGE = 5;
-const BALANCE = 6;
-const SCORPION = 7;
-const SAGITTAIRE = 8;
-const CAPRICORNE = 9;
-const VERSEAU = 10;
-const POISSON = 11;*/
-
-enum TypeAsc {
-  Belier,
-  Taureau,
-  Gemaux,
-  Cancer,
-  Lion,
-  Vierge,
-  Balance,
-  Scorpion,
-  Sagittaire,
-  Capricorne,
-  Verseau,
-  Poisson,
-}
-
-// struc
-class Asc {
-  final List<MonthDaySignHour> monthDaySignHour;
-  const Asc(this.monthDaySignHour); 
-}
-
-// struct
-class MonthDaySignHour {
-  final int month;
-  final int dayBegin;
-  final int dayEnd;
-  final List<SignHour> signHour;
-  const MonthDaySignHour(this.month, this.dayBegin, this.dayEnd, this.signHour);
-}
-
-// struct
-class SignHour {
-  final TypeAsc typeAsc;
-  final DateTime hourBegin;
-  final DateTime hourEnd;
-  const SignHour(this.typeAsc, this.hourBegin, this.hourEnd);
-}
-
-// struct
-class AscReturn {
-  final String sign;
-  final TypeAsc typeAsc;
-  final double degre;
-  const AscReturn(this.sign, this.typeAsc, this.degre);
-} 
+import './e_type_signe.dart';
+import './s_asc.dart';
+import './s_asc_return.dart';
+import './s_month_day_sign_hour.dart';
+import './s_sign_hour.dart';
 
 // main class
 class CalcAsc {
   static Asc _asc;
-  DateTime _natal;
+  static DateTime _natal;
   DateTime _hourMinNatal;
 
   CalcAsc(DateTime natal) {
-    this._natal = natal;
-    this._hourMinNatal = _hm(_natal.hour.toString() + ':' + _natal.minute.toString());
+    _natal = natal;
+    _hourMinNatal = _hm(_natal.hour.toString() + ':' + _natal.minute.toString());
     loadJsonAsc();
   }
 
@@ -112,47 +58,47 @@ class CalcAsc {
     List<SignHour> sign = [];
     SignHour signHour;
     MonthDaySignHour monthDaySignHour;
-    TypeAsc signEnum;
+    TypeSigne signEnum;
     Map decoded = jsonDecode(jsonString);
     for (var i in decoded['data']) {
       sign = [];
       for (var j in i['sign']) {
         switch(j['sign']) {
           case 'Belier':
-            signEnum = TypeAsc.Belier;
+            signEnum = TypeSigne.Belier;
             break;
           case 'Taureau':
-            signEnum = TypeAsc.Taureau;
+            signEnum = TypeSigne.Taureau;
             break;
           case 'Gemaux':
-            signEnum = TypeAsc.Gemaux;
+            signEnum = TypeSigne.Gemaux;
             break;
           case 'Cancer':
-            signEnum = TypeAsc.Cancer;
+            signEnum = TypeSigne.Cancer;
             break;
           case 'Lion':
-            signEnum = TypeAsc.Lion;
+            signEnum = TypeSigne.Lion;
             break;
           case 'Vierge':
-            signEnum = TypeAsc.Vierge;
+            signEnum = TypeSigne.Vierge;
             break;
           case 'Balance':
-            signEnum = TypeAsc.Balance;
+            signEnum = TypeSigne.Balance;
             break;
           case 'Scorpion':
-            signEnum = TypeAsc.Scorpion;
+            signEnum = TypeSigne.Scorpion;
             break;
           case 'Sagittaire':
-            signEnum = TypeAsc.Sagittaire;
+            signEnum = TypeSigne.Sagittaire;
             break;
           case 'Capricorne':
-            signEnum = TypeAsc.Capricorne;
+            signEnum = TypeSigne.Capricorne;
             break;
           case 'Verseau':
-            signEnum = TypeAsc.Verseau;
+            signEnum = TypeSigne.Verseau;
             break;
           case 'Poisson':
-            signEnum = TypeAsc.Poisson;
+            signEnum = TypeSigne.Poisson;
             break;
         }
         signHour = new SignHour(signEnum, _hm(j['hourBegin']), _hm(j['hourEnd']));
@@ -171,16 +117,14 @@ class CalcAsc {
   }
 
   AscReturn getAsc() {
-    String signText = '?';
     double degreInSign = 0.0;
-    TypeAsc sign;
+    TypeSigne sign;
     int dayMax = 0;
-     for (var i in _asc.monthDaySignHour) {
+    /*for (var i in _asc.monthDaySignHour) {
       for (var j in i.signHour) {
         print (j.hourBegin);
       }
-    }  
-    /*
+    }*/
     for (var i in _asc.monthDaySignHour) {
       if (i.month == _natal.month) {
         // Calcul at the day
@@ -190,19 +134,21 @@ class CalcAsc {
         }
         if (_natal.day >= i.dayBegin && _natal.day <= i.dayEnd) {
           for (var j in i.signHour) {
-            print(j.hourBegin.toString() + ' ' + j.typeAsc.toString());
-            Duration difference = _hourMinNatal.difference(j.hourBegin);
-            //if (_hourMinNatal >= j.hourBegin) {
-            if (!difference.isNegative) {
-              print(_hourMinNatal.toString() + ' >= ' + j.hourBegin.toString() + ' == true');
-            } else {
-              print(_hourMinNatal.toString() + ' >= ' + j.hourBegin.toString() + ' == false');
+            Duration diffBegin = _hourMinNatal.difference(j.hourBegin);
+            Duration diffEnd = j.hourEnd.difference(_hourMinNatal);
+            //if (_hourMinNatal >= j.hourBegin && _hourMinNatal <= j.hourEnd) { 
+            if (!diffBegin.isNegative && !diffEnd.isNegative) {
+              sign = j.typeAsc;
             }
           }
         }
-
+        degreInSign = 0;
+        int maxMin = 24 * 60;
+        int hourCalc = _hourMinNatal.hour * 60;
+        int minCalc = _hourMinNatal.minute;
+        degreInSign = ((hourCalc * minCalc) / maxMin) * 30;
       }
-    }*/
-    return new AscReturn(signText, sign, degreInSign);
+    }
+    return new AscReturn(sign, degreInSign);
   }
 }

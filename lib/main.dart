@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 // import 'dart:ffi' as ffi;
 // import 'dart:io' show Platform;
-import 'calc_asc.dart';
+import './asc/calc_asc.dart';
+import './asc/e_type_signe.dart';
+import './asc/s_asc_return.dart';
 import 'draw_astro.dart';
 
 /*
@@ -32,8 +34,6 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     // main();
-    CalcAsc calcAsc = new CalcAsc(new DateTime.utc(1986, 3, 4, 4 , 54));
-    calcAsc.getAsc();
     return MaterialApp(
       title: 'Flutter Demo',
       theme: ThemeData(
@@ -73,6 +73,8 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   int _counter = 0;
+  AscReturn _ascReturn;
+  String _signe = '';
 
   void _incrementCounter() {
     setState(() {
@@ -87,6 +89,9 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
+    CalcAsc calcAsc = new CalcAsc(new DateTime.utc(1986, 3, 4, 4 , 54));
+    _ascReturn = calcAsc.getAsc();
+    _signe = _ascReturn.sign.toString();
     // This method is rerun every time setState is called, for instance as done
     // by the _incrementCounter method above.
     //
@@ -112,7 +117,7 @@ class _MyHomePageState extends State<MyHomePage> {
             ),
           ),
           Align(
-            child: new Text('Hello world')
+            child: new Text('Hello world '+ _signe)
           ),
           ]
         )
