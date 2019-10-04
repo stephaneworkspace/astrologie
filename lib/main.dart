@@ -1,20 +1,24 @@
 import 'package:flutter/material.dart';
-import 'dart:ffi' as ffi;
-import 'dart:io' show Platform;
+// import 'dart:ffi' as ffi;
+// import 'dart:io' show Platform;
+import 'calc_asc.dart';
 import 'draw_astro.dart';
 
+/*
 // FFI signature of the hello_world C function
 typedef hello_world_func = ffi.Void Function();
 // Dart type defintion for calling the C foreign function
 typedef HelloWorld = void Function();
+*/
 
 void main() => runApp(MyApp());
 
 class MyApp extends StatelessWidget {
+  /*
   main() {
     // Open the dynamic library
-    var path = "c/ascendant.dylib";
-    if (Platform.isWindows) path = "ascendant.dll";
+    var path = '/Users/stephanebressani/Documents/source/flutter/astrologie/lib/ascendant.dylib';
+    if (Platform.isWindows) path = 'ascendant.dll';
     final dylib = ffi.DynamicLibrary.open(path);
     // Look up the C function 'hello_world'
     final HelloWorld hello = dylib
@@ -22,12 +26,14 @@ class MyApp extends StatelessWidget {
         .asFunction();
     // Call the function
     hello();
-  }
+  }*/
 
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    main();
+    // main();
+    print('test');
+    var x = new CalcAsc();
     return MaterialApp(
       title: 'Flutter Demo',
       theme: ThemeData(
