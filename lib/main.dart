@@ -1,12 +1,33 @@
 import 'package:flutter/material.dart';
+import 'dart:ffi' as ffi;
+import 'dart:io' show Platform;
 import 'draw_astro.dart';
+
+// FFI signature of the hello_world C function
+typedef hello_world_func = ffi.Void Function();
+// Dart type defintion for calling the C foreign function
+typedef HelloWorld = void Function();
 
 void main() => runApp(MyApp());
 
 class MyApp extends StatelessWidget {
+  main() {
+    // Open the dynamic library
+    var path = "c/ascendant.dylib";
+    if (Platform.isWindows) path = "ascendant.dll";
+    final dylib = ffi.DynamicLibrary.open(path);
+    // Look up the C function 'hello_world'
+    final HelloWorld hello = dylib
+        .lookup<ffi.NativeFunction<hello_world_func>>('hello_world')
+        .asFunction();
+    // Call the function
+    hello();
+  }
+
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
+    main();
     return MaterialApp(
       title: 'Flutter Demo',
       theme: ThemeData(
