@@ -1,20 +1,4 @@
-/*@JS()
-library eph;*/
-
-//import 'dart:ffi';
-//import 'dart:ui';
-//import 'dart:math';
 import 'package:intl/intl.dart';
-//import 'package:intl/date_symbol_data_local.dart';
-//initializeDateFormatting("fr_CH", null).then((_) => runMyCode());
-//import 'package:date_format/date_format.dart';
-// https://github.com/dart-lang/sdk/tree/master/pkg/js
-//import 'package:js/js.dart';
-
-/*@JS('getAllPlanets')
-//external set _getAllPlanets(void Function(String '1986-04-03', -71.13, 42.27, 30) f);
-external void getAllPlanets(String date, double long, double lat, double height);
-*/
 
 import 'dart:async' show Future;
 import 'dart:convert';
@@ -26,7 +10,6 @@ import './s_asc_return.dart';
 import './s_month_day_sign_hour.dart';
 import './s_sign_hour.dart';
 
-// main class
 class CalcAsc {
   static Asc _asc;
   static DateTime _natal;
