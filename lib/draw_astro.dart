@@ -10,7 +10,6 @@ const EXT0 = 30.0;
 const EXT1 = 40.0;
 const EXT2 = 90.0;
 const EXT3 = 130.0;
-const CIRC = 360.0;
 
 class DrawAstro extends CustomPainter {
   // Feature : Make a big complete structure for paint
@@ -28,20 +27,9 @@ class DrawAstro extends CustomPainter {
       ..color = Colors.black
       ..style = PaintingStyle.stroke
       ..strokeWidth = 1.0;
-      /// size.width = 375
-      /// size.height = 375
-    // Offset center = new Offset(size.width / 2, size.height / 2);
-    double radiusTotal = min(size.width / 2, size.height / 2);
-    /*double radiusCircleExt0 = radiusTotal - 30.0;
-    double radiusCircleExt1 = radiusTotal - 40.0;
-    double radiusCircleExt2 = radiusTotal - 90.0;
-    double radiusCircleExt3 = radiusTotal - 130.0;*/
-    double radiusCircleExt0 = (radiusTotal * 35) / 100;
-    double radiusCircleExt1 = (radiusTotal * 55) / 100;
-    double radiusCircleExt2 = (radiusTotal * 60) / 100;
-    canvas.drawCircle(_calcDraw.getCenter(), radiusCircleExt0, paint);
-    canvas.drawCircle(_calcDraw.getCenter(), radiusCircleExt1, paint);
-    canvas.drawCircle(_calcDraw.getCenter(), radiusCircleExt2, paint);
+    canvas.drawCircle(_calcDraw.getCenter(), _calcDraw.getRadiusCircle(0), paint);
+    canvas.drawCircle(_calcDraw.getCenter(), _calcDraw.getRadiusCircle(1), paint);
+    canvas.drawCircle(_calcDraw.getCenter(), _calcDraw.getRadiusCircle(2), paint);
     /*
     /// Trait à partir du centre
     // double x = 2 * pi;
@@ -55,7 +43,7 @@ class DrawAstro extends CustomPainter {
     double dy2 = centre.dy + sin(45 / CIRC * pi) * Radius.circular(radiusCircleExt0).y;
     canvas.drawLine(centre2, new Offset(dx2, dy2), paint);*/
     for(var i in _zodiacDegreReturn.zodiac) {
-      List<Offset> xy = prepareLineInsideCircle(i.degre0, radiusCircleExt1, radiusCircleExt0);
+      List<Offset> xy = _calcDraw.lineTrigo(i.degre0, _calcDraw.getRadiusCircle(1), _calcDraw.getRadiusCircle(0));
       canvas.drawLine(xy[0], xy[1], paint);
     }
   }
@@ -65,14 +53,5 @@ class DrawAstro extends CustomPainter {
     return false;
   }
 
-  List<Offset> prepareLineInsideCircle(double angular, double radiusCircleBegin, double radiusCircleEnd) {
-    List<Offset> returnList = [];
-    double dx1 = _calcDraw.getCenter().dx + cos(angular / CIRC * 2 * pi) * -1 * Radius.circular(radiusCircleBegin).x;
-    double dy1 = _calcDraw.getCenter().dy + sin(angular / CIRC * 2 * pi) * Radius.circular(radiusCircleBegin).y;
-    returnList.add(new Offset(dx1, dy1));
-    double dx2 = _calcDraw.getCenter().dx + cos(angular / CIRC * 2 * pi) * -1 * Radius.circular(radiusCircleEnd).x;
-    double dy2 = _calcDraw.getCenter().dy + sin(angular / CIRC * 2 * pi) * Radius.circular(radiusCircleEnd).y;
-    returnList.add(new Offset(dx2, dy2));
-    return returnList;
-  }
+
 }

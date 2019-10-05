@@ -78,6 +78,10 @@ class _MyHomePageState extends State<MyHomePage> {
       _zodiacDegreReturn = calcZodiac.getDegre();
     }
     _calcDraw = new CalcDraw(MediaQuery.of(context).size.width , MediaQuery.of(context).size.height);
+    
+    // At °0, no importance, ist juste for have the size of zodiac container care
+    List<Offset> xyZodiacSizeLine = _calcDraw.lineTrigo(0, _calcDraw.getRadiusCircle(1), _calcDraw.getRadiusCircle(0));
+    double whZodiacSize = _calcDraw.sizeZodiac(xyZodiacSizeLine[0], xyZodiacSizeLine[1]);
     // This method is rerun every time setState is called, for instance as done
     // by the _incrementCounter method above.
     //
@@ -115,8 +119,8 @@ class _MyHomePageState extends State<MyHomePage> {
               top: _calcDraw.getCenter().dy,
               left: _calcDraw.getCenter().dx,
               child: new Container(
-                width: 30.0,
-                height: 30.0,
+                width: whZodiacSize,
+                height: whZodiacSize,
                 decoration: new BoxDecoration(color: Colors.blue),
               )
             ),
@@ -128,11 +132,11 @@ class _MyHomePageState extends State<MyHomePage> {
                   print("onTap called.");
                 },
                 child: new Container(
-                  width: 30.0,
-                  height: 30.0,
+                  width: whZodiacSize,
+                  height: whZodiacSize,
                   child: SvgPicture.asset('assets/svg/zodiac/belier.svg',
-                    width: 30.0,
-                    height: 30.0,
+                    width: whZodiacSize,
+                    height: whZodiacSize,
                     alignment: Alignment.center,
                     color: Colors.red, 
                     semanticsLabel: 'Belier'
