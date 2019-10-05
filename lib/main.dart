@@ -71,7 +71,7 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
     CalcAsc calcAsc = new CalcAsc(new DateTime.utc(1986, 3, 4, 4 , 54));
     _ascReturn = calcAsc.getAsc();
-    if (_ascReturn != null) {
+    if (_ascReturn != null && _ascReturn.sign != null && _ascReturn.sign.index != null) {
       CalcZodiac calcZodiac = new CalcZodiac(_ascReturn.degre, _ascReturn.sign.index + 1);
       _zodiacDegreReturn = calcZodiac.getDegre();
     }
@@ -120,7 +120,23 @@ class _MyHomePageState extends State<MyHomePage> {
             Positioned( //.fill not identic
               top: 375.0 / 2.0,
               left: MediaQuery.of(context).size.width / 2.0,
-              child: IconButton(
+              child: new GestureDetector(
+                onTap: () {
+                  print("onTap called.");
+                },
+                child: new Container(
+                  width: 30.0,
+                  height: 30.0,
+                  child: SvgPicture.asset('assets/svg/zodiac/belier.svg',
+                    width: 30.0,
+                    height: 30.0,
+                    alignment: Alignment.center,
+                    color: Colors.red, 
+                    semanticsLabel: 'Belier'
+                  ),
+                )
+              ),
+              /*child: IconButton(
                 icon: SvgPicture.asset('assets/svg/zodiac/belier.svg',
                     height: 30.0,
                     width: 30.0,
@@ -128,8 +144,7 @@ class _MyHomePageState extends State<MyHomePage> {
                     color: Colors.red, 
                     semanticsLabel: 'Belier'
                   ),
-                onPressed: () {},
-              )
+                onPressed: () {},*/
             ),
             /*Container(
               /// width, left = - 375
