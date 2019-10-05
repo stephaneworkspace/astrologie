@@ -16,18 +16,21 @@ class CalcAsc {
   DateTime _hourMinNatal;
 
   CalcAsc(DateTime natal) {
+    setNatal(natal);
+  }
+
+  void setNatal(DateTime natal) {
     _natal = natal;
     _hourMinNatal = _hm(_natal.hour.toString() + ':' + _natal.minute.toString());
-    loadJsonAsc();
   }
 
-  Future<String> _loadJsonAscAsset() async {
+  Future setJson() async {
+    String jsonString = await _setJson();
+    _parseJson(jsonString);
+  }
+
+  Future<String> _setJson() async {
     return await rootBundle.loadString('assets/data/asc.json');
-  }
-
-  Future loadJsonAsc() async {
-    String jsonString = await _loadJsonAscAsset();
-    _parseJsonAsc(jsonString);
   }
 
   // parse hour:min
@@ -36,9 +39,9 @@ class CalcAsc {
     return df.parseStrict(s);
   }
 
-  void _parseJsonAsc(String jsonString) {
-    List<MonthDaySignHour> data = [];
-    List<SignHour> sign = [];
+  void _parseJson(String jsonString) {
+    List<MonthDaySignHour> data = new List<MonthDaySignHour>();
+    List<SignHour> sign = new List<SignHour>();
     SignHour signHour;
     MonthDaySignHour monthDaySignHour;
     TypeSigne signEnum;
@@ -91,23 +94,12 @@ class CalcAsc {
       data.add(monthDaySignHour);
     }
     _asc = new Asc(data);
-    /*
-    for (var i in data) {
-      for (var j in i.signHour) {
-        print (j.hourBegin);
-      }
-    }*/ 
   }
 
   AscReturn getAsc() {
     double degreInSign = 0.0;
     TypeSigne sign;
     int dayMax = 0;
-    /*for (var i in _asc.monthDaySignHour) {
-      for (var j in i.signHour) {
-        print (j.hourBegin);
-      }
-    }*/
     if (_asc != null && _asc.monthDaySignHour != null) {
       for (var i in _asc.monthDaySignHour) {
         if (i.month == _natal.month) {

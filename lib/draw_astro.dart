@@ -43,6 +43,7 @@ class DrawAstro extends CustomPainter {
     double dy2 = centre.dy + sin(45 / CIRC * pi) * Radius.circular(radiusCircleExt0).y;
     canvas.drawLine(centre2, new Offset(dx2, dy2), paint);*/
     for(var i in _zodiacDegreReturn.zodiac) {
+      // print(i.degre0);
       List<Offset> xy = _calcDraw.lineTrigo(i.degre0, _calcDraw.getRadiusCircle(1), _calcDraw.getRadiusCircle(0));
       canvas.drawLine(xy[0], xy[1], paint);
     }

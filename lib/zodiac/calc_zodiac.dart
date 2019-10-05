@@ -1,5 +1,3 @@
-import 'package:intl/intl.dart';
-
 import 'dart:async' show Future;
 import 'dart:convert';
 import 'package:flutter/services.dart' show rootBundle;
@@ -30,22 +28,25 @@ class CalcZodiac {
   static List<Zodiac> _zodiac;
   
   CalcZodiac(double degreAsc, int signAsc) {
-    _degreAsc = degreAsc;
-    _signAsc = signAsc;
-    loadJsonAsc();
+    _setAsc(degreAsc, signAsc);
   }
 
-  Future<String> _loadJsonZodiacAsset() async {
+  void _setAsc(double degreAsc, int signAsc) {
+    _degreAsc = degreAsc;
+    _signAsc = signAsc;
+  }
+
+  Future<String> _setJson() async {
     return await rootBundle.loadString('assets/data/zodiac.json');
   }
 
-  Future loadJsonAsc() async {
-    String jsonString = await _loadJsonZodiacAsset();
-    _parseJsonAsc(jsonString);
+  Future setJson() async {
+    String jsonString = await _setJson();
+    _parseJson(jsonString);
   }
 
-  void _parseJsonAsc(String jsonString) {
-    List<Zodiac> data = [];
+  void _parseJson(String jsonString) {
+    List<Zodiac> data = new List<Zodiac>();
     Map decoded = jsonDecode(jsonString);
     int idByAsc = _signAsc;
     // Order by Asc
@@ -340,24 +341,21 @@ class CalcZodiac {
   }
 
   ZodiacDegreReturn getDegre() {
-    List<Zodiac> dataSorted = [];
+    List<Zodiac> dataSorted = new List<Zodiac>();
     dataSorted = _zodiac;
-    if (dataSorted != null) {
-      dataSorted.sort((a,b) => a.idByAsc.compareTo(b.idByAsc));
-    }
+    dataSorted.sort((a,b) => a.idByAsc.compareTo(b.idByAsc));
+    // }
     // debug
     /*for (var i in data) {
       print(' <- ' + i.id.toString() + ' ' + i.idByAsc.toString() + ' ' + i.symbol);
     }*/
-    List<ZodiacDegre> zodiacDegre = [];
-    if (dataSorted != null) {
-      for (var i in dataSorted) {
-        double degre = ((i.idByAsc - 1) * 30.0) - _degreAsc;
-        if (degre < 0) {
-          degre = 360.0 - (degre * - 1);
-        }
-        zodiacDegre.add(new ZodiacDegre(i.idByAsc, degre));
+    List<ZodiacDegre> zodiacDegre = new List<ZodiacDegre>();
+    for (var i in dataSorted) {
+      double degre = ((i.idByAsc - 1) * 30.0) - _degreAsc;
+      if (degre < 0) {
+        degre = 360.0 - (degre * - 1);
       }
+      zodiacDegre.add(new ZodiacDegre(i.idByAsc, degre));
     }
     // debug
     /*

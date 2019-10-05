@@ -53,10 +53,13 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
   AscReturn _ascReturn;
   ZodiacDegreReturn _zodiacDegreReturn;
+  int _counter = 0;
   CalcDraw _calcDraw;
+  List<Offset> _xyZodiacSizeLine; // size between 2 circle by point on 0° for the size of zodiac
+  double _whZodiacSize; // size zodiac by the line between 2 circle
+  bool _swLoaded = false;
 
   void _incrementCounter() {
     setState(() {
@@ -70,175 +73,204 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   @override
+  void initState() {
+    super.initState();
+    loadNatal(new DateTime.utc(1986, 3, 4, 4, 54)).whenComplete(() {
+      setState(() {
+        _swLoaded = true;
+      });
+    });
+  }
+
+  loadNatal(DateTime natal) async {
+    CalcAsc calcAsc = new CalcAsc(new DateTime.utc(1986, 3, 4, 4, 54));
+    await calcAsc.setJson();
+    setState(() {
+      _ascReturn = calcAsc.getAsc();
+    });
+    CalcZodiac calcZodiac = new CalcZodiac(_ascReturn.degre, _ascReturn.sign.index + 1);
+    await calcZodiac.setJson();
+    setState(() {
+      var degre = calcZodiac.getDegre();
+      _zodiacDegreReturn = degre;
+    });
+  }
+
+  @override
   Widget build(BuildContext context) {
-    CalcAsc calcAsc = new CalcAsc(new DateTime.utc(1986, 3, 4, 4 , 54));
-    _ascReturn = calcAsc.getAsc();
-    if (_ascReturn != null && _ascReturn.sign != null && _ascReturn.sign.index != null) {
-      CalcZodiac calcZodiac = new CalcZodiac(_ascReturn.degre, _ascReturn.sign.index + 1);
-      _zodiacDegreReturn = calcZodiac.getDegre();
+    if (_swLoaded) {
+      _calcDraw = new CalcDraw(MediaQuery.of(context).size.width , MediaQuery.of(context).size.height);
+      // At °0, no importance, ist juste for have the size of zodiac container care
+      _xyZodiacSizeLine = _calcDraw.lineTrigo(0, _calcDraw.getRadiusCircle(1), _calcDraw.getRadiusCircle(0));
+      _whZodiacSize = _calcDraw.sizeZodiac(_xyZodiacSizeLine[0], _xyZodiacSizeLine[1]);
     }
-    _calcDraw = new CalcDraw(MediaQuery.of(context).size.width , MediaQuery.of(context).size.height);
-    
-    // At °0, no importance, ist juste for have the size of zodiac container care
-    List<Offset> xyZodiacSizeLine = _calcDraw.lineTrigo(0, _calcDraw.getRadiusCircle(1), _calcDraw.getRadiusCircle(0));
-    double whZodiacSize = _calcDraw.sizeZodiac(xyZodiacSizeLine[0], xyZodiacSizeLine[1]);
     // This method is rerun every time setState is called, for instance as done
     // by the _incrementCounter method above.
     //
     // The Flutter framework has been optimized to make rerunning build methods
     // fast, so that you can just rebuild anything that needs updating rather
     // than having to individually change instances of widgets.
-    return Scaffold(
-      appBar: AppBar(
-        // Here we take the value from the MyHomePage object that was created by
-        // the App.build method, and use it to set our appbar title.
-        title: Text(widget.title),
-      ),
-      //body: Center(
-        body: Stack(
-          children: <Widget>[
-            Positioned(
-              child: Align(
-                alignment: AlignmentDirectional.topCenter,
-                child: new CustomPaint(
-                  size: Size(_calcDraw.getSizeWH(), _calcDraw.getSizeWH()), // 375, 736 max iphone6s
-                  painter: new DrawAstro(_zodiacDegreReturn),
-                ),
-              )
-            ),
-            Positioned(
-              child: Align(
-                alignment: AlignmentDirectional.topCenter,
-                child: new CustomPaint(
-                  size: Size(_calcDraw.getSizeWH(), _calcDraw.getSizeWH()), // 375, 736 max iphone6s
-                  painter: new DrawSquare(),
-                ),
-              )
-            ),
-            Positioned( //.fill not identic
-              top: _calcDraw.getCenter().dy,
-              left: _calcDraw.getCenter().dx,
-              child: new Container(
-                width: whZodiacSize,
-                height: whZodiacSize,
-                decoration: new BoxDecoration(color: Colors.blue),
-              )
-            ),
-            Positioned( //.fill not identic
-              top: _calcDraw.getCenter().dy,
-              left: _calcDraw.getCenter().dx,
-              child: new GestureDetector(
-                onTap: () {
-                  print("onTap called.");
-                },
-                child: new Container(
-                  width: whZodiacSize,
-                  height: whZodiacSize,
-                  child: SvgPicture.asset('assets/svg/zodiac/belier.svg',
-                    width: whZodiacSize,
-                    height: whZodiacSize,
-                    alignment: Alignment.center,
-                    color: Colors.red, 
-                    semanticsLabel: 'Belier'
+    if (_swLoaded) {
+      return Scaffold(
+        appBar: AppBar(
+          // Here we take the value from the MyHomePage object that was created by
+          // the App.build method, and use it to set our appbar title.
+          title: Text(widget.title),
+        ),
+        //body: Center(
+          body: Stack(
+            children: <Widget>[
+              Positioned(
+                child: Align(
+                  alignment: AlignmentDirectional.topCenter,
+                  child: new CustomPaint(
+                    size: Size(_calcDraw.getSizeWH(), _calcDraw.getSizeWH()), // 375, 736 max iphone6s
+                    painter: new DrawAstro(_zodiacDegreReturn),
                   ),
                 )
               ),
-              /*child: IconButton(
-                icon: SvgPicture.asset('assets/svg/zodiac/belier.svg',
-                    height: 30.0,
-                    width: 30.0,
-                    alignment: Alignment.topLeft,
-                    color: Colors.red, 
-                    semanticsLabel: 'Belier'
+              Positioned(
+                child: Align(
+                  alignment: AlignmentDirectional.topCenter,
+                  child: new CustomPaint(
+                    size: Size(_calcDraw.getSizeWH(), _calcDraw.getSizeWH()), // 375, 736 max iphone6s
+                    painter: new DrawSquare(),
                   ),
-                onPressed: () {},*/
-            ),
-            /*Container(
-              /// width, left = - 375
-              /// width, center = MediaQuery.of(context).size.width
-              /// 
-              ///
-              width: MediaQuery.of(context).size.width, // 375 on iPhone 6s
-              height: 375.0, // This is static for now, latter for ipad and tablet
-              child: IconButton(
-                icon: SvgPicture.asset('assets/svg/zodiac/belier.svg',
-                    height: 30,
-                    width: 30,
-                    //alignment: Alignment(100.00, 100.00),
-                    color: Colors.red, 
-                    semanticsLabel: 'Belier'
-                  ),
-                onPressed: () {},
-              )
-            )*/
-            /*
-            Positioned(
-              left: -375.0,
-              right: -375.0,
-              child: IconButton(
-                icon: SvgPicture.asset('assets/svg/zodiac/belier.svg',
-                    height: 30,
-                    width: 30,
-                    //alignment: Alignment(100.00, 100.00),
-                    color: Colors.red, 
-                    semanticsLabel: 'Belier'
-                  ),
-                onPressed: () {},
-              )
-            )*/
+                )
+              ),
+              Positioned( //.fill not identic
+                top: _calcDraw.getCenter().dy,
+                left: _calcDraw.getCenter().dx,
+                child: new Container(
+                  width: _whZodiacSize,
+                  height: _whZodiacSize,
+                  decoration: new BoxDecoration(color: Colors.blue),
+                )
+              ),
+              Positioned( //.fill not identic
+                top: _calcDraw.getCenter().dy,
+                left: _calcDraw.getCenter().dx,
+                child: new GestureDetector(
+                  onTap: () {
+                    print("onTap called. " + _swLoaded.toString());
+                  },
+                  child: new Container(
+                    width: _whZodiacSize,
+                    height: _whZodiacSize,
+                    child: SvgPicture.asset('assets/svg/zodiac/belier.svg',
+                      width: _whZodiacSize,
+                      height: _whZodiacSize,
+                      alignment: Alignment.center,
+                      color: Colors.red, 
+                      semanticsLabel: 'Belier'
+                    ),
+                  )
+                ),
+                /*child: IconButton(
+                  icon: SvgPicture.asset('assets/svg/zodiac/belier.svg',
+                      height: 30.0,
+                      width: 30.0,
+                      alignment: Alignment.topLeft,
+                      color: Colors.red, 
+                      semanticsLabel: 'Belier'
+                    ),
+                  onPressed: () {},*/
+              ),
+              /*Container(
+                /// width, left = - 375
+                /// width, center = MediaQuery.of(context).size.width
+                /// 
+                ///
+                width: MediaQuery.of(context).size.width, // 375 on iPhone 6s
+                height: 375.0, // This is static for now, latter for ipad and tablet
+                child: IconButton(
+                  icon: SvgPicture.asset('assets/svg/zodiac/belier.svg',
+                      height: 30,
+                      width: 30,
+                      //alignment: Alignment(100.00, 100.00),
+                      color: Colors.red, 
+                      semanticsLabel: 'Belier'
+                    ),
+                  onPressed: () {},
+                )
+              )*/
+              /*
+              Positioned(
+                left: -375.0,
+                right: -375.0,
+                child: IconButton(
+                  icon: SvgPicture.asset('assets/svg/zodiac/belier.svg',
+                      height: 30,
+                      width: 30,
+                      //alignment: Alignment(100.00, 100.00),
+                      color: Colors.red, 
+                      semanticsLabel: 'Belier'
+                    ),
+                  onPressed: () {},
+                )
+              )*/
 
-          ],
-        ),
-        // Center is a layout widget. It takes a single child and positions it
-        // in the middle of the parent.
-        /*child: Column(
-          children: <Widget>[
-          Align(
-            alignment: FractionalOffset.center,
-            child: new CustomPaint(
-              size: Size(375, 375), // 375, 736 max iphone6s
-              painter: new DrawAstro(_zodiacDegreReturn),
-            ),
+            ],
           ),
-          Align(
-            child: new Text(_ascReturn.sign.toString())
-          ),
-          Align(
-            child: new Text(_ascReturn.degre.toString())
-          )
-          ]
-        )*/
-      //),
-        // child: Column(
-          // Column is also a layout widget. It takes a list of children and
-          // arranges them vertically. By default, it sizes itself to fit its
-          // children horizontally, and tries to be as tall as its parent.
-          //
-          // Invoke "debug painting" (press "p" in the console, choose the
-          // "Toggle Debug Paint" action from the Flutter Inspector in Android
-          // Studio, or the "Toggle Debug Paint" command in Visual Studio Code)
-          // to see the wireframe for each widget.
-          //
-          // Column has various properties to control how it sizes itself and
-          // how it positions its children. Here we use mainAxisAlignment to
-          // center the children vertically; the main axis here is the vertical
-          // axis because Columns are vertical (the cross axis would be
-          // horizontal).
-          // mainAxisAlignment: MainAxisAlignment.center,
-          /*children: <Widget>[
-            Text(
-              'You have pushed the button this many times:',
+          // Center is a layout widget. It takes a single child and positions it
+          // in the middle of the parent.
+          /*child: Column(
+            children: <Widget>[
+            Align(
+              alignment: FractionalOffset.center,
+              child: new CustomPaint(
+                size: Size(375, 375), // 375, 736 max iphone6s
+                painter: new DrawAstro(_zodiacDegreReturn),
+              ),
             ),
-            Text(
-              '$_counter',
-              style: Theme.of(context).textTheme.display1,
+            Align(
+              child: new Text(_ascReturn.sign.toString())
             ),
-          ],*/
-      floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
-        child: Icon(Icons.add),
-      ), // This trailing comma makes auto-formatting nicer for build methods.
-    );
+            Align(
+              child: new Text(_ascReturn.degre.toString())
+            )
+            ]
+          )*/
+        //),
+          // child: Column(
+            // Column is also a layout widget. It takes a list of children and
+            // arranges them vertically. By default, it sizes itself to fit its
+            // children horizontally, and tries to be as tall as its parent.
+            //
+            // Invoke "debug painting" (press "p" in the console, choose the
+            // "Toggle Debug Paint" action from the Flutter Inspector in Android
+            // Studio, or the "Toggle Debug Paint" command in Visual Studio Code)
+            // to see the wireframe for each widget.
+            //
+            // Column has various properties to control how it sizes itself and
+            // how it positions its children. Here we use mainAxisAlignment to
+            // center the children vertically; the main axis here is the vertical
+            // axis because Columns are vertical (the cross axis would be
+            // horizontal).
+            // mainAxisAlignment: MainAxisAlignment.center,
+            /*children: <Widget>[
+              Text(
+                'You have pushed the button this many times:',
+              ),
+              Text(
+                '$_counter',
+                style: Theme.of(context).textTheme.display1,
+              ),
+            ],*/
+        floatingActionButton: FloatingActionButton(
+          onPressed: _incrementCounter,
+          tooltip: 'Increment',
+          child: Icon(Icons.add),
+        ), // This trailing comma makes auto-formatting nicer for build methods.
+      );
+    } else {
+      return Scaffold(
+        appBar: AppBar(
+          // Here we take the value from the MyHomePage object that was created by
+          // the App.build method, and use it to set our appbar title.
+          title: Text(widget.title),
+        )
+      );
+    }
   }
 }

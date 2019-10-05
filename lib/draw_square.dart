@@ -20,6 +20,7 @@ class DrawSquare extends CustomPainter {
       /// size.width = 375
       /// size.height = 375
     canvas.drawLine(new Offset(0.0, size.height), new Offset(size.width, 0.0), paint);
+    canvas.drawLine(new Offset(0.0, 0.0), new Offset(size.height, size.height), paint);
   }
 
   @override
