@@ -51,6 +51,7 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   int _counter = 0;
   AscReturn _ascReturn;
+  ZodiacReturn _zodiacDegreReturn;
 
   void _incrementCounter() {
     setState(() {
@@ -67,7 +68,9 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
     CalcAsc calcAsc = new CalcAsc(new DateTime.utc(1986, 3, 4, 4 , 54));
     _ascReturn = calcAsc.getAsc();
-    new CalcZodiac(_ascReturn.degre, _ascReturn.sign.index + 1);
+    print(_ascReturn.sign.index);
+    CalcZodiac calcZodiac = new CalcZodiac(_ascReturn.degre, _ascReturn.sign.index);
+    _zodiacDegreReturn = calcZodiac.GetDegre();
     // This method is rerun every time setState is called, for instance as done
     // by the _incrementCounter method above.
     //

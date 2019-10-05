@@ -37,11 +37,39 @@ class CalcZodiac {
 
   Future loadJsonAsc() async {
     String jsonString = await _loadJsonZodiacAsset();
-    //_parseJsonAsc(jsonString);
+    _parseJsonAsc(jsonString);
   }
 
-/*
+  /// idByAsc = 11/12 Verseau (10 without + 1 on enum 0-11)
+  ///
+  /// 1 3    3 + 10 = 1
+  /// 2 4    4 + 10 = 2
+  /// 3 5    5 + 10 = 3
+  /// 4 6    6 + 10 = 4
+  /// 5 7    7 + 10 = 5
+  /// 6 8    8 + 10 = 6
+  /// 7 9    9 + 10 = 7
+  /// 8 10   10 + 10 = 8
+  /// 9 11   11 + 10 = 9
+  /// 10 12  12 + 10 = 10 
+  /// 11 1   1 + 10 = 11
+  /// 12 2   2 + 10 = 12
   void _parseJsonAsc(String jsonString) {
+    List<Zodiac> data = [];
+    Map decoded = jsonDecode(jsonString);
+    int idByAsc = _signAsc;
+    for (var i in decoded['data']) {
+      idByAsc = _signAsc + i['id'];
+      if (idByAsc > 12) {
+        idByAsc -= 12;
+      }
+      data.add(new Zodiac(i['id'], idByAsc, 'test', i['symbol'], new Element(i['element']), i['svg']));
+    }/*
+    for (var i in data) {
+        print(i.id.toString() + '-' + i.idByAsc.toString());
+    }*/
+  }
+    /*
     List<MonthDaySignHour> data = [];
     List<SignHour> sign = [];
     SignHour signHour;

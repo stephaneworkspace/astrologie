@@ -4,72 +4,72 @@
         "sign": "Belier",
         "symbol": "♈",
         "element": "Feu",
-        "svg": "belier.svg"
+        "svg": "assets/svg/zodiac/belier.svg"
     }, {
         "id": 2,
         "sign": "Taureau",
         "symbol": "♉",
         "element": "Terre",
-        "svg": "taureau.svg"
+        "svg": "assets/svg/zodiac/taureau.svg"
     }, {
         "id": 3,
         "sign": "Gemaux",
         "symbol": "♊",
         "element": "Vent",
-        "svg": "gemaux.svg"
+        "svg": "assets/svg/zodiac/gemaux.svg"
     }, {
         "id": 4,
         "sign": "Cancer",
         "symbol": "♋",
         "element": "Eau",
-        "svg": "cancer.svg"
+        "svg": "assets/svg/zodiac/cancer.svg"
     }, {
         "id": 5,
         "sign": "Lion",
         "symbol": "♌",
         "element": "Feu",
-        "svg": "lion.svg"
+        "svg": "assets/svg/zodiac/lion.svg"
     }, {
         "id": 6,
         "sign": "Vierge",
         "symbol": "♍",
         "element": "Terre",
-        "svg": "vierge.svg"
+        "svg": "assets/svg/zodiac/vierge.svg"
     }, {
         "id": 7,
         "sign": "Balance",
         "symbol": "♎",
         "element": "Air",
-        "svg": "balance.svg"
+        "svg": "assets/svg/zodiac/balance.svg"
     }, {
         "id": 8,
         "sign": "Scorpion",
         "symbol": "♏",
         "element": "Eau",
-        "svg": "scorpion.svg"
+        "svg": "assets/svg/zodiac/scorpion.svg"
     }, {
         "id": 9,
         "sign": "Sagittaire",
         "symbol": "♐",
         "element": "Feu",
-        "svg": "sagittaire.svg"
+        "svg": "assets/svg/zodiac/sagittaire.svg"
     }, {
         "id": 10,
         "sign": "Capricorne",
         "symbol": "♑",
         "element": "Terre",
-        "svg": "capricorne.svg"
+        "svg": "assets/svg/zodiac/capricorne.svg"
     }, {
         "id": 11,
         "sign": "Verseau",
         "symbol": "♒",
         "element": "Air",
-        "svg": "verseau.svg"
+        "svg": "assets/svg/zodiac/verseau.svg"
     }, {
         "id": 12,
         "sign": "Poisson",
         "symbol": "♑",
         "element": "Eau",
-        "svg": "poisson.svg"
+        "svg": "assets/svg/zodiac/poisson.svg"
     }] 
 }
