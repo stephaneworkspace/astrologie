@@ -4,6 +4,7 @@ import './asc/calc_asc.dart';
 import './asc/s_asc_return.dart';
 import './zodiac/calc_zodiac.dart';
 import './zodiac/s_zodiac_degre_return.dart';
+import './draw/calc_draw.dart';
 import './draw_astro.dart';
 import './draw_square.dart';
 
@@ -55,6 +56,7 @@ class _MyHomePageState extends State<MyHomePage> {
   int _counter = 0;
   AscReturn _ascReturn;
   ZodiacDegreReturn _zodiacDegreReturn;
+  CalcDraw _calcDraw;
 
   void _incrementCounter() {
     setState(() {
@@ -75,6 +77,7 @@ class _MyHomePageState extends State<MyHomePage> {
       CalcZodiac calcZodiac = new CalcZodiac(_ascReturn.degre, _ascReturn.sign.index + 1);
       _zodiacDegreReturn = calcZodiac.getDegre();
     }
+    _calcDraw = new CalcDraw(MediaQuery.of(context).size.width , MediaQuery.of(context).size.height);
     // This method is rerun every time setState is called, for instance as done
     // by the _incrementCounter method above.
     //
@@ -94,7 +97,7 @@ class _MyHomePageState extends State<MyHomePage> {
               child: Align(
                 alignment: AlignmentDirectional.topCenter,
                 child: new CustomPaint(
-                  size: Size(375.0, 375.0), // 375, 736 max iphone6s
+                  size: Size(_calcDraw.getSizeWH(), _calcDraw.getSizeWH()), // 375, 736 max iphone6s
                   painter: new DrawAstro(_zodiacDegreReturn),
                 ),
               )
@@ -103,14 +106,14 @@ class _MyHomePageState extends State<MyHomePage> {
               child: Align(
                 alignment: AlignmentDirectional.topCenter,
                 child: new CustomPaint(
-                  size: Size(375.0, 375.0), // 375, 736 max iphone6s
+                  size: Size(_calcDraw.getSizeWH(), _calcDraw.getSizeWH()), // 375, 736 max iphone6s
                   painter: new DrawSquare(),
                 ),
               )
             ),
             Positioned( //.fill not identic
-              top: 375.0 / 2.0,
-              left: MediaQuery.of(context).size.width / 2.0,
+              top: _calcDraw.getSizeWH() / 2.0,
+              left: _calcDraw.getSizeWH() / 2.0,
               child: new Container(
                 width: 30.0,
                 height: 30.0,
@@ -118,8 +121,8 @@ class _MyHomePageState extends State<MyHomePage> {
               )
             ),
             Positioned( //.fill not identic
-              top: 375.0 / 2.0,
-              left: MediaQuery.of(context).size.width / 2.0,
+              top: _calcDraw.getSizeWH() / 2.0,
+              left: _calcDraw.getSizeWH() / 2.0,
               child: new GestureDetector(
                 onTap: () {
                   print("onTap called.");
