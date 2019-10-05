@@ -92,7 +92,7 @@ class _MyHomePageState extends State<MyHomePage> {
               child: Align(
                 alignment: AlignmentDirectional.topCenter,
                 child: new CustomPaint(
-                  size: Size(375, 375), // 375, 736 max iphone6s
+                  size: Size(375.0, 375.0), // 375, 736 max iphone6s
                   painter: new DrawAstro(_zodiacDegreReturn),
                 ),
               )
@@ -101,12 +101,39 @@ class _MyHomePageState extends State<MyHomePage> {
               child: Align(
                 alignment: AlignmentDirectional.topCenter,
                 child: new CustomPaint(
-                  size: Size(375, 375), // 375, 736 max iphone6s
+                  size: Size(375.0, 375.0), // 375, 736 max iphone6s
                   painter: new DrawSquare(),
                 ),
               )
             ),
-            Container(
+            Positioned( //.fill not identic
+              top: 375.0 / 2.0,
+              left: MediaQuery.of(context).size.width / 2.0,
+              child: new Container(
+                width: 30.0,
+                height: 30.0,
+                decoration: new BoxDecoration(color: Colors.blue),
+              )
+            ),
+            Positioned( //.fill not identic
+              top: 375.0 / 2.0,
+              left: MediaQuery.of(context).size.width / 2.0,
+              child: IconButton(
+                icon: SvgPicture.asset('assets/svg/zodiac/belier.svg',
+                    height: 30.0,
+                    width: 30.0,
+                    //alignment: Alignment(100.00, 100.00),
+                    color: Colors.red, 
+                    semanticsLabel: 'Belier'
+                  ),
+                onPressed: () {},
+              )
+            ),
+            /*Container(
+              /// width, left = - 375
+              /// width, center = MediaQuery.of(context).size.width
+              /// 
+              ///
               width: MediaQuery.of(context).size.width, // 375 on iPhone 6s
               height: 375.0, // This is static for now, latter for ipad and tablet
               child: IconButton(
@@ -119,7 +146,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   ),
                 onPressed: () {},
               )
-            )
+            )*/
             /*
             Positioned(
               left: -375.0,

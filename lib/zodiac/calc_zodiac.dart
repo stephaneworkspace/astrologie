@@ -350,12 +350,14 @@ class CalcZodiac {
       print(' <- ' + i.id.toString() + ' ' + i.idByAsc.toString() + ' ' + i.symbol);
     }*/
     List<ZodiacDegre> zodiacDegre = [];
-    for (var i in dataSorted) {
-      double degre = ((i.idByAsc - 1) * 30.0) - _degreAsc;
-      if (degre < 0) {
-        degre = 360.0 - (degre * - 1);
+    if (dataSorted != null) {
+      for (var i in dataSorted) {
+        double degre = ((i.idByAsc - 1) * 30.0) - _degreAsc;
+        if (degre < 0) {
+          degre = 360.0 - (degre * - 1);
+        }
+        zodiacDegre.add(new ZodiacDegre(i.idByAsc, degre));
       }
-      zodiacDegre.add(new ZodiacDegre(i.idByAsc, degre));
     }
     // debug
     /*

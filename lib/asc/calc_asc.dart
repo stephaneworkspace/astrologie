@@ -108,28 +108,30 @@ class CalcAsc {
         print (j.hourBegin);
       }
     }*/
-    for (var i in _asc.monthDaySignHour) {
-      if (i.month == _natal.month) {
-        // Calcul at the day
-        degreInSign = 0;
-        if (i.dayEnd > dayMax) {
-          dayMax = i.dayEnd;
-        }
-        if (_natal.day >= i.dayBegin && _natal.day <= i.dayEnd) {
-          for (var j in i.signHour) {
-            Duration diffBegin = _hourMinNatal.difference(j.hourBegin);
-            Duration diffEnd = j.hourEnd.difference(_hourMinNatal);
-            //if (_hourMinNatal >= j.hourBegin && _hourMinNatal <= j.hourEnd) { 
-            if (!diffBegin.isNegative && !diffEnd.isNegative) {
-              sign = j.typeAsc;
+    if (_asc.monthDaySignHour != null) {
+      for (var i in _asc.monthDaySignHour) {
+        if (i.month == _natal.month) {
+          // Calcul at the day
+          degreInSign = 0;
+          if (i.dayEnd > dayMax) {
+            dayMax = i.dayEnd;
+          }
+          if (_natal.day >= i.dayBegin && _natal.day <= i.dayEnd) {
+            for (var j in i.signHour) {
+              Duration diffBegin = _hourMinNatal.difference(j.hourBegin);
+              Duration diffEnd = j.hourEnd.difference(_hourMinNatal);
+              //if (_hourMinNatal >= j.hourBegin && _hourMinNatal <= j.hourEnd) { 
+              if (!diffBegin.isNegative && !diffEnd.isNegative) {
+                sign = j.typeAsc;
+              }
             }
           }
+          degreInSign = 0;
+          int maxMin = 24 * 60;
+          int hourCalc = _hourMinNatal.hour * 60;
+          int minCalc = _hourMinNatal.minute;
+          degreInSign = ((hourCalc + minCalc) / maxMin) * 30.0;
         }
-        degreInSign = 0;
-        int maxMin = 24 * 60;
-        int hourCalc = _hourMinNatal.hour * 60;
-        int minCalc = _hourMinNatal.minute;
-        degreInSign = ((hourCalc + minCalc) / maxMin) * 30.0;
       }
     }
     return new AscReturn(sign, degreInSign);
