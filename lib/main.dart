@@ -87,19 +87,24 @@ class _MyHomePageState extends State<MyHomePage> {
       ),
       //body: Center(
         body: Stack(
-          alignment: Alignment(375, 375),
           children: <Widget>[
             Positioned(
-              child: new CustomPaint(
-                size: Size(375, 375), // 375, 736 max iphone6s
-                painter: new DrawAstro(_zodiacDegreReturn),
-              ),
+              child: Align(
+                alignment: AlignmentDirectional.topCenter,
+                child: new CustomPaint(
+                  size: Size(375, 375), // 375, 736 max iphone6s
+                  painter: new DrawAstro(_zodiacDegreReturn),
+                ),
+              )
             ),
             Positioned(
-              child: new CustomPaint(
-                size: Size(375, 375), // 375, 736 max iphone6s
-                painter: new DrawSquare(),
-              ),
+              child: Align(
+                alignment: AlignmentDirectional.topCenter,
+                child: new CustomPaint(
+                  size: Size(375, 375), // 375, 736 max iphone6s
+                  painter: new DrawSquare(),
+                ),
+              )
             ),
 
 

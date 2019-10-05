@@ -342,7 +342,7 @@ class CalcZodiac {
   ZodiacDegreReturn getDegre() {
     List<Zodiac> dataSorted = [];
     dataSorted = _zodiac;
-    if (dataSorted != []) {
+    if (dataSorted != null) {
       dataSorted.sort((a,b) => a.idByAsc.compareTo(b.idByAsc));
     }
     // debug
