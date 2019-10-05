@@ -39,6 +39,10 @@ class CalcDraw {
     }
   }
 
+  double getRadiusCircleZodiac() {
+    return (getRadiusTotal() * (((CIRCLE1 - CIRCLE0) / 2) + CIRCLE0)) / 100;
+  }
+
   Offset getCenter() {
     //return new Offset(size.width / 2, size.height / 2);
     return new Offset(getRadiusTotal(), getRadiusTotal());

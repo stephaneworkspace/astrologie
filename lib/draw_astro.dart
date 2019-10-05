@@ -46,6 +46,8 @@ class DrawAstro extends CustomPainter {
       // print(i.degre0);
       List<Offset> xy = _calcDraw.lineTrigo(i.degre0, _calcDraw.getRadiusCircle(1), _calcDraw.getRadiusCircle(0));
       canvas.drawLine(xy[0], xy[1], paint);
+      xy = _calcDraw.lineTrigo(i.degre15, _calcDraw.getRadiusCircleZodiac(), _calcDraw.getRadiusCircle(0));
+      canvas.drawLine(xy[0], xy[1], paint);
     }
   }
 

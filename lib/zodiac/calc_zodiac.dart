@@ -344,26 +344,18 @@ class CalcZodiac {
     List<Zodiac> dataSorted = new List<Zodiac>();
     dataSorted = _zodiac;
     dataSorted.sort((a,b) => a.idByAsc.compareTo(b.idByAsc));
-    // }
-    // debug
-    /*for (var i in data) {
-      print(' <- ' + i.id.toString() + ' ' + i.idByAsc.toString() + ' ' + i.symbol);
-    }*/
     List<ZodiacDegre> zodiacDegre = new List<ZodiacDegre>();
     for (var i in dataSorted) {
       double degre = ((i.idByAsc - 1) * 30.0) - _degreAsc;
       if (degre < 0) {
         degre = 360.0 - (degre * - 1);
       }
-      zodiacDegre.add(new ZodiacDegre(i.idByAsc, degre));
+      zodiacDegre.add(new ZodiacDegre(i.idByAsc, degre, degre + 15.0));
     }
-    // debug
-    /*
-    for (var i in zodiacDegre) {
-      print(' ->' + i.id.toString() + ' ' + i.degre0.toString());
-    }*/
     return new ZodiacDegreReturn(zodiacDegre);
   }
+
+
     /*
     List<MonthDaySignHour> data = [];
     List<SignHour> sign = [];
