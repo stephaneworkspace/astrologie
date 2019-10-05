@@ -112,8 +112,8 @@ class _MyHomePageState extends State<MyHomePage> {
               )
             ),
             Positioned( //.fill not identic
-              top: _calcDraw.getSizeWH() / 2.0,
-              left: _calcDraw.getSizeWH() / 2.0,
+              top: _calcDraw.getCenter().dy,
+              left: _calcDraw.getCenter().dx,
               child: new Container(
                 width: 30.0,
                 height: 30.0,
@@ -121,8 +121,8 @@ class _MyHomePageState extends State<MyHomePage> {
               )
             ),
             Positioned( //.fill not identic
-              top: _calcDraw.getSizeWH() / 2.0,
-              left: _calcDraw.getSizeWH() / 2.0,
+              top: _calcDraw.getCenter().dy,
+              left: _calcDraw.getCenter().dx,
               child: new GestureDetector(
                 onTap: () {
                   print("onTap called.");

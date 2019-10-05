@@ -30,7 +30,7 @@ class DrawAstro extends CustomPainter {
       ..strokeWidth = 1.0;
       /// size.width = 375
       /// size.height = 375
-    Offset center = new Offset(size.width / 2, size.height / 2);
+    // Offset center = new Offset(size.width / 2, size.height / 2);
     double radiusTotal = min(size.width / 2, size.height / 2);
     /*double radiusCircleExt0 = radiusTotal - 30.0;
     double radiusCircleExt1 = radiusTotal - 40.0;
@@ -39,9 +39,9 @@ class DrawAstro extends CustomPainter {
     double radiusCircleExt0 = (radiusTotal * 35) / 100;
     double radiusCircleExt1 = (radiusTotal * 55) / 100;
     double radiusCircleExt2 = (radiusTotal * 60) / 100;
-    canvas.drawCircle(center, radiusCircleExt0, paint);
-    canvas.drawCircle(center, radiusCircleExt1, paint);
-    canvas.drawCircle(center, radiusCircleExt2, paint);
+    canvas.drawCircle(_calcDraw.getCenter(), radiusCircleExt0, paint);
+    canvas.drawCircle(_calcDraw.getCenter(), radiusCircleExt1, paint);
+    canvas.drawCircle(_calcDraw.getCenter(), radiusCircleExt2, paint);
     /*
     /// Trait à partir du centre
     // double x = 2 * pi;
