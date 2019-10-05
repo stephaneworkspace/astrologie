@@ -106,23 +106,35 @@ class _MyHomePageState extends State<MyHomePage> {
                 ),
               )
             ),
-
-
-/*
-              Positioned(
-                  right: 0,
-                  child: IconButton(
-                    icon: SvgPicture.asset('assets/profileView/iconAjustes.svg',
-                        height: 30,
-                        width: 30,
-                        color: Colors.white, 
-                        semanticsLabel: 'Ajustes Logo'
-                      ),
-                    onPressed: _onPrefsButtonPressed,
-                  )
-              ),
-              */
-
+            Container(
+              width: MediaQuery.of(context).size.width, // 375 on iPhone 6s
+              height: 375.0, // This is static for now, latter for ipad and tablet
+              child: IconButton(
+                icon: SvgPicture.asset('assets/svg/zodiac/belier.svg',
+                    height: 30,
+                    width: 30,
+                    //alignment: Alignment(100.00, 100.00),
+                    color: Colors.red, 
+                    semanticsLabel: 'Belier'
+                  ),
+                onPressed: () {},
+              )
+            )
+            /*
+            Positioned(
+              left: -375.0,
+              right: -375.0,
+              child: IconButton(
+                icon: SvgPicture.asset('assets/svg/zodiac/belier.svg',
+                    height: 30,
+                    width: 30,
+                    //alignment: Alignment(100.00, 100.00),
+                    color: Colors.red, 
+                    semanticsLabel: 'Belier'
+                  ),
+                onPressed: () {},
+              )
+            )*/
 
           ],
         ),
