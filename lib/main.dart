@@ -71,8 +71,10 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
     CalcAsc calcAsc = new CalcAsc(new DateTime.utc(1986, 3, 4, 4 , 54));
     _ascReturn = calcAsc.getAsc();
-    CalcZodiac calcZodiac = new CalcZodiac(_ascReturn.degre, _ascReturn.sign.index + 1);
-    _zodiacDegreReturn = calcZodiac.getDegre();
+    if (_ascReturn != null) {
+      CalcZodiac calcZodiac = new CalcZodiac(_ascReturn.degre, _ascReturn.sign.index + 1);
+      _zodiacDegreReturn = calcZodiac.getDegre();
+    }
     // This method is rerun every time setState is called, for instance as done
     // by the _incrementCounter method above.
     //
@@ -122,7 +124,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 icon: SvgPicture.asset('assets/svg/zodiac/belier.svg',
                     height: 30.0,
                     width: 30.0,
-                    //alignment: Alignment(100.00, 100.00),
+                    alignment: Alignment.topLeft,
                     color: Colors.red, 
                     semanticsLabel: 'Belier'
                   ),

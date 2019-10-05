@@ -108,7 +108,7 @@ class CalcAsc {
         print (j.hourBegin);
       }
     }*/
-    if (_asc.monthDaySignHour != null) {
+    if (_asc != null && _asc.monthDaySignHour != null) {
       for (var i in _asc.monthDaySignHour) {
         if (i.month == _natal.month) {
           // Calcul at the day
