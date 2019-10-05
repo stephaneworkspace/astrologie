@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import './asc/calc_asc.dart';
 import './asc/s_asc_return.dart';
 import './zodiac/calc_zodiac.dart';
 import './zodiac/s_zodiac_degre_return.dart';
-import 'draw_astro.dart';
+import './draw_astro.dart';
+import './draw_square.dart';
 
 void main() => runApp(MyApp());
 
@@ -83,16 +85,51 @@ class _MyHomePageState extends State<MyHomePage> {
         // the App.build method, and use it to set our appbar title.
         title: Text(widget.title),
       ),
-      body: Center(
+      //body: Center(
+        body: Stack(
+          alignment: Alignment(375, 375),
+          children: <Widget>[
+            Positioned(
+              child: new CustomPaint(
+                size: Size(375, 375), // 375, 736 max iphone6s
+                painter: new DrawAstro(_zodiacDegreReturn),
+              ),
+            ),
+            Positioned(
+              child: new CustomPaint(
+                size: Size(375, 375), // 375, 736 max iphone6s
+                painter: new DrawSquare(),
+              ),
+            ),
+
+
+/*
+              Positioned(
+                  right: 0,
+                  child: IconButton(
+                    icon: SvgPicture.asset('assets/profileView/iconAjustes.svg',
+                        height: 30,
+                        width: 30,
+                        color: Colors.white, 
+                        semanticsLabel: 'Ajustes Logo'
+                      ),
+                    onPressed: _onPrefsButtonPressed,
+                  )
+              ),
+              */
+
+
+          ],
+        ),
         // Center is a layout widget. It takes a single child and positions it
         // in the middle of the parent.
-        child: Column(
+        /*child: Column(
           children: <Widget>[
           Align(
             alignment: FractionalOffset.center,
             child: new CustomPaint(
               size: Size(375, 375), // 375, 736 max iphone6s
-              painter: new DrawAstro()
+              painter: new DrawAstro(_zodiacDegreReturn),
             ),
           ),
           Align(
@@ -102,8 +139,8 @@ class _MyHomePageState extends State<MyHomePage> {
             child: new Text(_ascReturn.degre.toString())
           )
           ]
-        )
-      ),
+        )*/
+      //),
         // child: Column(
           // Column is also a layout widget. It takes a list of children and
           // arranges them vertically. By default, it sizes itself to fit its

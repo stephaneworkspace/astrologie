@@ -342,7 +342,9 @@ class CalcZodiac {
   ZodiacDegreReturn getDegre() {
     List<Zodiac> dataSorted = [];
     dataSorted = _zodiac;
-    dataSorted.sort((a,b) => a.idByAsc.compareTo(b.idByAsc));
+    if (dataSorted != []) {
+      dataSorted.sort((a,b) => a.idByAsc.compareTo(b.idByAsc));
+    }
     // debug
     /*for (var i in data) {
       print(' <- ' + i.id.toString() + ' ' + i.idByAsc.toString() + ' ' + i.symbol);
@@ -355,9 +357,11 @@ class CalcZodiac {
       }
       zodiacDegre.add(new ZodiacDegre(i.idByAsc, degre));
     }
+    // debug
+    /*
     for (var i in zodiacDegre) {
       print(' ->' + i.id.toString() + ' ' + i.degre0.toString());
-    }
+    }*/
     return new ZodiacDegreReturn(zodiacDegre);
   }
     /*
