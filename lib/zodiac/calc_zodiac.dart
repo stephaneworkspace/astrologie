@@ -4,6 +4,8 @@ import 'dart:async' show Future;
 import 'dart:convert';
 import 'package:flutter/services.dart' show rootBundle;
 
+import './s_zodiac_degre_return.dart';
+
 // struct
 class Element {
   final String name;
@@ -24,6 +26,7 @@ class Zodiac {
 class CalcZodiac {
   static double _degreAsc;
   static int _signAsc;
+  static List<Zodiac> _zodiac;
   
   CalcZodiac(double degreAsc, int signAsc) {
     _degreAsc = degreAsc;
@@ -40,34 +43,309 @@ class CalcZodiac {
     _parseJsonAsc(jsonString);
   }
 
-  /// idByAsc = 11/12 Verseau (10 without + 1 on enum 0-11)
-  ///
-  /// 1 3    3 + 10 = 1
-  /// 2 4    4 + 10 = 2
-  /// 3 5    5 + 10 = 3
-  /// 4 6    6 + 10 = 4
-  /// 5 7    7 + 10 = 5
-  /// 6 8    8 + 10 = 6
-  /// 7 9    9 + 10 = 7
-  /// 8 10   10 + 10 = 8
-  /// 9 11   11 + 10 = 9
-  /// 10 12  12 + 10 = 10 
-  /// 11 1   1 + 10 = 11
-  /// 12 2   2 + 10 = 12
   void _parseJsonAsc(String jsonString) {
     List<Zodiac> data = [];
     Map decoded = jsonDecode(jsonString);
     int idByAsc = _signAsc;
+    // Order by Asc
     for (var i in decoded['data']) {
-      idByAsc = _signAsc + i['id'];
-      if (idByAsc > 12) {
-        idByAsc -= 12;
+      switch (_signAsc) {
+        case 1:
+          idByAsc = i['id'];
+          break;
+        case 2:
+          switch(i['id']) {
+            case 2:
+              idByAsc = 1;
+              break;
+            case 3:
+              idByAsc = 2;
+              break;
+            case 4:
+              idByAsc = 3;
+              break;
+            case 5:
+              idByAsc = 4;
+              break;
+            case 6:
+              idByAsc = 5;
+              break;
+            case 7:
+              idByAsc = 6;
+              break;
+            case 8:
+              idByAsc = 7;
+              break;
+            case 9:
+              idByAsc = 8;
+              break;
+            case 10:
+              idByAsc = 9;
+              break;
+            case 11:
+              idByAsc = 10;
+              break;
+            case 12:
+              idByAsc = 11;
+              break;
+            default:
+              idByAsc = 11 + i['id'];
+              break;
+          }
+          break;
+        case 3:
+          switch(i['id']) {
+            case 3:
+              idByAsc = 1;
+              break;
+            case 4:
+              idByAsc = 2;
+              break;
+            case 5:
+              idByAsc = 3;
+              break;
+            case 6:
+              idByAsc = 4;
+              break;
+            case 7:
+              idByAsc = 5;
+              break;
+            case 8:
+              idByAsc = 6;
+              break;
+            case 9:
+              idByAsc = 7;
+              break;
+            case 10:
+              idByAsc = 8;
+              break;
+            case 11:
+              idByAsc = 9;
+              break;
+            case 12:
+              idByAsc = 10;
+              break;
+            default:
+              idByAsc = 10 + i['id'];
+              break;
+          }
+          break;
+        case 4:
+          switch(i['id']) {
+            case 4:
+              idByAsc = 1;
+              break;
+            case 5:
+              idByAsc = 2;
+              break;
+            case 6:
+              idByAsc = 3;
+              break;
+            case 7:
+              idByAsc = 4;
+              break;
+            case 8:
+              idByAsc = 5;
+              break;
+            case 9:
+              idByAsc = 6;
+              break;
+            case 10:
+              idByAsc = 7;
+              break;
+            case 11:
+              idByAsc = 8;
+              break;
+            case 12:
+              idByAsc = 9;
+              break;
+            default:
+              idByAsc = 9 + i['id'];
+              break;
+          }
+          break;
+        case 5:
+          switch(i['id']) {
+            case 5:
+              idByAsc = 1;
+              break;
+            case 6:
+              idByAsc = 2;
+              break;
+            case 7:
+              idByAsc = 3;
+              break;
+            case 8:
+              idByAsc = 4;
+              break;
+            case 9:
+              idByAsc = 5;
+              break;
+            case 10:
+              idByAsc = 6;
+              break;
+            case 11:
+              idByAsc = 7;
+              break;
+            case 12:
+              idByAsc = 8;
+              break;
+            default:
+              idByAsc = 8 + i['id'];
+              break;
+          }
+          break;
+        case 6:
+          switch(i['id']) {
+            case 6:
+              idByAsc = 1;
+              break;
+            case 7:
+              idByAsc = 2;
+              break;
+            case 8:
+              idByAsc = 3;
+              break;
+            case 9:
+              idByAsc = 4;
+              break;
+            case 10:
+              idByAsc = 5;
+              break;
+            case 11:
+              idByAsc = 6;
+              break;
+            case 12:
+              idByAsc = 7;
+              break;
+            default:
+              idByAsc = 7 + i['id'];
+              break;
+          }
+          break;
+        case 7:
+          switch(i['id']) {
+            case 7:
+              idByAsc = 1;
+              break;
+            case 8:
+              idByAsc = 2;
+              break;
+            case 9:
+              idByAsc = 3;
+              break;
+            case 10:
+              idByAsc = 4;
+              break;
+            case 11:
+              idByAsc = 5;
+              break;
+            case 12:
+              idByAsc = 6;
+              break;
+            default:
+              idByAsc = 6 + i['id'];
+              break;
+          }
+          break;
+        case 8:
+          switch(i['id']) {
+            case 8:
+              idByAsc = 1;
+              break;
+            case 9:
+              idByAsc = 2;
+              break;
+            case 10:
+              idByAsc = 3;
+              break;
+            case 11:
+              idByAsc = 4;
+              break;
+            case 12:
+              idByAsc = 5;
+              break;
+            default:
+              idByAsc = 5 + i['id'];
+              break;
+          }
+          break;
+        case 9:
+          switch(i['id']) {
+            case 9:
+              idByAsc = 1;
+              break;
+            case 10:
+              idByAsc = 2;
+              break;
+            case 11:
+              idByAsc = 3;
+              break;
+            case 12:
+              idByAsc = 4;
+              break;
+            default:
+              idByAsc = 4 + i['id'];
+              break;
+          }
+          break;
+        case 10:
+          switch(i['id']) {
+            case 10:
+              idByAsc = 1;
+              break;
+            case 11:
+              idByAsc = 2;
+              break;
+            case 12:
+              idByAsc = 3;
+              break;
+            default:
+              idByAsc = 3 + i['id'];
+              break;
+          }
+          break;
+        case 11:
+          switch(i['id']) {
+            case 11:
+              idByAsc = 1;
+              break;
+            case 12:
+              idByAsc = 2;
+              break;
+            default:
+              idByAsc = 2 + i['id'];
+              break;
+          }
+          break;
+        case 12:
+          switch(i['id']) {
+            case 12:
+              idByAsc = 1;
+              break;
+            default:
+              idByAsc = 1 + i['id'];
+              break;
+          }
+          break;
       }
       data.add(new Zodiac(i['id'], idByAsc, 'test', i['symbol'], new Element(i['element']), i['svg']));
-    }/*
-    for (var i in data) {
-        print(i.id.toString() + '-' + i.idByAsc.toString());
+    }
+    // debug
+    /*for (var i in data) {
+      print(' -> ' + i.id.toString() + ' ' + i.idByAsc.toString() + ' ' + i.symbol);
     }*/
+    _zodiac = data;
+  }
+
+  ZodiacDegreReturn getDegre() {
+    List<Zodiac> data = [];
+    data = _zodiac;
+    data.sort((a,b) => a.idByAsc.compareTo(b.idByAsc));
+    for (var i in data) {
+      print(' <- ' + i.id.toString() + ' ' + i.idByAsc.toString() + ' ' + i.symbol);
+    }
+    return new ZodiacDegreReturn([]);
   }
     /*
     List<MonthDaySignHour> data = [];

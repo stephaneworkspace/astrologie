@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import './asc/calc_asc.dart';
 import './asc/s_asc_return.dart';
 import './zodiac/calc_zodiac.dart';
+import './zodiac/s_zodiac_degre_return.dart';
 import 'draw_astro.dart';
 
 void main() => runApp(MyApp());
@@ -51,7 +52,7 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   int _counter = 0;
   AscReturn _ascReturn;
-  ZodiacReturn _zodiacDegreReturn;
+  ZodiacDegreReturn _zodiacDegreReturn;
 
   void _incrementCounter() {
     setState(() {
@@ -68,9 +69,8 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
     CalcAsc calcAsc = new CalcAsc(new DateTime.utc(1986, 3, 4, 4 , 54));
     _ascReturn = calcAsc.getAsc();
-    print(_ascReturn.sign.index);
-    CalcZodiac calcZodiac = new CalcZodiac(_ascReturn.degre, _ascReturn.sign.index);
-    _zodiacDegreReturn = calcZodiac.GetDegre();
+    CalcZodiac calcZodiac = new CalcZodiac(_ascReturn.degre, _ascReturn.sign.index + 1);
+    _zodiacDegreReturn = calcZodiac.getDegre();
     // This method is rerun every time setState is called, for instance as done
     // by the _incrementCounter method above.
     //

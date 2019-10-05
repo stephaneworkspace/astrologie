@@ -1,5 +1,6 @@
 // struct
 class ZodiacDegre {
   final int id;
-  const ZodiacDegre(this.id);
+  final double degre0;
+  const ZodiacDegre(this.id, this.degre0);
 }
