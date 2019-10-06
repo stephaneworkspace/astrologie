@@ -56,14 +56,14 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+  CalcZodiac _calcZodiac;
+  List<ZodiacSvgReturn> _zodiacSvg;
   AscReturn _ascReturn;
   ZodiacDegreReturn _zodiacDegreReturn;
   int _counter = 0;
   CalcDraw _calcDraw;
   List<Offset> _xyZodiacSizeLine; // size between 2 circle by point on 0° for the size of zodiac
   double _whZodiacSize; // size zodiac by the line between 2 circle
-  Offset _xyZodiac; // Position of the svg zodiac
-  List<ZodiacSvgReturn> _zodiacSvg = new List<ZodiacSvgReturn>();
 
   bool _swLoaded = false;
 
@@ -94,10 +94,13 @@ class _MyHomePageState extends State<MyHomePage> {
     setState(() {
       _ascReturn = calcAsc.getAsc();
     });
-    CalcZodiac calcZodiac = new CalcZodiac(_ascReturn.degre, _ascReturn.sign.index + 1);
-    await calcZodiac.setJson();
+    _calcZodiac = new CalcZodiac(_ascReturn.degre, _ascReturn.sign.index + 1);
+    await _calcZodiac.setJson();
     setState(() {
-      _zodiacDegreReturn = calcZodiac.getDegre();
+      _zodiacDegreReturn = _calcZodiac.getDegre();
+
+      
+      
     });
   }
 
@@ -108,13 +111,8 @@ class _MyHomePageState extends State<MyHomePage> {
       // At °0, no importance, ist juste for have the size of zodiac container care
       _xyZodiacSizeLine = _calcDraw.lineTrigo(0, _calcDraw.getRadiusCircle(1), _calcDraw.getRadiusCircle(0));
       _whZodiacSize = _calcDraw.sizeZodiac(_xyZodiacSizeLine[0], _xyZodiacSizeLine[1]);
-      _whZodiacSize = (_whZodiacSize * 50) / 100;
-      // test
-      for(ZodiacDegre z in _zodiacDegreReturn.zodiac)
-      {
-        Offset xy = _calcDraw.getOffsetCenterZodiac(_whZodiacSize, _calcDraw.pointTrigo(z.degre15, _calcDraw.getRadiusCircleZodiac()));
-        _zodiacSvg.add(new ZodiacSvgReturn(z.zodiac, xy));
-      }
+      _whZodiacSize = (_whZodiacSize * 58) / 100;
+      _zodiacSvg = _calcZodiac.getZodiacSvg(_calcDraw, _whZodiacSize);
     }
     // This method is rerun every time setState is called, for instance as done
     // by the _incrementCounter method above.
@@ -141,6 +139,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   ),
                 )
               ),
+              /*
               Positioned(
                 child: Align(
                   alignment: AlignmentDirectional.topCenter,
@@ -149,7 +148,7 @@ class _MyHomePageState extends State<MyHomePage> {
                     painter: new DrawSquare(),
                   ),
                 )
-              ),
+              ),*/
               /*
               for (var z in _zodiacSvg)
                 Positioned( //.fill not identic
@@ -185,97 +184,9 @@ class _MyHomePageState extends State<MyHomePage> {
                       ),
                     )
                   ),
-                /*child: IconButton(
-                  icon: SvgPicture.asset('assets/svg/zodiac/belier.svg',
-                      height: 30.0,
-                      width: 30.0,
-                      alignment: Alignment.topLeft,
-                      color: Colors.red, 
-                      semanticsLabel: 'Belier'
-                    ),
-                  onPressed: () {},*/
               ),
-              /*Container(
-                /// width, left = - 375
-                /// width, center = MediaQuery.of(context).size.width
-                /// 
-                ///
-                width: MediaQuery.of(context).size.width, // 375 on iPhone 6s
-                height: 375.0, // This is static for now, latter for ipad and tablet
-                child: IconButton(
-                  icon: SvgPicture.asset('assets/svg/zodiac/belier.svg',
-                      height: 30,
-                      width: 30,
-                      //alignment: Alignment(100.00, 100.00),
-                      color: Colors.red, 
-                      semanticsLabel: 'Belier'
-                    ),
-                  onPressed: () {},
-                )
-              )*/
-              /*
-              Positioned(
-                left: -375.0,
-                right: -375.0,
-                child: IconButton(
-                  icon: SvgPicture.asset('assets/svg/zodiac/belier.svg',
-                      height: 30,
-                      width: 30,
-                      //alignment: Alignment(100.00, 100.00),
-                      color: Colors.red, 
-                      semanticsLabel: 'Belier'
-                    ),
-                  onPressed: () {},
-                )
-              )*/
-
             ],
           ),
-          // Center is a layout widget. It takes a single child and positions it
-          // in the middle of the parent.
-          /*child: Column(
-            children: <Widget>[
-            Align(
-              alignment: FractionalOffset.center,
-              child: new CustomPaint(
-                size: Size(375, 375), // 375, 736 max iphone6s
-                painter: new DrawAstro(_zodiacDegreReturn),
-              ),
-            ),
-            Align(
-              child: new Text(_ascReturn.sign.toString())
-            ),
-            Align(
-              child: new Text(_ascReturn.degre.toString())
-            )
-            ]
-          )*/
-        //),
-          // child: Column(
-            // Column is also a layout widget. It takes a list of children and
-            // arranges them vertically. By default, it sizes itself to fit its
-            // children horizontally, and tries to be as tall as its parent.
-            //
-            // Invoke "debug painting" (press "p" in the console, choose the
-            // "Toggle Debug Paint" action from the Flutter Inspector in Android
-            // Studio, or the "Toggle Debug Paint" command in Visual Studio Code)
-            // to see the wireframe for each widget.
-            //
-            // Column has various properties to control how it sizes itself and
-            // how it positions its children. Here we use mainAxisAlignment to
-            // center the children vertically; the main axis here is the vertical
-            // axis because Columns are vertical (the cross axis would be
-            // horizontal).
-            // mainAxisAlignment: MainAxisAlignment.center,
-            /*children: <Widget>[
-              Text(
-                'You have pushed the button this many times:',
-              ),
-              Text(
-                '$_counter',
-                style: Theme.of(context).textTheme.display1,
-              ),
-            ],*/
         floatingActionButton: FloatingActionButton(
           onPressed: _incrementCounter,
           tooltip: 'Increment',

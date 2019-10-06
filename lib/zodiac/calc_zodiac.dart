@@ -1,10 +1,12 @@
 import 'dart:async' show Future;
 import 'dart:convert';
+import 'package:astrologie/zodiac/s_zodiac_svg_return.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart' show rootBundle;
 
 import './s_zodiac_degre_return.dart';
 import './s_zodiac_degre.dart';
+import '../draw/calc_draw.dart';
 
 // struct
 class Element {
@@ -370,6 +372,16 @@ class CalcZodiac {
       zodiacDegre.add(new ZodiacDegre(i, degre, degre + 15.0));
     }
     return new ZodiacDegreReturn(zodiacDegre);
+  }
+
+  List<ZodiacSvgReturn> getZodiacSvg(CalcDraw calcDraw, double size) {
+    List<ZodiacSvgReturn> zodiacSvg = List<ZodiacSvgReturn>();
+    for(ZodiacDegre z in getDegre().zodiac)
+    {
+      Offset xy = calcDraw.getOffsetCenterZodiac(size, calcDraw.pointTrigo(z.degre15, calcDraw.getRadiusCircleZodiac()));
+      zodiacSvg.add(new ZodiacSvgReturn(z.zodiac, xy));
+    }
+    return zodiacSvg;
   }
 
 
