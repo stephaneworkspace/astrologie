@@ -55,9 +55,17 @@ class CalcDraw {
     return sqrt(a*a + b*b);
   }
 
+  /// Center for the svg zodiac
+  /// 
+  /// 0.0 - 0.0 = top left of the screen
+  /// so this method is a helper for find the position of the sign
+  Offset getOffsetCenterZodiac(double sizeZodiac, Offset xy00) {
+    return new Offset(xy00.dx - (sizeZodiac / 2), xy00.dy - (sizeZodiac / 2));
+  }
+
   // Trigonometry
   List<Offset> lineTrigo(double angular, double radiusCircleBegin, double radiusCircleEnd) {
-    List<Offset> returnList = [];
+    List<Offset> returnList = List<Offset>();
     double dx1 = getCenter().dx + cos(angular / CIRC * 2 * pi) * -1 * Radius.circular(radiusCircleBegin).x;
     double dy1 = getCenter().dy + sin(angular / CIRC * 2 * pi) * Radius.circular(radiusCircleBegin).y;
     returnList.add(new Offset(dx1, dy1));
@@ -65,5 +73,12 @@ class CalcDraw {
     double dy2 = getCenter().dy + sin(angular / CIRC * 2 * pi) * Radius.circular(radiusCircleEnd).y;
     returnList.add(new Offset(dx2, dy2));
     return returnList;
+  }
+
+  // Trigonometry
+  Offset pointTrigo(double angular, double radiusCircle) {
+    double dx = getCenter().dx + cos(angular / CIRC * 2 * pi) * -1 * Radius.circular(radiusCircle).x;
+    double dy = getCenter().dy + sin(angular / CIRC * 2 * pi) * Radius.circular(radiusCircle).y;
+    return new Offset(dx, dy);
   }
 }

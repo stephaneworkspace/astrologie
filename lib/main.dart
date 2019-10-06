@@ -1,9 +1,12 @@
+
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import './asc/calc_asc.dart';
 import './asc/s_asc_return.dart';
 import './zodiac/calc_zodiac.dart';
 import './zodiac/s_zodiac_degre_return.dart';
+import './zodiac/s_zodiac_degre.dart';
+import './zodiac/s_zodiac_svg_return.dart';
 import './draw/calc_draw.dart';
 import './draw_astro.dart';
 import './draw_square.dart';
@@ -59,6 +62,9 @@ class _MyHomePageState extends State<MyHomePage> {
   CalcDraw _calcDraw;
   List<Offset> _xyZodiacSizeLine; // size between 2 circle by point on 0° for the size of zodiac
   double _whZodiacSize; // size zodiac by the line between 2 circle
+  Offset _xyZodiac; // Position of the svg zodiac
+  List<ZodiacSvgReturn> _zodiacSvg = new List<ZodiacSvgReturn>();
+
   bool _swLoaded = false;
 
   void _incrementCounter() {
@@ -91,8 +97,7 @@ class _MyHomePageState extends State<MyHomePage> {
     CalcZodiac calcZodiac = new CalcZodiac(_ascReturn.degre, _ascReturn.sign.index + 1);
     await calcZodiac.setJson();
     setState(() {
-      var degre = calcZodiac.getDegre();
-      _zodiacDegreReturn = degre;
+      _zodiacDegreReturn = calcZodiac.getDegre();
     });
   }
 
@@ -103,6 +108,13 @@ class _MyHomePageState extends State<MyHomePage> {
       // At °0, no importance, ist juste for have the size of zodiac container care
       _xyZodiacSizeLine = _calcDraw.lineTrigo(0, _calcDraw.getRadiusCircle(1), _calcDraw.getRadiusCircle(0));
       _whZodiacSize = _calcDraw.sizeZodiac(_xyZodiacSizeLine[0], _xyZodiacSizeLine[1]);
+      _whZodiacSize = (_whZodiacSize * 30) / 100;
+      // test
+      for(ZodiacDegre z in _zodiacDegreReturn.zodiac)
+      {
+        Offset xy = _calcDraw.getOffsetCenterZodiac(_whZodiacSize, _calcDraw.pointTrigo(z.degre15, _calcDraw.getRadiusCircleZodiac()));
+        _zodiacSvg.add(new ZodiacSvgReturn(z.zodiac, xy));
+      }
     }
     // This method is rerun every time setState is called, for instance as done
     // by the _incrementCounter method above.
@@ -138,34 +150,38 @@ class _MyHomePageState extends State<MyHomePage> {
                   ),
                 )
               ),
+              /*
               Positioned( //.fill not identic
-                top: _calcDraw.getCenter().dy,
-                left: _calcDraw.getCenter().dx,
+                //top: _calcDraw.getCenter().dy,
+                //left: _calcDraw.getCenter().dx,
+                left: _xyZodiac.dx,
+                top: _xyZodiac.dy,
                 child: new Container(
                   width: _whZodiacSize,
                   height: _whZodiacSize,
                   decoration: new BoxDecoration(color: Colors.blue),
                 )
-              ),
-              Positioned( //.fill not identic
-                top: _calcDraw.getCenter().dy,
-                left: _calcDraw.getCenter().dx,
-                child: new GestureDetector(
-                  onTap: () {
-                    print("onTap called. " + _swLoaded.toString());
-                  },
-                  child: new Container(
-                    width: _whZodiacSize,
-                    height: _whZodiacSize,
-                    child: SvgPicture.asset('assets/svg/zodiac/belier.svg',
+              ),*/
+              for (var z in _zodiacSvg)
+                Positioned( //.fill not identic
+                  left: z.xyZodiac.dx,
+                  top: z.xyZodiac.dy,
+                  child: new GestureDetector(
+                    onTap: () {
+                      print("onTap called. " + z.zodiac.name);
+                    },
+                    child: new Container(
                       width: _whZodiacSize,
                       height: _whZodiacSize,
-                      alignment: Alignment.center,
-                      color: Colors.red, 
-                      semanticsLabel: 'Belier'
-                    ),
-                  )
-                ),
+                      child: SvgPicture.asset(z.zodiac.svg,
+                        width: _whZodiacSize,
+                        height: _whZodiacSize,
+                        alignment: Alignment.center,
+                        color: z.zodiac.element.color, 
+                        semanticsLabel: z.zodiac.name
+                      ),
+                    )
+                  ),
                 /*child: IconButton(
                   icon: SvgPicture.asset('assets/svg/zodiac/belier.svg',
                       height: 30.0,

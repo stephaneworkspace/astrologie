@@ -1,5 +1,6 @@
 import 'dart:async' show Future;
 import 'dart:convert';
+import 'package:flutter/material.dart';
 import 'package:flutter/services.dart' show rootBundle;
 
 import './s_zodiac_degre_return.dart';
@@ -8,7 +9,8 @@ import './s_zodiac_degre.dart';
 // struct
 class Element {
   final String name;
-  const Element(this.name);
+  final Color color;
+  const Element(this.name, this.color);
 }
 
 // struct
@@ -331,7 +333,22 @@ class CalcZodiac {
           }
           break;
       }
-      data.add(new Zodiac(i['id'], idByAsc, 'test', i['symbol'], new Element(i['element']), i['svg']));
+      Color color = Colors.black;
+      switch(i['element']) {
+        case 'Feu':
+          color = Colors.red;
+          break;
+        case 'Terre':
+          color = Colors.deepOrange;
+          break;
+        case 'Air':
+          color = Colors.green;
+          break;
+        case 'Eau':
+          color = Colors.blue;
+          break;
+      }
+      data.add(new Zodiac(i['id'], idByAsc, i['sign'], i['symbol'], new Element(i['element'], color), i['svg']));
     }
     // debug
     /*for (var i in data) {
@@ -345,12 +362,12 @@ class CalcZodiac {
     dataSorted = _zodiac;
     dataSorted.sort((a,b) => a.idByAsc.compareTo(b.idByAsc));
     List<ZodiacDegre> zodiacDegre = new List<ZodiacDegre>();
-    for (var i in dataSorted) {
+    for (Zodiac i in dataSorted) {
       double degre = ((i.idByAsc - 1) * 30.0) - _degreAsc;
       if (degre < 0) {
         degre = 360.0 - (degre * - 1);
       }
-      zodiacDegre.add(new ZodiacDegre(i.idByAsc, degre, degre + 15.0));
+      zodiacDegre.add(new ZodiacDegre(i, degre, degre + 15.0));
     }
     return new ZodiacDegreReturn(zodiacDegre);
   }

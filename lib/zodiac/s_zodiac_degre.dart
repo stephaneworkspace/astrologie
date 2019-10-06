@@ -1,7 +1,9 @@
 // struct
+import './calc_zodiac.dart';
+
 class ZodiacDegre {
-  final int id;
+  final Zodiac zodiac;
   final double degre0;
   final double degre15;
-  const ZodiacDegre(this.id, this.degre0, this.degre15);
+  const ZodiacDegre(this.zodiac, this.degre0, this.degre15);
 }
