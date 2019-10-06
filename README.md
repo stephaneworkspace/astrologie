@@ -4,7 +4,7 @@ by Stéphane Bressani
 
 ## Getting Started
 
-This project is an Astrodienst Swiss Ephemeris (http://www.astro.com/swisseph/) .Net portage from C (version 2.06) to C# (https://github.com/ygrenier/SwissEphNet) in a flutter project for cross platform usage.
+This project is an Astrodienst Swiss Ephemeris (http://www.astro.com/swisseph/) portage from C (version 2.06) and C# (https://github.com/ygrenier/SwissEphNet) to a flutter dart project
 
 ## References
 
