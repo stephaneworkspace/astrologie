@@ -108,7 +108,7 @@ class _MyHomePageState extends State<MyHomePage> {
       // At °0, no importance, ist juste for have the size of zodiac container care
       _xyZodiacSizeLine = _calcDraw.lineTrigo(0, _calcDraw.getRadiusCircle(1), _calcDraw.getRadiusCircle(0));
       _whZodiacSize = _calcDraw.sizeZodiac(_xyZodiacSizeLine[0], _xyZodiacSizeLine[1]);
-      _whZodiacSize = (_whZodiacSize * 58) / 100;
+      _whZodiacSize = (_whZodiacSize * 48) / 100;
       _zodiacSvg = _calcZodiac.getZodiacSvg(_calcDraw, _whZodiacSize);
     }
     // This method is rerun every time setState is called, for instance as done

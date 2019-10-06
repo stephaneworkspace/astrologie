@@ -341,7 +341,7 @@ class CalcZodiac {
           color = Colors.red;
           break;
         case 'Terre':
-          color = Colors.deepOrange;
+          color = Colors.orange;
           break;
         case 'Air':
           color = Colors.green;
