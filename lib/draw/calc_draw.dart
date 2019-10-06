@@ -2,11 +2,16 @@ import 'dart:math';
 
 import 'dart:ui';
 
+import './e_type_trait.dart';
+
 const CIRC = 360.0;
 
 const CIRCLE0 = 35;
 const CIRCLE1 = 55;
 const CIRCLE2 = 60;
+
+const DIVTRAITPETIT = 1.1;
+const DIVTRAITGRAND = 1.2;
 
 /// This draw class is optimized for circle in a care
 class CalcDraw {
@@ -41,6 +46,19 @@ class CalcDraw {
 
   double getRadiusCircleZodiac() {
     return (getRadiusTotal() * (((CIRCLE1 - CIRCLE0) / 2) + CIRCLE0)) / 100;
+  }
+
+  double getRadiusRulesInsideCircleZodiac(TypeTrait typeTrait) {
+    var divTrait;
+    switch (typeTrait) {
+      case TypeTrait.Petit:
+        divTrait = DIVTRAITPETIT;
+        break;
+      case TypeTrait.Grand:
+        divTrait = DIVTRAITGRAND;
+        break;
+    }
+    return (getRadiusTotal() * (((CIRCLE1 - CIRCLE0) / divTrait) + CIRCLE0)) / 100; // - CIRCLE1
   }
 
   Offset getCenter() {

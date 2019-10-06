@@ -98,9 +98,6 @@ class _MyHomePageState extends State<MyHomePage> {
     await _calcZodiac.setJson();
     setState(() {
       _zodiacDegreReturn = _calcZodiac.getDegre();
-
-      
-      
     });
   }
 

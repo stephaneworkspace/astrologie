@@ -1,10 +1,10 @@
 import 'dart:ui';
-import 'dart:math';
 
 import 'package:flutter/material.dart';
 
 import './zodiac/s_zodiac_degre_return.dart';
 import './draw/calc_draw.dart';
+import './draw/e_type_trait.dart';
 
 const EXT0 = 30.0;
 const EXT1 = 40.0;
@@ -45,6 +45,9 @@ class DrawAstro extends CustomPainter {
     for(var i in _zodiacDegreReturn.zodiac) {
       // print(i.degre0);
       List<Offset> xy = _calcDraw.lineTrigo(i.degre0, _calcDraw.getRadiusCircle(1), _calcDraw.getRadiusCircle(0));
+      canvas.drawLine(xy[0], xy[1], paint);
+
+      xy = _calcDraw.lineTrigo(i.degre15, _calcDraw.getRadiusCircle(1), _calcDraw.getRadiusRulesInsideCircleZodiac(TypeTrait.Petit));
       canvas.drawLine(xy[0], xy[1], paint);
     }
   }

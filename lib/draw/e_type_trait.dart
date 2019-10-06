@@ -1,0 +1,4 @@
+enum TypeTrait {
+  Petit,
+  Grand
+}
