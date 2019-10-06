@@ -106,9 +106,9 @@ class _MyHomePageState extends State<MyHomePage> {
     if (_swLoaded) {
       _calcDraw = new CalcDraw(MediaQuery.of(context).size.width , MediaQuery.of(context).size.height);
       // At °0, no importance, ist juste for have the size of zodiac container care
-      _xyZodiacSizeLine = _calcDraw.lineTrigo(0, _calcDraw.getRadiusCircle(1), _calcDraw.getRadiusCircle(0));
+      _xyZodiacSizeLine = _calcDraw.lineTrigo(0, _calcDraw.getRadiusCircleZodiacCIRCLE1WithoutLine(), _calcDraw.getRadiusCircle(0));
       _whZodiacSize = _calcDraw.sizeZodiac(_xyZodiacSizeLine[0], _xyZodiacSizeLine[1]);
-      _whZodiacSize = (_whZodiacSize * 48) / 100;
+      _whZodiacSize = (_whZodiacSize * 60) / 100;
       _zodiacSvg = _calcZodiac.getZodiacSvg(_calcDraw, _whZodiacSize);
     }
     // This method is rerun every time setState is called, for instance as done
