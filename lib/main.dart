@@ -1,11 +1,11 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:starflut/starflut.dart';
 import './asc/calc_asc.dart';
 import './asc/s_asc_return.dart';
 import './zodiac/calc_zodiac.dart';
 import './zodiac/s_zodiac_degre_return.dart';
-import './zodiac/s_zodiac_degre.dart';
 import './zodiac/s_zodiac_svg_return.dart';
 import './draw/calc_draw.dart';
 import './draw_astro.dart';
