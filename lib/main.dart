@@ -108,7 +108,7 @@ class _MyHomePageState extends State<MyHomePage> {
       // At °0, no importance, ist juste for have the size of zodiac container care
       _xyZodiacSizeLine = _calcDraw.lineTrigo(0, _calcDraw.getRadiusCircle(1), _calcDraw.getRadiusCircle(0));
       _whZodiacSize = _calcDraw.sizeZodiac(_xyZodiacSizeLine[0], _xyZodiacSizeLine[1]);
-      _whZodiacSize = (_whZodiacSize * 30) / 100;
+      _whZodiacSize = (_whZodiacSize * 50) / 100;
       // test
       for(ZodiacDegre z in _zodiacDegreReturn.zodiac)
       {
@@ -151,17 +151,16 @@ class _MyHomePageState extends State<MyHomePage> {
                 )
               ),
               /*
-              Positioned( //.fill not identic
-                //top: _calcDraw.getCenter().dy,
-                //left: _calcDraw.getCenter().dx,
-                left: _xyZodiac.dx,
-                top: _xyZodiac.dy,
-                child: new Container(
-                  width: _whZodiacSize,
-                  height: _whZodiacSize,
-                  decoration: new BoxDecoration(color: Colors.blue),
-                )
-              ),*/
+              for (var z in _zodiacSvg)
+                Positioned( //.fill not identic
+                  left: z.xyZodiac.dx,
+                  top: z.xyZodiac.dy,
+                  child: new Container(
+                    width: _whZodiacSize,
+                    height: _whZodiacSize,
+                    decoration: new BoxDecoration(color: Colors.grey),
+                  )
+                ),*/
               for (var z in _zodiacSvg)
                 Positioned( //.fill not identic
                   left: z.xyZodiac.dx,
@@ -173,9 +172,13 @@ class _MyHomePageState extends State<MyHomePage> {
                     child: new Container(
                       width: _whZodiacSize,
                       height: _whZodiacSize,
+                      margin: const EdgeInsets.only(left: 0.0, right: 0.0),
+                      padding: const EdgeInsets.only(left: 0.0, right: 0.0),
                       child: SvgPicture.asset(z.zodiac.svg,
                         width: _whZodiacSize,
                         height: _whZodiacSize,
+                        fit: BoxFit.scaleDown,
+                        allowDrawingOutsideViewBox: true,
                         alignment: Alignment.center,
                         color: z.zodiac.element.color, 
                         semanticsLabel: z.zodiac.name
