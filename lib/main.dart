@@ -87,10 +87,10 @@ Future<void> testCallPython() async {
     dynamic rr1 = await SrvGroup.initRaw("python36", Service);
 
     print("initRaw = $rr1");
-		var Result = await SrvGroup.loadRawModule("python", "", resPath + "/flutter_assets/starfiles/" + "testpy.py", false);
+		var Result = await SrvGroup.loadRawModule("python3", "", resPath + "/flutter_assets/starfiles/" + "testpy.py", false);
     print("loadRawModule = $Result");
 
-		dynamic python = await Service.importRawContext("python", "", false, "");
+		dynamic python = await Service.importRawContext("python3", "", false, "");
     print("python = "+ await python.getString());
 
 		StarObjectClass retobj = await python.call("tt", ["hello ", "world"]);
@@ -102,7 +102,7 @@ Future<void> testCallPython() async {
     StarObjectClass yy = await python.call("yy", ["hello ", "world", 123]);
     print(await yy.call("__len__",[]));
 
-    StarObjectClass multiply = await Service.importRawContext("python", "Multiply", true, "");
+    StarObjectClass multiply = await Service.importRawContext("python3", "Multiply", true, "");
     StarObjectClass multiply_inst = await multiply.newObject(["", "", 33, 44]);
     print(await multiply_inst.getString());
 
