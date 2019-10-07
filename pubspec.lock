@@ -150,7 +150,7 @@ packages:
     source: hosted
     version: "1.9.3"
   starflut:
-    dependency: "direct main"
+    dependency: "direct dev"
     description:
       name: starflut
       url: "https://pub.dartlang.org"

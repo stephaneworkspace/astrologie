@@ -29,11 +29,13 @@ dependencies:
 
   #js: ^0.6.0
   flutter_svg: ^0.14.1
-  starflut: ^0.6.0
+  
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
+  
+  starflut: ^0.6.0
 
 
 # For information on the generic Dart part of this file, see the
@@ -52,6 +54,7 @@ flutter:
     - assets/data/asc.json
     - assets/data/zodiac.json
     - assets/svg/zodiac/
+    - starfiles/
   #  - images/a_dot_burr.jpeg
   #  - images/a_dot_ham.jpeg
 
