@@ -59,17 +59,13 @@ class _MyHomePageState extends State<MyHomePage> {
 
 
 Future<void> testCallPython() async {
-    print('1');
     StarCoreFactory starcore = await Starflut.getFactory();
-    print('2');
     StarServiceClass Service = await starcore.initSimple("test", "123", 0, 0, new List<String>());
-    print('3');
     await starcore.regMsgCallBackP(
         (int serviceGroupID, int uMsg, Object wParam, Object lParam) async{
       print("$serviceGroupID  $uMsg   $wParam   $lParam");
       return null;
     });
-    print('4');
     StarSrvGroupClass SrvGroup = await Service["_ServiceGroup"];
 
     /*---script python--*/
