@@ -88,7 +88,7 @@ Future<void> testCallPython() async {
 
     print("initRaw = $rr1");
 
-    //await SrvGroup.runScript("python",'print("This line will be printed.")', null);
+    //await SrvGroup.runScript("python36",'print("This line will be printed.")', null);
 
 		var Result = await SrvGroup.loadRawModule("python", "", resPath + "/flutter_assets/starfiles/" + "testpy.py", false);
     print("loadRawModule = $Result");
