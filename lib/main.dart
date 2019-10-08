@@ -84,9 +84,12 @@ Future<void> testCallPython() async {
     String resPath = await Starflut.getResourcePath();
     print("resPath = $resPath");
 
-    dynamic rr1 = await SrvGroup.initRaw("python", Service);
+    dynamic rr1 = await SrvGroup.initRaw("python36", Service);
 
     print("initRaw = $rr1");
+
+    //await SrvGroup.runScript("python",'print("This line will be printed.")', null);
+
 		var Result = await SrvGroup.loadRawModule("python", "", resPath + "/flutter_assets/starfiles/" + "testpy.py", false);
     print("loadRawModule = $Result");
 
@@ -107,7 +110,7 @@ Future<void> testCallPython() async {
     print(await multiply_inst.getString());
 
     print(await multiply_inst.call("multiply", [11, 22]));
-
+*/
     await SrvGroup.clearService();
 		await starcore.moduleExit();
   }
