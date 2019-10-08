@@ -110,7 +110,7 @@ Future<void> testCallPython() async {
     print(await multiply_inst.getString());
 
     print(await multiply_inst.call("multiply", [11, 22]));
-*/
+
     await SrvGroup.clearService();
 		await starcore.moduleExit();
   }
