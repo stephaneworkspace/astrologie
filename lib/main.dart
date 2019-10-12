@@ -108,15 +108,20 @@ Future<void> testCallPython() async {
   }
 */
 
+
 Future<void> testCallPython() async {
+    var _outputString = '';
     StarCoreFactory starcore = await Starflut.getFactory();
-    StarServiceClass Service = await starcore.initSimple("test", "123", 0, 0, new List<String>());
+    StarServiceClass service = await starcore.initSimple("test", "123", 0, 0, []);
     await starcore.regMsgCallBackP(
-        (int serviceGroupID, int uMsg, Object wParam, Object lParam) async{
+        (int serviceGroupID, int uMsg, Object wParam, Object lParam) async {
+          if( uMsg == Starflut.MSG_DISPMSG || uMsg == Starflut.MSG_DISPLUAMSG ) {
+              print('wParam:' + _outputString + wParam);
+          }
       print("$serviceGroupID  $uMsg   $wParam   $lParam");
       return null;
     });
-    StarSrvGroupClass SrvGroup = await Service["_ServiceGroup"];
+    StarSrvGroupClass srvGroup = await service["_ServiceGroup"];
 
     /*---script python--*/
     bool isAndroid = await Starflut.isAndroid();
@@ -134,8 +139,19 @@ Future<void> testCallPython() async {
     String resPath = await Starflut.getResourcePath();
     print("resPath = $resPath");
 
+    if( await srvGroup.initRaw("python36", service) == true ){
+      _outputString = "init starcore and python 3.6 successfully";
+      //_isButtonDisabled = false;
+    }else{
+      _outputString = "init starcore and python 3.6 failed";
+    }
 
-    dynamic rr1 = await SrvGroup.initRaw("python36", Service);
+    setState(() {
+      _counter++;
+    });
+  }
+
+    //dynamic rr1 = await SrvGroup.initRaw("python36", Service);
     /*
     print("initRaw = $rr1");
 
@@ -164,11 +180,6 @@ Future<void> testCallPython() async {
 
     await SrvGroup.clearService();
 		await starcore.moduleExit();*/
-  }
-
-
-
-
 
   CalcZodiac _calcZodiac;
   List<ZodiacSvgReturn> _zodiacSvg;

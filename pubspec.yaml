@@ -55,7 +55,7 @@ flutter:
     - assets/data/asc.json
     - assets/data/zodiac.json
     - assets/svg/zodiac/
-    - starfiles/
+    - flutter_assets/starfiles/
   #  - images/a_dot_burr.jpeg
   #  - images/a_dot_ham.jpeg
 
