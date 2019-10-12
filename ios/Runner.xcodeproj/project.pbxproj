@@ -55,6 +55,8 @@
 		97C146FD1CF9000F007C117D /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		97C147001CF9000F007C117D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		97C147021CF9000F007C117D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		EC2793142352169A0001E965 /* starflut.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = starflut.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		EC279316235216C40001E965 /* starflut.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = starflut.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		ECEA736B2346F7D500EEAA3E /* ascendant.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = ascendant.dylib; path = ../lib/ascendant.dylib; sourceTree = "<group>"; };
 		FCA73222D75DA3074B01CADB /* Pods-Runner.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Runner.debug.xcconfig"; path = "Target Support Files/Pods-Runner/Pods-Runner.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -141,6 +143,8 @@
 		ECEA736A2346F7D400EEAA3E /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				EC279316235216C40001E965 /* starflut.framework */,
+				EC2793142352169A0001E965 /* starflut.framework */,
 				ECEA736B2346F7D500EEAA3E /* ascendant.dylib */,
 				5F693C9F56EE7E45B2E8F32F /* Pods_Runner.framework */,
 			);

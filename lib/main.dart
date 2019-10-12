@@ -55,8 +55,9 @@ class MyHomePage extends StatefulWidget {
   _MyHomePageState createState() => _MyHomePageState();
 }
 
-class _MyHomePageState extends State<MyHomePage> {
 
+class _MyHomePageState extends State<MyHomePage> {
+/*
 Future<void> testCallPython() async {
     StarCoreFactory starcore = await Starflut.getFactory();
     StarServiceClass service = await starcore.initSimple("test", "123", 0, 0, new List<String>());
@@ -99,14 +100,14 @@ Future<void> testCallPython() async {
       dynamic python = await service.importRawContext("python", "", false, "");
       print("python = "+ await python.getString());
 
-      StarObjectClass retobj = await python.call("astro");
+      StarObjectClass retobj = await python.call("astro", ["1986-4-3 ", "4:54", "+02:00", "46n12", "6e9"]);
       print(retobj);
     }
     await srvGroup.clearService();
 		await starcore.moduleExit();
   }
+*/
 
-/*
 Future<void> testCallPython() async {
     StarCoreFactory starcore = await Starflut.getFactory();
     StarServiceClass Service = await starcore.initSimple("test", "123", 0, 0, new List<String>());
@@ -162,7 +163,7 @@ Future<void> testCallPython() async {
 
     await SrvGroup.clearService();
 		await starcore.moduleExit();
-  }*/
+  }
 
 
 
