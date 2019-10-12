@@ -1,6 +1,6 @@
 PODS:
   - Flutter (1.0.0)
-  - starflut (0.6.4):
+  - starflut (0.6.6):
     - Flutter
 
 DEPENDENCIES:
@@ -15,7 +15,7 @@ EXTERNAL SOURCES:
 
 SPEC CHECKSUMS:
   Flutter: 0e3d915762c693b495b44d77113d4970485de6ec
-  starflut: 20b621b2d30ac2ccd5607146f2b1b22c827f78e0
+  starflut: 40b9127a0e6d4fbaccb6ab1c7a16054532793510
 
 PODFILE CHECKSUM: 10ae9c18d12c9ffc2275c9a159a3b1e281990db0
 
