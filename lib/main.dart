@@ -134,8 +134,9 @@ Future<void> testCallPython() async {
     String resPath = await Starflut.getResourcePath();
     print("resPath = $resPath");
 
-    dynamic rr1 = await SrvGroup.initRaw("python36", Service);
 
+    dynamic rr1 = await SrvGroup.initRaw("python36", Service);
+    /*
     print("initRaw = $rr1");
 
     //await SrvGroup.runScript("python36",'print("This line will be printed.")', null);
@@ -162,7 +163,7 @@ Future<void> testCallPython() async {
     print(await multiply_inst.call("multiply", [11, 22]));
 
     await SrvGroup.clearService();
-		await starcore.moduleExit();
+		await starcore.moduleExit();*/
   }
 
 
