@@ -57,7 +57,56 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
 
+Future<void> testCallPython() async {
+    StarCoreFactory starcore = await Starflut.getFactory();
+    StarServiceClass service = await starcore.initSimple("test", "123", 0, 0, new List<String>());
+    await starcore.regMsgCallBackP(
+        (int serviceGroupID, int uMsg, Object wParam, Object lParam) async{
+      print("$serviceGroupID  $uMsg   $wParam   $lParam");
+      return null;
+    });
+    StarSrvGroupClass srvGroup = await service["_ServiceGroup"];
 
+    /*---script python--*/
+    bool isAndroid = await Starflut.isAndroid();
+    if( isAndroid == true ){
+      await Starflut.copyFileFromAssets("testpy.py", "flutter_assets/starfiles","flutter_assets/starfiles");
+      await Starflut.copyFileFromAssets("python3.6.zip", "flutter_assets/starfiles",null);  //desRelatePath must be null 
+      await Starflut.copyFileFromAssets("zlib.cpython-36m.so", null,null);
+      await Starflut.copyFileFromAssets("unicodedata.cpython-36m.so", null,null);
+      await Starflut.loadLibrary("libpython3.6m.so");
+    }
+
+    String docPath = await Starflut.getDocumentPath();
+    print("docPath = $docPath");
+
+    String resPath = await Starflut.getResourcePath();
+    print("resPath = $resPath");
+
+    String outputString;
+    bool isDisabled = true;
+    if( await srvGroup.initRaw("python36", service) == true) {
+      outputString = "init starcore and python 3.6 successfully";
+      isDisabled = false;
+    }else{
+      outputString = "init starcore and python 3.6 failed";
+    }
+    print(outputString);
+    if (!isDisabled) {
+      var result = await srvGroup.loadRawModule("python", "", resPath + "/flutter_assets/starfiles/" + "astro_py.py", false);
+      print("loadRawModule = $result");
+
+      dynamic python = await service.importRawContext("python", "", false, "");
+      print("python = "+ await python.getString());
+
+      StarObjectClass retobj = await python.call("astro");
+      print(retobj);
+    }
+    await srvGroup.clearService();
+		await starcore.moduleExit();
+  }
+
+/*
 Future<void> testCallPython() async {
     StarCoreFactory starcore = await Starflut.getFactory();
     StarServiceClass Service = await starcore.initSimple("test", "123", 0, 0, new List<String>());
@@ -113,7 +162,7 @@ Future<void> testCallPython() async {
 
     await SrvGroup.clearService();
 		await starcore.moduleExit();
-  }
+  }*/
 
 
 
