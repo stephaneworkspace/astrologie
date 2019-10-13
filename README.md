@@ -12,4 +12,7 @@ su yourusername
 chmod a+x setup.sh
 chmod a+x generate_assets.sh
 ./setup.sh
+exit
+genereate_assets.sh
+flutter run
 ````
