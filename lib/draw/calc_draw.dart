@@ -52,6 +52,10 @@ class CalcDraw {
     return getRadiusRulesInsideCircleZodiac(TypeTrait.Grand);
   }
 
+  double getRadiusCircleZHouseCIRCLE2WithoutLine() {
+    return (getRadiusTotal() * ((CIRCLE2 - CIRCLE1) + CIRCLE0)) / 100; // - CIRCLE2
+  }
+
   double getRadiusRulesInsideCircleZodiac(TypeTrait typeTrait) {
     var divTrait;
     switch (typeTrait) {

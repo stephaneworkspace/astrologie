@@ -1,10 +1,10 @@
 import 'dart:ui';
-
 import 'package:flutter/material.dart';
-
 import './zodiac/s_zodiac.dart';
+import 'house/s_house.dart';
 import './draw/calc_draw.dart';
 import './draw/e_type_trait.dart';
+
 
 const EXT0 = 30.0;
 const EXT1 = 40.0;
@@ -14,10 +14,12 @@ const EXT3 = 130.0;
 class DrawAstro extends CustomPainter {
   // Feature : Make a big complete structure for paint
   List<Zodiac> _zodiac;
+  List<House> _house;
   CalcDraw _calcDraw;
 
-  DrawAstro(List<Zodiac> zodiac) {
+  DrawAstro(List<Zodiac> zodiac, List<House> house) {
     _zodiac = zodiac;
+    _house = house;
   }
 
   @override
@@ -42,6 +44,8 @@ class DrawAstro extends CustomPainter {
     double dx2 = centre.dx + cos(45 / CIRC * pi) * -1 * Radius.circular(radiusCircleExt0).x;
     double dy2 = centre.dy + sin(45 / CIRC * pi) * Radius.circular(radiusCircleExt0).y;
     canvas.drawLine(centre2, new Offset(dx2, dy2), paint);*/
+    
+    // Draw lines zodiac
     for(var i in _zodiac) {
       // 0°
       List<Offset> xy = _calcDraw.lineTrigo(i.posCricle360, _calcDraw.getRadiusCircle(1), _calcDraw.getRadiusCircle(0));
@@ -60,6 +64,13 @@ class DrawAstro extends CustomPainter {
         xy = _calcDraw.lineTrigo(angular, _calcDraw.getRadiusCircle(1), _calcDraw.getRadiusRulesInsideCircleZodiac(typeTrait));
         canvas.drawLine(xy[0], xy[1], paint);
       }
+    }
+
+    // Draw lines house
+    for (var i in _house) {
+      // 0°
+      List<Offset> xy = _calcDraw.lineTrigo(i.posCricle360, _calcDraw.getRadiusCircle(2), _calcDraw.getRadiusCircle(1));
+      canvas.drawLine(xy[0], xy[1], paint);
     }
   }
 

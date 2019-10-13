@@ -15,23 +15,25 @@ class CalcZodiac {
     _zodiac.clear();
     Map decoded = jsonDecode(await rootBundle.loadString('assets/data/generated.json'));
     // Order by Asc
-    for (var i in decoded['zodiac']) {
-      Color color = Colors.black;
-      switch(i['element']) {
-        case 'Feu':
-          color = Colors.red;
-          break;
-        case 'Terre':
-          color = Colors.orange;
-          break;
-        case 'Air':
-          color = Colors.green;
-          break;
-        case 'Eau':
-          color = Colors.blue;
-          break;
+    if (decoded != null) {
+      for (var i in decoded['zodiac']) {
+        Color color = Colors.black;
+        switch(i['element']) {
+          case 'Feu':
+            color = Colors.red;
+            break;
+          case 'Terre':
+            color = Colors.orange;
+            break;
+          case 'Air':
+            color = Colors.green;
+            break;
+          case 'Eau':
+            color = Colors.blue;
+            break;
+        }
+        _zodiac.add(new Zodiac(i['id'], i['id_by_asc'], i['sign'], i['symbol'], new El(i['element'], color), i['svg'], i['pos_circle_360'], new Offset(0.0, 0.0)));
       }
-      _zodiac.add(new Zodiac(i['id'], i['id_by_asc'], i['sign'], i['symbol'], new El(i['element'], color), i['svg'], i['pos_circle_360'], new Offset(0.0, 0.0)));
     }
   }
 

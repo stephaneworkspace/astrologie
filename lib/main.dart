@@ -1,4 +1,5 @@
 
+import 'package:astrologie/house/calc_house.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:starflut/starflut.dart';
@@ -6,6 +7,7 @@ import './zodiac/calc_zodiac.dart';
 import './draw/calc_draw.dart';
 import './draw_astro.dart';
 import './draw_square.dart';
+import 'house/s_house.dart';
 import 'zodiac/s_zodiac.dart';
 
 void main() => runApp(MyApp());
@@ -180,7 +182,8 @@ Future<void> testCallPython() async {
 
   CalcZodiac _calcZodiac;
   List<Zodiac> _zodiac;
-  // AscReturn _ascReturn;
+  CalcHouse _calcHouse;
+  List<House> _house;
   int _counter = 0;
   List<Offset> _xyZodiacSizeLine; // size between 2 circle by point on 0° for the size of zodiac
 
@@ -211,20 +214,28 @@ Future<void> testCallPython() async {
   loadNatal() async {
     _calcZodiac = new CalcZodiac();
     _zodiac = new List<Zodiac>();
+    _calcHouse = new CalcHouse();
+    _house = new List<House>();
     await _calcZodiac.parseJson();
+    await _calcHouse.parseJson();
   }
 
   @override
   Widget build(BuildContext context) {
     CalcDraw calcDraw;
     double whZodiacSize; // size zodiac by the line between 2 circle
+    double whHouseSize;
     if (_swLoaded) {
       calcDraw = new CalcDraw(MediaQuery.of(context).size.width , MediaQuery.of(context).size.height);
       // At °0, no importance, ist juste for have the size of zodiac container care
       _xyZodiacSizeLine = calcDraw.lineTrigo(0, calcDraw.getRadiusCircleZodiacCIRCLE1WithoutLine(), calcDraw.getRadiusCircle(0));
-     whZodiacSize = calcDraw.sizeZodiac(_xyZodiacSizeLine[0], _xyZodiacSizeLine[1]); 
+      whZodiacSize = calcDraw.sizeZodiac(_xyZodiacSizeLine[0], _xyZodiacSizeLine[1]); 
       whZodiacSize = (whZodiacSize * 60) / 100;
       _zodiac = _calcZodiac.calcDrawZodiac(calcDraw, whZodiacSize);
+      _xyZodiacSizeLine = calcDraw.lineTrigo(0, calcDraw.getRadiusCircleZHouseCIRCLE2WithoutLine(), calcDraw.getRadiusCircle(0));
+      whHouseSize = calcDraw.sizeZodiac(_xyZodiacSizeLine[0], _xyZodiacSizeLine[1]); 
+      whHouseSize = (whZodiacSize * 60) / 100;
+      _house = _calcHouse.calcDrawZodiac(calcDraw, whHouseSize);
     }
     // This method is rerun every time setState is called, for instance as done
     // by the _incrementCounter method above.
@@ -247,7 +258,7 @@ Future<void> testCallPython() async {
                   alignment: AlignmentDirectional.topCenter,
                   child: new CustomPaint(
                     size: Size(calcDraw.getSizeWH(), calcDraw.getSizeWH()), // 375, 736 max iphone6s
-                    painter: new DrawAstro(_zodiac),
+                    painter: new DrawAstro(_zodiac, _house),
                   ),
                 )
               ),
