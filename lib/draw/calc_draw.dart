@@ -71,7 +71,7 @@ class CalcDraw {
     return (getRadiusTotal() * (((CIRCLE1 - CIRCLE0) / divTrait) + CIRCLE0)) / 100; // - CIRCLE1
   }
 
-  /// Top of Pointer
+  /// Bottom of Pointer
   ///     ..
   ///    /  \
   ///     II
