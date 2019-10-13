@@ -1,3 +1,4 @@
+import 'dart:math';
 import 'dart:ui';
 import 'package:flutter/material.dart';
 import './zodiac/s_zodiac.dart';
@@ -46,6 +47,10 @@ class DrawAstro extends CustomPainter {
     canvas.drawLine(centre2, new Offset(dx2, dy2), paint);*/
     
     // Draw lines zodiac
+    paint = Paint()
+      ..color = Colors.black
+      ..style = PaintingStyle.stroke
+      ..strokeWidth = 1.0;
     for(var i in _zodiac) {
       // 0°
       List<Offset> xy = _calcDraw.lineTrigo(i.posCricle360, _calcDraw.getRadiusCircle(1), _calcDraw.getRadiusCircle(0));
@@ -65,12 +70,27 @@ class DrawAstro extends CustomPainter {
         canvas.drawLine(xy[0], xy[1], paint);
       }
     }
-
     // Draw lines house
     for (var i in _house) {
       // 0°
+    paint = Paint()
+      ..color = Colors.black
+      ..style = PaintingStyle.stroke
+      ..strokeWidth = 1.0;
       List<Offset> xy = _calcDraw.lineTrigo(i.posCricle360, _calcDraw.getRadiusCircle(2), _calcDraw.getRadiusCircle(1));
       canvas.drawLine(xy[0], xy[1], paint);
+      // Draw triange
+      paint = Paint()
+        ..color = Colors.black
+        ..style = PaintingStyle.fill;
+        double angularPointer = 1.0;
+      List<Offset> xyT = _calcDraw.pathTrianglePointer(i.posCricle360, angularPointer, _calcDraw.getRadiusRulesInsideCircleHouseForPointerBottom(), _calcDraw.getRadiusRulesInsideCircleHouseForPointerTop());
+      Path path = new Path();
+      path.moveTo(xyT[2].dx, xyT[2].dy);
+      path.lineTo(xyT[0].dx, xyT[0].dy);
+      path.lineTo(xyT[1].dx, xyT[1].dy);
+      path.close();
+      canvas.drawPath(path, paint);
     }
   }
 

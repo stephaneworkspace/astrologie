@@ -13,6 +13,8 @@ const CIRCLE2 = 60;
 const DIVTRAITPETIT = 0.1;
 const DIVTRAITGRAND = 0.2;
 
+const DIVTRAITPOINTER = 1.5;
+
 /// This draw class is optimized for circle in a care
 class CalcDraw {
   static double _sizeMinWorkingCanvasWidthHeight;
@@ -69,6 +71,25 @@ class CalcDraw {
     return (getRadiusTotal() * (((CIRCLE1 - CIRCLE0) / divTrait) + CIRCLE0)) / 100; // - CIRCLE1
   }
 
+  /// Top of Pointer
+  ///     ..
+  ///    /  \
+  ///     II
+  ///     II
+  ///    HERE
+  double  getRadiusRulesInsideCircleHouseForPointerBottom() {
+    return (getRadiusTotal() * (((CIRCLE2 - CIRCLE1) / DIVTRAITPOINTER) - CIRCLE2)) / 100; // - CIRCLE2
+  }
+
+  /// Top of Pointer
+  ///    HERE
+  ///    /  \
+  ///     II
+  ///     II
+  double  getRadiusRulesInsideCircleHouseForPointerTop() {
+    return (getRadiusTotal() * ((CIRCLE2 - CIRCLE1) - CIRCLE2)) / 100; // - CIRCLE2
+  }
+
   Offset getCenter() {
     //return new Offset(size.width / 2, size.height / 2);
     return new Offset(getRadiusTotal(), getRadiusTotal());
@@ -107,4 +128,29 @@ class CalcDraw {
     double dy = getCenter().dy + sin(angular / CIRC * 2 * pi) * Radius.circular(radiusCircle).y;
     return new Offset(dx, dy);
   }
+
+  // Not return radiusCircleEnd
+  List<Offset> pathTrianglePointer(double angular, double angularPointer, double radiusCircleBegin, double radiusCircleEnd) {
+    List<Offset> returnList = List<Offset>();
+    double angular1 = angular - angularPointer;
+    if (angular1 > 360) {
+      angular1 -= 360;
+    }
+    double angular2 = angular + angularPointer;
+    if (angular2 > 360) {
+      angular2 -= 360;
+    }
+    double dx1 = getCenter().dx + cos(angular1 / CIRC * 2 * pi) * -1 * Radius.circular(radiusCircleBegin).x;
+    double dy1 = getCenter().dy + sin(angular1 / CIRC * 2 * pi) * Radius.circular(radiusCircleBegin).y;
+    returnList.add(new Offset(dx1, dy1));
+    double dx2 = getCenter().dx + cos(angular2 / CIRC * 2 * pi) * -1 * Radius.circular(radiusCircleBegin).x;
+    double dy2 = getCenter().dy + sin(angular2 / CIRC * 2 * pi) * Radius.circular(radiusCircleBegin).y;
+    returnList.add(new Offset(dx2, dy2));
+    double dx3 = getCenter().dx + cos(angular / CIRC * 2 * pi) * -1 * Radius.circular(radiusCircleEnd).x;
+    double dy3 = getCenter().dy + sin(angular / CIRC * 2 * pi) * Radius.circular(radiusCircleEnd).y;
+    returnList.add(new Offset(dx3, dy3));
+    return returnList;
+  }
+
+  
 }
