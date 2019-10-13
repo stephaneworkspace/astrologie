@@ -2,14 +2,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:starflut/starflut.dart';
-import './asc/calc_asc.dart';
-import './asc/s_asc_return.dart';
 import './zodiac/calc_zodiac.dart';
-import './zodiac/s_zodiac_degre_return.dart';
-import './zodiac/s_zodiac_svg_return.dart';
 import './draw/calc_draw.dart';
 import './draw_astro.dart';
 import './draw_square.dart';
+import 'zodiac/s_zodiac.dart';
 
 void main() => runApp(MyApp());
 
@@ -182,13 +179,10 @@ Future<void> testCallPython() async {
 		await starcore.moduleExit();*/
 
   CalcZodiac _calcZodiac;
-  List<ZodiacSvgReturn> _zodiacSvg;
-  AscReturn _ascReturn;
-  ZodiacDegreReturn _zodiacDegreReturn;
+  List<Zodiac> _zodiac;
+  // AscReturn _ascReturn;
   int _counter = 0;
-  CalcDraw _calcDraw;
   List<Offset> _xyZodiacSizeLine; // size between 2 circle by point on 0° for the size of zodiac
-  double _whZodiacSize; // size zodiac by the line between 2 circle
 
   bool _swLoaded = false;
 
@@ -207,35 +201,30 @@ Future<void> testCallPython() async {
   @override
   void initState() {
     super.initState();
-    loadNatal(new DateTime.utc(1986, 3, 4, 4, 54)).whenComplete(() {
+    loadNatal().whenComplete(() {
       setState(() {
         _swLoaded = true;
       });
     });
   }
 
-  loadNatal(DateTime natal) async {
-    CalcAsc calcAsc = new CalcAsc(new DateTime.utc(1986, 3, 4, 4, 54));
-    await calcAsc.setJson();
-    setState(() {
-      _ascReturn = calcAsc.getAsc();
-    });
-    _calcZodiac = new CalcZodiac(_ascReturn.degre, _ascReturn.sign.index + 1);
-    await _calcZodiac.setJson();
-    setState(() {
-      _zodiacDegreReturn = _calcZodiac.getDegre();
-    });
+  loadNatal() async {
+    _calcZodiac = new CalcZodiac();
+    _zodiac = new List<Zodiac>();
+    await _calcZodiac.parseJson();
   }
 
   @override
   Widget build(BuildContext context) {
+    CalcDraw calcDraw;
+    double whZodiacSize; // size zodiac by the line between 2 circle
     if (_swLoaded) {
-      _calcDraw = new CalcDraw(MediaQuery.of(context).size.width , MediaQuery.of(context).size.height);
+      calcDraw = new CalcDraw(MediaQuery.of(context).size.width , MediaQuery.of(context).size.height);
       // At °0, no importance, ist juste for have the size of zodiac container care
-      _xyZodiacSizeLine = _calcDraw.lineTrigo(0, _calcDraw.getRadiusCircleZodiacCIRCLE1WithoutLine(), _calcDraw.getRadiusCircle(0));
-      _whZodiacSize = _calcDraw.sizeZodiac(_xyZodiacSizeLine[0], _xyZodiacSizeLine[1]);
-      _whZodiacSize = (_whZodiacSize * 60) / 100;
-      _zodiacSvg = _calcZodiac.getZodiacSvg(_calcDraw, _whZodiacSize);
+      _xyZodiacSizeLine = calcDraw.lineTrigo(0, calcDraw.getRadiusCircleZodiacCIRCLE1WithoutLine(), calcDraw.getRadiusCircle(0));
+     whZodiacSize = calcDraw.sizeZodiac(_xyZodiacSizeLine[0], _xyZodiacSizeLine[1]); 
+      whZodiacSize = (whZodiacSize * 60) / 100;
+      _zodiac = _calcZodiac.calcDrawZodiac(calcDraw, whZodiacSize);
     }
     // This method is rerun every time setState is called, for instance as done
     // by the _incrementCounter method above.
@@ -257,8 +246,8 @@ Future<void> testCallPython() async {
                 child: Align(
                   alignment: AlignmentDirectional.topCenter,
                   child: new CustomPaint(
-                    size: Size(_calcDraw.getSizeWH(), _calcDraw.getSizeWH()), // 375, 736 max iphone6s
-                    painter: new DrawAstro(_zodiacDegreReturn),
+                    size: Size(calcDraw.getSizeWH(), calcDraw.getSizeWH()), // 375, 736 max iphone6s
+                    painter: new DrawAstro(_zodiac),
                   ),
                 )
               ),
@@ -283,27 +272,27 @@ Future<void> testCallPython() async {
                     decoration: new BoxDecoration(color: Colors.grey),
                   )
                 ),*/
-              for (var z in _zodiacSvg)
+              for (var z in _zodiac)
                 Positioned( //.fill not identic
                   left: z.xyZodiac.dx,
                   top: z.xyZodiac.dy,
                   child: new GestureDetector(
                     onTap: () {
-                      print("onTap called. " + z.zodiac.name);
+                      print("onTap called. " + z.sign);
                     },
                     child: new Container(
-                      width: _whZodiacSize,
-                      height: _whZodiacSize,
+                      width: whZodiacSize,
+                      height: whZodiacSize,
                       margin: const EdgeInsets.only(left: 0.0, right: 0.0),
                       padding: const EdgeInsets.only(left: 0.0, right: 0.0),
-                      child: SvgPicture.asset(z.zodiac.svg,
-                        width: _whZodiacSize,
-                        height: _whZodiacSize,
+                      child: SvgPicture.asset(z.svg,
+                        width: whZodiacSize,
+                        height: whZodiacSize,
                         fit: BoxFit.scaleDown,
                         allowDrawingOutsideViewBox: true,
                         alignment: Alignment.center,
-                        color: z.zodiac.element.color, 
-                        semanticsLabel: z.zodiac.name
+                        color: z.element.color, 
+                        semanticsLabel: z.sign
                       ),
                     )
                   ),

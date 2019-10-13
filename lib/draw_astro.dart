@@ -2,7 +2,7 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 
-import './zodiac/s_zodiac_degre_return.dart';
+import './zodiac/s_zodiac.dart';
 import './draw/calc_draw.dart';
 import './draw/e_type_trait.dart';
 
@@ -13,11 +13,11 @@ const EXT3 = 130.0;
 
 class DrawAstro extends CustomPainter {
   // Feature : Make a big complete structure for paint
-  ZodiacDegreReturn _zodiacDegreReturn;
+  List<Zodiac> _zodiac;
   CalcDraw _calcDraw;
 
-  DrawAstro(ZodiacDegreReturn zodiacDegreReturn) {
-    _zodiacDegreReturn = zodiacDegreReturn;
+  DrawAstro(List<Zodiac> zodiac) {
+    _zodiac = zodiac;
   }
 
   @override
@@ -42,9 +42,9 @@ class DrawAstro extends CustomPainter {
     double dx2 = centre.dx + cos(45 / CIRC * pi) * -1 * Radius.circular(radiusCircleExt0).x;
     double dy2 = centre.dy + sin(45 / CIRC * pi) * Radius.circular(radiusCircleExt0).y;
     canvas.drawLine(centre2, new Offset(dx2, dy2), paint);*/
-    for(var i in _zodiacDegreReturn.zodiac) {
+    for(var i in _zodiac) {
       // 0°
-      List<Offset> xy = _calcDraw.lineTrigo(i.degre0, _calcDraw.getRadiusCircle(1), _calcDraw.getRadiusCircle(0));
+      List<Offset> xy = _calcDraw.lineTrigo(i.posCricle360, _calcDraw.getRadiusCircle(1), _calcDraw.getRadiusCircle(0));
       canvas.drawLine(xy[0], xy[1], paint);
       // 1° -> 29 °
       for (int j = 1; j < 15; j++) {
@@ -52,7 +52,12 @@ class DrawAstro extends CustomPainter {
         if (j == 5 || j == 10 || j == 15) {
           typeTrait = TypeTrait.Grand;
         }
-        xy = _calcDraw.lineTrigo(i.degre0 + j.toDouble() * 2.0, _calcDraw.getRadiusCircle(1), _calcDraw.getRadiusRulesInsideCircleZodiac(typeTrait));
+        // calc angular
+        double angular = i.posCricle360 + j.toDouble() * 2.0;
+        if (angular > 360.0) {
+          angular -= 360.0;
+        }
+        xy = _calcDraw.lineTrigo(angular, _calcDraw.getRadiusCircle(1), _calcDraw.getRadiusRulesInsideCircleZodiac(typeTrait));
         canvas.drawLine(xy[0], xy[1], paint);
       }
     }
