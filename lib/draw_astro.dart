@@ -110,14 +110,14 @@ class DrawAstro extends CustomPainter {
     for (var i in _angle) {
       // 0°
       paint = Paint()
-      ..color = Colors.black
+      ..color = i.color
       ..style = PaintingStyle.stroke
       ..strokeWidth = 1.0;
       List<Offset> xy = _calcDraw.lineTrigo(i.posCricle360, _calcDraw.getRadiusCircle(2), _calcDraw.getRadiusCircle(1));
       canvas.drawLine(xy[0], xy[1], paint);
       // Draw Big triangle
       paint = Paint()
-        ..color = Colors.black
+        ..color = i.color
         ..style = PaintingStyle.fill;
         double angularPointer = 1.0;
       List<Offset> xyT = _calcDraw.pathTrianglePointer(i.posCricle360, angularPointer, _calcDraw.getRadiusCircle(2), _calcDraw.getRadiusCircle(1));
@@ -127,6 +127,15 @@ class DrawAstro extends CustomPainter {
       path.lineTo(xyT[1].dx, xyT[1].dy);
       path.close();
       canvas.drawPath(path, paint);
+      // Draw line if svg (Asc and MC)
+      if (i.svg != '') {
+        paint = Paint()
+        ..color = i.color
+        ..style = PaintingStyle.stroke
+        ..strokeWidth = 1.0;
+        List<Offset> xy = _calcDraw.lineTrigo(i.posCricle360, _calcDraw.getRadiusCircle(3), _calcDraw.getRadiusCircle(2));
+        canvas.drawLine(xy[0], xy[1], paint);
+      }
     }
     // Draw lines planet (todo detect colision)
     for (var i in _planet) {

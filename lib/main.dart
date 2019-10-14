@@ -195,6 +195,7 @@ Future<void> testCallPython() async {
   int _counter = 0;
   List<Offset> _xyZodiacSizeLine; // size between 2 circle by point on 0° for the size of zodiac
   List<Offset> _xyHouseSizeLine;
+  List<Offset> _xyAngleSizeLine;
   List<Offset> _xyPlanetSizeLine;
   List<Offset> _xyPlanetDegSizeLine;
 
@@ -242,6 +243,7 @@ Future<void> testCallPython() async {
     CalcDraw calcDraw;
     double whZodiacSize; // size zodiac by the line between 2 circle
     double whHouseSize;
+    double whAngleSymbolSize;
     double whPlanetSymbolSize;
     double whPlanetDegSymbolSize;
     if (_swLoaded) {
@@ -257,7 +259,11 @@ Future<void> testCallPython() async {
       whHouseSize = (whHouseSize * 70) / 100;
       _house = _calcHouse.calcDrawHouse(calcDraw, whHouseSize);
       
-      _angle = _calcAngle.calcDrawAngle(calcDraw, 0.0); // todo angle size for outside circle
+      _xyAngleSizeLine = calcDraw.lineTrigo(0, calcDraw.getRadiusCirclePlanetCIRCLE4INVISIBLEWithoutLine(), calcDraw.getRadiusCircle(0));
+      whAngleSymbolSize = calcDraw.sizePlanet(_xyAngleSizeLine[0], _xyAngleSizeLine[1]);
+      whAngleSymbolSize = (whAngleSymbolSize * 150) / 100;
+
+      _angle = _calcAngle.calcDrawAngle(calcDraw, whAngleSymbolSize); // todo angle size for outside circle
 
       _xyPlanetSizeLine = calcDraw.lineTrigo(0, calcDraw.getRadiusCirclePlanetCIRCLE4INVISIBLEWithoutLine(), calcDraw.getRadiusCircle(0));
       whPlanetSymbolSize = calcDraw.sizePlanet(_xyPlanetSizeLine[0], _xyPlanetSizeLine[1]);
@@ -365,7 +371,34 @@ Future<void> testCallPython() async {
                       ),
                     ),
                   ),
-                ),    
+                ),  
+              for (var z in _angle)
+                if (z.svg != '')
+                Positioned(
+                  left: z.xyAngle.dx,
+                  top: z.xyAngle.dy,
+                  child: new GestureDetector(
+                    onTap: () {
+                      print("onTap called. House " + z.id.toString());
+                    },
+                    child: new Container(
+                      width: whAngleSymbolSize,
+                      height: whAngleSymbolSize,
+                      margin: const EdgeInsets.only(left: 0.0, right: 0.0),
+                      padding: const EdgeInsets.only(left: 0.0, right: 0.0),
+                      //child: Text(z.id.toString(),
+                      child: SvgPicture.asset(z.svg,
+                        width: whAngleSymbolSize,
+                        height: whAngleSymbolSize,
+                        fit: BoxFit.scaleDown,
+                        allowDrawingOutsideViewBox: true,
+                        alignment: Alignment.center, 
+                        color: z.color, 
+                        semanticsLabel: z.sign
+                      ),
+                    ),
+                  ),
+                ),      
               for (var z in _planet)
                 Positioned( //.fill not identic
                   left: z.xyPlanet.dx,
