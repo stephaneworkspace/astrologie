@@ -70,7 +70,7 @@ class CalcPlanet {
       for (var i in _angle) {
         // 0° todo... colision detector
         Offset xy1 = calcDraw.getOffsetCenterPlanet(sizePlanet, calcDraw.pointTrigo(i.posCricle360, calcDraw.getRadiusCircle(4)));
-        Offset xy2 = calcDraw.getOffsetCenterPlanet(sizePlanet, calcDraw.pointTrigo(i.posCricle360, calcDraw.getRadiusCircle(5)));
+        Offset xy2 = calcDraw.getOffsetCenterPlanet(sizeDegre, calcDraw.pointTrigo(i.posCricle360, calcDraw.getRadiusCircle(5)));
         // todo, calc of position outside circle with text
         z.add(new Planet(i.id, i.sign, i.signPos, i.svg, i.svgDegre, i.posCricle360, xy1, xy2, i.color));
       }

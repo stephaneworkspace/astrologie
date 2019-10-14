@@ -11,7 +11,7 @@ const CIRCLE1 = 55;
 const CIRCLE2 = 60;
 const CIRCLE3INVISIBLE = 70;
 const CIRCLE4INVISIBLE = 75;
-const CIRCLE5INVISIBLE = 85;
+const CIRCLE5INVISIBLE = 82;
 
 const DIVTRAITPETIT = 0.1;
 const DIVTRAITGRAND = 0.2;
@@ -136,6 +136,13 @@ class CalcDraw {
 
   // Theorem Pythagoras => Distance between 2 offset
   double sizePlanet(Offset xy1, Offset xy2) {
+    double a = xy1.dx - xy2.dx;
+    double b = xy1.dy - xy2.dy;
+    return sqrt(a*a + b*b);
+  }
+
+  // Theorem Pythagoras => Distance between 2 offset
+  double sizeAngle(Offset xy1, Offset xy2) {
     double a = xy1.dx - xy2.dx;
     double b = xy1.dy - xy2.dy;
     return sqrt(a*a + b*b);

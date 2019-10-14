@@ -196,6 +196,7 @@ Future<void> testCallPython() async {
   List<Offset> _xyZodiacSizeLine; // size between 2 circle by point on 0° for the size of zodiac
   List<Offset> _xyHouseSizeLine;
   List<Offset> _xyAngleSizeLine;
+  List<Offset> _xyAngleDegSizeLine;
   List<Offset> _xyPlanetSizeLine;
   List<Offset> _xyPlanetDegSizeLine;
 
@@ -244,6 +245,7 @@ Future<void> testCallPython() async {
     double whZodiacSize; // size zodiac by the line between 2 circle
     double whHouseSize;
     double whAngleSymbolSize;
+    double whAngleDegSymbolSize;
     double whPlanetSymbolSize;
     double whPlanetDegSymbolSize;
     if (_swLoaded) {
@@ -262,17 +264,18 @@ Future<void> testCallPython() async {
       _xyAngleSizeLine = calcDraw.lineTrigo(0, calcDraw.getRadiusCirclePlanetCIRCLE4INVISIBLEWithoutLine(), calcDraw.getRadiusCircle(0));
       whAngleSymbolSize = calcDraw.sizePlanet(_xyAngleSizeLine[0], _xyAngleSizeLine[1]);
       whAngleSymbolSize = (whAngleSymbolSize * 150) / 100;
+      _xyAngleDegSizeLine = calcDraw.lineTrigo(0, calcDraw.getRadiusCirclePlanetCIRCLE5INVISIBLEWithoutLine(), calcDraw.getRadiusCircle(0));
+      whAngleDegSymbolSize = calcDraw.sizeAngle(_xyAngleDegSizeLine[0], _xyAngleDegSizeLine[1]);
+      whAngleDegSymbolSize = (whAngleDegSymbolSize * 110) / 100;
 
-      _angle = _calcAngle.calcDrawAngle(calcDraw, whAngleSymbolSize); // todo angle size for outside circle
+      _angle = _calcAngle.calcDrawAngle(calcDraw, whAngleSymbolSize, whAngleDegSymbolSize); // todo angle size for outside circle
 
       _xyPlanetSizeLine = calcDraw.lineTrigo(0, calcDraw.getRadiusCirclePlanetCIRCLE4INVISIBLEWithoutLine(), calcDraw.getRadiusCircle(0));
       whPlanetSymbolSize = calcDraw.sizePlanet(_xyPlanetSizeLine[0], _xyPlanetSizeLine[1]);
       whPlanetSymbolSize = (whPlanetSymbolSize * 150) / 100;
-      
-
       _xyPlanetDegSizeLine = calcDraw.lineTrigo(0, calcDraw.getRadiusCirclePlanetCIRCLE5INVISIBLEWithoutLine(), calcDraw.getRadiusCircle(0));
-      whPlanetDegSymbolSize = calcDraw.sizePlanet(_xyPlanetSizeLine[0], _xyPlanetSizeLine[1]);
-      whPlanetDegSymbolSize = (whPlanetDegSymbolSize * 150) / 100;
+      whPlanetDegSymbolSize = calcDraw.sizePlanet(_xyPlanetDegSizeLine[0], _xyPlanetDegSizeLine[1]);
+      whPlanetDegSymbolSize = (whPlanetDegSymbolSize * 110) / 100;
 
       _planet = _calcPlanet.calcDrawPlanet(calcDraw, whPlanetSymbolSize, whPlanetDegSymbolSize);
     }
@@ -374,31 +377,57 @@ Future<void> testCallPython() async {
                 ),  
               for (var z in _angle)
                 if (z.svg != '')
-                Positioned(
-                  left: z.xyAngle.dx,
-                  top: z.xyAngle.dy,
-                  child: new GestureDetector(
-                    onTap: () {
-                      print("onTap called. House " + z.id.toString());
-                    },
-                    child: new Container(
-                      width: whAngleSymbolSize,
-                      height: whAngleSymbolSize,
-                      margin: const EdgeInsets.only(left: 0.0, right: 0.0),
-                      padding: const EdgeInsets.only(left: 0.0, right: 0.0),
-                      //child: Text(z.id.toString(),
-                      child: SvgPicture.asset(z.svg,
+                  Positioned(
+                    left: z.xyAngle.dx,
+                    top: z.xyAngle.dy,
+                    child: new GestureDetector(
+                      onTap: () {
+                        print("onTap called. House " + z.id.toString());
+                      },
+                      child: new Container(
                         width: whAngleSymbolSize,
                         height: whAngleSymbolSize,
-                        fit: BoxFit.scaleDown,
-                        allowDrawingOutsideViewBox: true,
-                        alignment: Alignment.center, 
-                        color: z.color, 
-                        semanticsLabel: z.sign
+                        margin: const EdgeInsets.only(left: 0.0, right: 0.0),
+                        padding: const EdgeInsets.only(left: 0.0, right: 0.0),
+                        //child: Text(z.id.toString(),
+                        child: SvgPicture.asset(z.svg,
+                          width: whAngleSymbolSize,
+                          height: whAngleSymbolSize,
+                          fit: BoxFit.scaleDown,
+                          allowDrawingOutsideViewBox: true,
+                          alignment: Alignment.center, 
+                          color: z.color, 
+                          semanticsLabel: z.sign
+                        ),
                       ),
                     ),
+                  ),    
+              for (var z in _angle)
+                if (z.svg != '')
+                  Positioned( //.fill not identic
+                    left: z.xyDeg.dx,
+                    top: z.xyDeg.dy,
+                    child: new GestureDetector(
+                      onTap: () {
+                        print("onTap called. " + z.id + " " + z.svgDegre);
+                      },
+                      child: new Container(
+                        width: whAngleDegSymbolSize,
+                        height: whAngleDegSymbolSize,
+                        margin: const EdgeInsets.only(left: 0.0, right: 0.0),
+                        padding: const EdgeInsets.only(left: 0.0, right: 0.0),
+                        child: SvgPicture.asset(z.svgDegre,
+                          width: whAngleDegSymbolSize,
+                          height: whAngleDegSymbolSize,
+                          fit: BoxFit.scaleDown,
+                          allowDrawingOutsideViewBox: true,
+                          alignment: Alignment.center,
+                          color: z.color, 
+                          semanticsLabel: z.sign
+                        ),
+                      )
+                    ),
                   ),
-                ),      
               for (var z in _planet)
                 Positioned( //.fill not identic
                   left: z.xyPlanet.dx,

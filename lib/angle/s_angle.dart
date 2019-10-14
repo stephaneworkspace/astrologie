@@ -5,8 +5,10 @@ class Angle {
   final String sign;
   final String signPos;
   final String svg;
+  final String svgDegre;
   final double posCricle360; 
   final Offset xyAngle;
+  final Offset xyDeg;
   final Color color;
-  const Angle(this.id, this.sign, this.signPos, this.svg, this.posCricle360, this.xyAngle, this.color);
+  const Angle(this.id, this.sign, this.signPos, this.svg, this.svgDegre, this.posCricle360, this.xyAngle, this.xyDeg, this.color);
 }
