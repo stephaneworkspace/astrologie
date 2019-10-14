@@ -6,7 +6,8 @@ class Planet {
   final String sign;
   final String signPos;
   final String svg;
+  final String svgDegre;
   final double posCricle360; 
   final Offset xyPlanet; // Position of the svg planet symbol
-  const Planet(this.id, this.sign, this.signPos, this.svg, this.posCricle360, this.xyPlanet);
+  const Planet(this.id, this.sign, this.signPos, this.svg, this.svgDegre, this.posCricle360, this.xyPlanet);
 }

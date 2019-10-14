@@ -16,7 +16,7 @@ class CalcPlanet {
     // Order by Asc
     if (decoded != null) {
       for (var i in decoded['planets']) {
-        _angle.add(new Planet(i['id'], i['sign'], i['sign_pos'], i['svg'], i['pos_circle_360'], new Offset(0.0, 0.0)));
+        _angle.add(new Planet(i['id'], i['sign'], i['sign_pos'], i['svg'], i['svg_degre'], i['pos_circle_360'], new Offset(0.0, 0.0)));
       }
     }
   }
@@ -29,7 +29,7 @@ class CalcPlanet {
         // 0° todo... colision detector
         Offset xy = calcDraw.getOffsetCenterPlanet(size, calcDraw.pointTrigo(i.posCricle360, calcDraw.getRadiusCircle(4)));
         // todo, calc of position outside circle with text
-        z.add(new Planet(i.id, i.sign, i.signPos, i.svg, i.posCricle360, xy));
+        z.add(new Planet(i.id, i.sign, i.signPos, i.svg, i.svgDegre, i.posCricle360, xy));
       }
     }
     return z;
