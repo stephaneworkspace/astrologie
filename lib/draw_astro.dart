@@ -2,6 +2,7 @@ import 'dart:math';
 import 'dart:ui';
 import 'package:flutter/material.dart';
 import './zodiac/s_zodiac.dart';
+import 'angle/s_angle.dart';
 import 'house/s_house.dart';
 import './draw/calc_draw.dart';
 import './draw/e_type_trait.dart';
@@ -16,11 +17,13 @@ class DrawAstro extends CustomPainter {
   // Feature : Make a big complete structure for paint
   List<Zodiac> _zodiac;
   List<House> _house;
+  List<Angle> _angle;
   CalcDraw _calcDraw;
 
-  DrawAstro(List<Zodiac> zodiac, List<House> house) {
+  DrawAstro(List<Zodiac> zodiac, List<House> house, List<Angle> angle) {
     _zodiac = zodiac;
     _house = house;
+    _angle = angle;
   }
 
   @override
@@ -73,24 +76,33 @@ class DrawAstro extends CustomPainter {
     // Draw lines house
     for (var i in _house) {
       // 0°
-    paint = Paint()
+      paint = Paint()
       ..color = Colors.black
       ..style = PaintingStyle.stroke
       ..strokeWidth = 1.0;
       List<Offset> xy = _calcDraw.lineTrigo(i.posCricle360, _calcDraw.getRadiusCircle(2), _calcDraw.getRadiusCircle(1));
       canvas.drawLine(xy[0], xy[1], paint);
-      // Draw triange
-      paint = Paint()
-        ..color = Colors.black
-        ..style = PaintingStyle.fill;
-        double angularPointer = 1.0;
-      List<Offset> xyT = _calcDraw.pathTrianglePointer(i.posCricle360, angularPointer, _calcDraw.getRadiusRulesInsideCircleHouseForPointerBottom(), _calcDraw.getRadiusRulesInsideCircleHouseForPointerTop());
-      Path path = new Path();
-      path.moveTo(xyT[2].dx, xyT[2].dy);
-      path.lineTo(xyT[0].dx, xyT[0].dy);
-      path.lineTo(xyT[1].dx, xyT[1].dy);
-      path.close();
-      canvas.drawPath(path, paint);
+      // Draw triange only if not == AC / IC / DESC / MC
+      bool swPointer = true;
+      for (var j in _angle) {
+        if (j.posCricle360 == i.posCricle360) {
+          print(j.posCricle360.toString() + ' ' + i.posCricle360.toString());
+          swPointer = false;
+        }
+      }
+      if (swPointer) {
+        paint = Paint()
+          ..color = Colors.black
+          ..style = PaintingStyle.fill;
+          double angularPointer = 1.0;
+        List<Offset> xyT = _calcDraw.pathTrianglePointer(i.posCricle360, angularPointer, _calcDraw.getRadiusRulesInsideCircleHouseForPointerBottom(), _calcDraw.getRadiusRulesInsideCircleHouseForPointerTop());
+        Path path = new Path();
+        path.moveTo(xyT[2].dx, xyT[2].dy);
+        path.lineTo(xyT[0].dx, xyT[0].dy);
+        path.lineTo(xyT[1].dx, xyT[1].dy);
+        path.close();
+        canvas.drawPath(path, paint);
+      }
     }
   }
 

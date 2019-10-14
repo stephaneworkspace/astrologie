@@ -7,6 +7,8 @@ import './zodiac/calc_zodiac.dart';
 import './draw/calc_draw.dart';
 import './draw_astro.dart';
 import './draw_square.dart';
+import 'angle/calc_angle.dart';
+import 'angle/s_angle.dart';
 import 'house/s_house.dart';
 import 'zodiac/s_zodiac.dart';
 
@@ -184,6 +186,8 @@ Future<void> testCallPython() async {
   List<Zodiac> _zodiac;
   CalcHouse _calcHouse;
   List<House> _house;
+  CalcAngle _calcAngle;
+  List<Angle> _angle;
   int _counter = 0;
   List<Offset> _xyZodiacSizeLine; // size between 2 circle by point on 0° for the size of zodiac
   List<Offset> _xyHouseSizeLine;
@@ -217,8 +221,11 @@ Future<void> testCallPython() async {
     _zodiac = new List<Zodiac>();
     _calcHouse = new CalcHouse();
     _house = new List<House>();
+    _calcAngle = new CalcAngle();
+    _angle = new List<Angle>();
     await _calcZodiac.parseJson();
     await _calcHouse.parseJson();
+    await _calcAngle.parseJson();
   }
 
   @override
@@ -237,6 +244,7 @@ Future<void> testCallPython() async {
       whHouseSize = calcDraw.sizeHouse(_xyHouseSizeLine[0], _xyHouseSizeLine[1]); 
       whHouseSize = (whZodiacSize * 33) / 100;
       _house = _calcHouse.calcDrawHouse(calcDraw, whHouseSize);
+      _angle = _calcAngle.calcDrawAngle(calcDraw, 0.0); // todo angle size for outside circle
     }
     // This method is rerun every time setState is called, for instance as done
     // by the _incrementCounter method above.
@@ -259,7 +267,7 @@ Future<void> testCallPython() async {
                   alignment: AlignmentDirectional.topCenter,
                   child: new CustomPaint(
                     size: Size(calcDraw.getSizeWH(), calcDraw.getSizeWH()), // 375, 736 max iphone6s
-                    painter: new DrawAstro(_zodiac, _house),
+                    painter: new DrawAstro(_zodiac, _house, _angle),
                   ),
                 )
               ),
