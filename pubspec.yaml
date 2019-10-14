@@ -55,6 +55,7 @@ flutter:
     - assets/data/
     - assets/svg/angle/
     - assets/svg/aspect/
+    - assets/svg/degre_min/
     - assets/svg/house/
     - assets/svg/planet/
     - assets/svg/zodiac/

@@ -16,20 +16,21 @@ class CalcPlanet {
     // Order by Asc
     if (decoded != null) {
       for (var i in decoded['planets']) {
-        _angle.add(new Planet(i['id'], i['sign'], i['sign_pos'], i['svg'], i['svg_degre'], i['pos_circle_360'], new Offset(0.0, 0.0)));
+        _angle.add(new Planet(i['id'], i['sign'], i['sign_pos'], i['svg'], i['svg_degre'], i['pos_circle_360'], new Offset(0.0, 0.0), new Offset(0.0, 0.0)));
       }
     }
   }
 
-  List<Planet> calcDrawPlanet(CalcDraw calcDraw, double size) {
+  List<Planet> calcDrawPlanet(CalcDraw calcDraw, double sizePlanet, double sizeDegre) {
     List<Planet> z = new List<Planet>();
     // test null if file don't exist
     if (_angle != null) {
       for (var i in _angle) {
         // 0° todo... colision detector
-        Offset xy = calcDraw.getOffsetCenterPlanet(size, calcDraw.pointTrigo(i.posCricle360, calcDraw.getRadiusCircle(4)));
+        Offset xy1 = calcDraw.getOffsetCenterPlanet(sizePlanet, calcDraw.pointTrigo(i.posCricle360, calcDraw.getRadiusCircle(4)));
+        Offset xy2 = calcDraw.getOffsetCenterPlanet(sizePlanet, calcDraw.pointTrigo(i.posCricle360, calcDraw.getRadiusCircle(5)));
         // todo, calc of position outside circle with text
-        z.add(new Planet(i.id, i.sign, i.signPos, i.svg, i.svgDegre, i.posCricle360, xy));
+        z.add(new Planet(i.id, i.sign, i.signPos, i.svg, i.svgDegre, i.posCricle360, xy1, xy2));
       }
     }
     return z;

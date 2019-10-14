@@ -196,6 +196,7 @@ Future<void> testCallPython() async {
   List<Offset> _xyZodiacSizeLine; // size between 2 circle by point on 0° for the size of zodiac
   List<Offset> _xyHouseSizeLine;
   List<Offset> _xyPlanetSizeLine;
+  List<Offset> _xyPlanetDegSizeLine;
 
   bool _swLoaded = false;
 
@@ -242,6 +243,7 @@ Future<void> testCallPython() async {
     double whZodiacSize; // size zodiac by the line between 2 circle
     double whHouseSize;
     double whPlanetSymbolSize;
+    double whPlanetDegSymbolSize;
     if (_swLoaded) {
       calcDraw = new CalcDraw(MediaQuery.of(context).size.width , MediaQuery.of(context).size.height);
       // At °0, no importance, ist juste for have the size of zodiac container care
@@ -260,7 +262,13 @@ Future<void> testCallPython() async {
       _xyPlanetSizeLine = calcDraw.lineTrigo(0, calcDraw.getRadiusCirclePlanetCIRCLE4INVISIBLEWithoutLine(), calcDraw.getRadiusCircle(0));
       whPlanetSymbolSize = calcDraw.sizePlanet(_xyPlanetSizeLine[0], _xyPlanetSizeLine[1]);
       whPlanetSymbolSize = (whPlanetSymbolSize * 150) / 100;
-      _planet = _calcPlanet.calcDrawPlanet(calcDraw, whPlanetSymbolSize);
+      
+
+      _xyPlanetDegSizeLine = calcDraw.lineTrigo(0, calcDraw.getRadiusCirclePlanetCIRCLE5INVISIBLEWithoutLine(), calcDraw.getRadiusCircle(0));
+      whPlanetDegSymbolSize = calcDraw.sizePlanet(_xyPlanetSizeLine[0], _xyPlanetSizeLine[1]);
+      whPlanetDegSymbolSize = (whPlanetDegSymbolSize * 150) / 100;
+
+      _planet = _calcPlanet.calcDrawPlanet(calcDraw, whPlanetSymbolSize, whPlanetDegSymbolSize);
     }
     // This method is rerun every time setState is called, for instance as done
     // by the _incrementCounter method above.
@@ -364,7 +372,7 @@ Future<void> testCallPython() async {
                   top: z.xyPlanet.dy,
                   child: new GestureDetector(
                     onTap: () {
-                      print("onTap called. " + z.id);
+                      print("onTap called. " + z.id + " " + z.svgDegre);
                     },
                     child: new Container(
                       width: whPlanetSymbolSize,
@@ -374,6 +382,31 @@ Future<void> testCallPython() async {
                       child: SvgPicture.asset(z.svg,
                         width: whPlanetSymbolSize,
                         height: whPlanetSymbolSize,
+                        fit: BoxFit.scaleDown,
+                        allowDrawingOutsideViewBox: true,
+                        alignment: Alignment.center,
+                        // color: z.element.color, 
+                        semanticsLabel: z.sign
+                      ),
+                    )
+                  ),
+                ),
+              for (var z in _planet)
+                Positioned( //.fill not identic
+                  left: z.xyDeg.dx,
+                  top: z.xyDeg.dy,
+                  child: new GestureDetector(
+                    onTap: () {
+                      print("onTap called. " + z.id + " " + z.svgDegre);
+                    },
+                    child: new Container(
+                      width: whPlanetDegSymbolSize,
+                      height: whPlanetDegSymbolSize,
+                      margin: const EdgeInsets.only(left: 0.0, right: 0.0),
+                      padding: const EdgeInsets.only(left: 0.0, right: 0.0),
+                      child: SvgPicture.asset(z.svgDegre,
+                        width: whPlanetDegSymbolSize,
+                        height: whPlanetDegSymbolSize,
                         fit: BoxFit.scaleDown,
                         allowDrawingOutsideViewBox: true,
                         alignment: Alignment.center,

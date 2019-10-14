@@ -11,6 +11,7 @@ const CIRCLE1 = 55;
 const CIRCLE2 = 60;
 const CIRCLE3INVISIBLE = 70;
 const CIRCLE4INVISIBLE = 75;
+const CIRCLE5INVISIBLE = 85;
 
 const DIVTRAITPETIT = 0.1;
 const DIVTRAITGRAND = 0.2;
@@ -47,6 +48,8 @@ class CalcDraw {
         return (getRadiusTotal() * CIRCLE3INVISIBLE) / 100; // For planet (no circle, outside of circle)
       case 4: 
         return (getRadiusTotal() * CIRCLE4INVISIBLE) / 100; // For planet (no circle, outside of circle)
+      case 5:
+        return (getRadiusTotal() * CIRCLE5INVISIBLE) / 100;
       default:
         return getRadiusTotal();
     }
@@ -74,6 +77,10 @@ class CalcDraw {
 
   double getRadiusCirclePlanetCIRCLE4INVISIBLEWithoutLine() {
     return (getRadiusTotal() * ((CIRCLE4INVISIBLE - CIRCLE3INVISIBLE) + CIRCLE0)) / 100; // - CIRCLE4INVISIBLE
+  }
+
+  double getRadiusCirclePlanetCIRCLE5INVISIBLEWithoutLine() {
+    return (getRadiusTotal() * ((CIRCLE5INVISIBLE - CIRCLE4INVISIBLE) + CIRCLE0)) / 100; // - CIRCLE5INVISIBLE for °
   }
 
   double getRadiusRulesInsideCircleZodiac(TypeTrait typeTrait) {
