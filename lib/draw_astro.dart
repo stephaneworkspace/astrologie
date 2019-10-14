@@ -135,7 +135,7 @@ class DrawAstro extends CustomPainter {
       ..color = Colors.black
       ..style = PaintingStyle.stroke
       ..strokeWidth = 1.0;
-      List<Offset> xy = _calcDraw.lineTrigo(i.posCricle360, _calcDraw.getRadiusCircle(3), _calcDraw.getRadiusCircle(2));
+      List<Offset> xy = _calcDraw.lineTrigo(i.posCricle360, _calcDraw.getRadiusCircle(3), _calcDraw.getRadiusCircle(1));
       canvas.drawLine(xy[0], xy[1], paint);
     }
   }
