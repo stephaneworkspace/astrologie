@@ -38,7 +38,13 @@ class CalcHouse {
             degreNext = map[i.id].posCricle360;
             break;
         }
-        double degreMid = i.posCricle360 + ((degreNext - i.posCricle360) / 2);
+        double temp = 0.0;
+        if (i.posCricle360 > degreNext) {
+          temp = 360.0 + degreNext - i.posCricle360;
+        } else {
+          temp = degreNext - i.posCricle360;
+        }
+        double degreMid = i.posCricle360 + (temp / 2);
         if (degreMid > 360.0) {
           degreMid -= 360.0;
         }
