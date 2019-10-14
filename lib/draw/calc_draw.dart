@@ -51,7 +51,7 @@ class CalcDraw {
   }
 
   double getRadiusCircleHouse() {
-    return (getRadiusTotal() * (((CIRCLE2 - CIRCLE1 + 0.3) / 2.0) + CIRCLE1)) / 100;
+    return (getRadiusTotal() * (((CIRCLE2 - CIRCLE1) / 2.0) + CIRCLE1)) / 100;
   }
 
   double getRadiusCircleZodiacCIRCLE1WithoutLine() {
@@ -101,6 +101,13 @@ class CalcDraw {
 
   // Theorem Pythagoras => Distance between 2 offset
   double sizeZodiac(Offset xy1, Offset xy2) {
+    double a = xy1.dx - xy2.dx;
+    double b = xy1.dy - xy2.dy;
+    return sqrt(a*a + b*b);
+  }
+
+  // Theorem Pythagoras => Distance between 2 offset
+  double sizeHouse(Offset xy1, Offset xy2) {
     double a = xy1.dx - xy2.dx;
     double b = xy1.dy - xy2.dy;
     return sqrt(a*a + b*b);

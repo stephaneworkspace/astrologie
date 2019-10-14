@@ -234,7 +234,7 @@ Future<void> testCallPython() async {
       whZodiacSize = (whZodiacSize * 60) / 100;
       _zodiac = _calcZodiac.calcDrawZodiac(calcDraw, whZodiacSize);
       _xyHouseSizeLine = calcDraw.lineTrigo(0, calcDraw.getRadiusCircleZHouseCIRCLE2WithoutLine(), calcDraw.getRadiusCircle(0));
-      whHouseSize = calcDraw.sizeZodiac(_xyHouseSizeLine[0], _xyHouseSizeLine[1]); 
+      whHouseSize = calcDraw.sizeHouse(_xyHouseSizeLine[0], _xyHouseSizeLine[1]); 
       whHouseSize = (whZodiacSize * 33) / 100;
       _house = _calcHouse.calcDrawHouse(calcDraw, whHouseSize);
     }
@@ -322,7 +322,8 @@ Future<void> testCallPython() async {
                       //height: whHouseSize,
                       margin: const EdgeInsets.only(left: 0.0, right: 0.0),
                       padding: const EdgeInsets.only(left: 0.0, right: 0.0),
-                      child: Text(z.id.toString())
+                      child: Text(z.id.toString(),
+                      )
                     ),
                   )
 
