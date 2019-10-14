@@ -7,12 +7,12 @@ import './e_type_trait.dart';
 const CIRC = 360.0;
 
 const CIRCLE0 = 35;
-const CIRCLE1 = 55;
-const CIRCLE2 = 60;
-const CIRCLE3INVISIBLE = 70;
-const CIRCLE4INVISIBLE = 75;
-const CIRCLE5INVISIBLE = 82;
-const CIRCLE6INVISIBLE = 87;
+const CIRCLE1 = 62;
+const CIRCLE2 = 67;
+const CIRCLE3INVISIBLE = 75;
+const CIRCLE4INVISIBLE = 80;
+const CIRCLE5INVISIBLE = 87;
+const CIRCLE6INVISIBLE = 92;
 
 const DIVTRAITPETIT = 0.1;
 const DIVTRAITGRAND = 0.2;

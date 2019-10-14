@@ -255,7 +255,7 @@ Future<void> testCallPython() async {
       // At °0, no importance, ist juste for have the size of zodiac container care
       _xyZodiacSizeLine = calcDraw.lineTrigo(0, calcDraw.getRadiusCircleZodiacCIRCLE1WithoutLine(), calcDraw.getRadiusCircle(0));
       whZodiacSize = calcDraw.sizeZodiac(_xyZodiacSizeLine[0], _xyZodiacSizeLine[1]); 
-      whZodiacSize = (whZodiacSize * 60) / 100;
+      whZodiacSize = (whZodiacSize * 50) / 100;
       _zodiac = _calcZodiac.calcDrawZodiac(calcDraw, whZodiacSize);
       
       _xyHouseSizeLine = calcDraw.lineTrigo(0, calcDraw.getRadiusCircleHouseCIRCLE2WithoutLine(), calcDraw.getRadiusCircle(0));
@@ -271,7 +271,7 @@ Future<void> testCallPython() async {
       whAngleDegSymbolSize = (whAngleDegSymbolSize * 110) / 100;
       _xyAngleMinSizeLine = calcDraw.lineTrigo(0, calcDraw.getRadiusCirclePlanetCIRCLE6INVISIBLEWithoutLine(), calcDraw.getRadiusCircle(0));
       whAngleMinSymbolSize = calcDraw.sizeAngle(_xyAngleMinSizeLine[0], _xyAngleMinSizeLine[1]);
-      whAngleMinSymbolSize = (whAngleMinSymbolSize * 105) / 100;
+      whAngleMinSymbolSize = (whAngleMinSymbolSize * 100) / 100;
       _angle = _calcAngle.calcDrawAngle(calcDraw, whAngleSymbolSize, whAngleDegSymbolSize, whAngleMinSymbolSize); // todo angle size for outside circle
 
       _xyPlanetSizeLine = calcDraw.lineTrigo(0, calcDraw.getRadiusCirclePlanetCIRCLE4INVISIBLEWithoutLine(), calcDraw.getRadiusCircle(0));
