@@ -575,11 +575,36 @@ Future<void> testCallPython() async {
                     height: calcDraw.getSizeHMinusFloatingButtonBottom(),
                     width: calcDraw.getSizeWH(),
                     child: new SingleChildScrollView(
+                      child: IntrinsicHeight(
+                        child: Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
+                          Expanded(child: Container(
+                              color: Colors.red, 
+                              child: new Text('Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc ac justo pharetra dolor consequat sodales eu malesuada lacus. Praesent placerat ex ut ipsum lacinia finibus. Nunc sed mi nec magna dapibus semper. Sed quis nibh ac ex consequat scelerisque quis eu est. Sed sollicitudin laoreet dictum. Etiam pharetra volutpat sem et feugiat. Integer leo ex, condimentum sed sapien mattis, blandit bibendum dui. Phasellus et enim facilisis, rutrum arcu ut, mattis quam. Vivamus et tincidunt neque.\nLorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc ac justo pharetra dolor consequat sodales eu malesuada lacus. Praesent placerat ex ut ipsum lacinia finibus. Nunc sed mi nec magna dapibus semper. Sed quis nibh ac ex consequat scelerisque quis eu est. Sed sollicitudin laoreet dictum. Etiam pharetra volutpat sem et feugiat. Integer leo ex, condimentum sed sapien mattis, blandit bibendum dui. Phasellus et enim facilisis, rutrum arcu ut, mattis quam. Vivamus et tincidunt neque.')
+                            ),
+                          ),
+                          Expanded(child: Container(
+                              color: Colors.blue, 
+                              child: new Text('test')
+                            ),
+                          ),
+                        ]),
+                      ),
                       //color: Colors.grey,/*
                       /*child: new Text('test $_counter',
                         style: new TextStyle(color: Colors.red)
                       ),*/
-                      child: new Text('Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc ac justo pharetra dolor consequat sodales eu malesuada lacus. Praesent placerat ex ut ipsum lacinia finibus. Nunc sed mi nec magna dapibus semper. Sed quis nibh ac ex consequat scelerisque quis eu est. Sed sollicitudin laoreet dictum. Etiam pharetra volutpat sem et feugiat. Integer leo ex, condimentum sed sapien mattis, blandit bibendum dui. Phasellus et enim facilisis, rutrum arcu ut, mattis quam. Vivamus et tincidunt neque.\nLorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc ac justo pharetra dolor consequat sodales eu malesuada lacus. Praesent placerat ex ut ipsum lacinia finibus. Nunc sed mi nec magna dapibus semper. Sed quis nibh ac ex consequat scelerisque quis eu est. Sed sollicitudin laoreet dictum. Etiam pharetra volutpat sem et feugiat. Integer leo ex, condimentum sed sapien mattis, blandit bibendum dui. Phasellus et enim facilisis, rutrum arcu ut, mattis quam. Vivamus et tincidunt neque.'),
+                      /*
+                      child: Stack(
+                        children: <Widget>[
+                          new Container(
+                            child: new Text('test'),
+                          ),
+                          new Container(
+                            child: new Text('Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc ac justo pharetra dolor consequat sodales eu malesuada lacus. Praesent placerat ex ut ipsum lacinia finibus. Nunc sed mi nec magna dapibus semper. Sed quis nibh ac ex consequat scelerisque quis eu est. Sed sollicitudin laoreet dictum. Etiam pharetra volutpat sem et feugiat. Integer leo ex, condimentum sed sapien mattis, blandit bibendum dui. Phasellus et enim facilisis, rutrum arcu ut, mattis quam. Vivamus et tincidunt neque.\nLorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc ac justo pharetra dolor consequat sodales eu malesuada lacus. Praesent placerat ex ut ipsum lacinia finibus. Nunc sed mi nec magna dapibus semper. Sed quis nibh ac ex consequat scelerisque quis eu est. Sed sollicitudin laoreet dictum. Etiam pharetra volutpat sem et feugiat. Integer leo ex, condimentum sed sapien mattis, blandit bibendum dui. Phasellus et enim facilisis, rutrum arcu ut, mattis quam. Vivamus et tincidunt neque.'),
+                          )
+                        ]
+                      ),*/
+                      //child: new Text('Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc ac justo pharetra dolor consequat sodales eu malesuada lacus. Praesent placerat ex ut ipsum lacinia finibus. Nunc sed mi nec magna dapibus semper. Sed quis nibh ac ex consequat scelerisque quis eu est. Sed sollicitudin laoreet dictum. Etiam pharetra volutpat sem et feugiat. Integer leo ex, condimentum sed sapien mattis, blandit bibendum dui. Phasellus et enim facilisis, rutrum arcu ut, mattis quam. Vivamus et tincidunt neque.\nLorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc ac justo pharetra dolor consequat sodales eu malesuada lacus. Praesent placerat ex ut ipsum lacinia finibus. Nunc sed mi nec magna dapibus semper. Sed quis nibh ac ex consequat scelerisque quis eu est. Sed sollicitudin laoreet dictum. Etiam pharetra volutpat sem et feugiat. Integer leo ex, condimentum sed sapien mattis, blandit bibendum dui. Phasellus et enim facilisis, rutrum arcu ut, mattis quam. Vivamus et tincidunt neque.'),
                     ),
                   ),
                 )
