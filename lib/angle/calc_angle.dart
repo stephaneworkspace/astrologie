@@ -17,12 +17,12 @@ class CalcAngle {
     // Order by Asc
     if (decoded != null) {
       for (var i in decoded['angles']) {
-        _angle.add(new Angle(i['id'], i['sign'], i['sign_pos'], i['svg'], i['svg_degre'], i['pos_circle_360'], new Offset(0.0, 0.0), new Offset(0.0, 0.0), HexColor('#7c7459')));
+        _angle.add(new Angle(i['id'], i['sign'], i['sign_pos'], i['svg'], i['svg_degre'], i['svg_min'], i['pos_circle_360'], new Offset(0.0, 0.0), new Offset(0.0, 0.0), new Offset(0.0, 0.0), HexColor('#7c7459')));
       }
     }
   }
 
-  List<Angle> calcDrawAngle(CalcDraw calcDraw, double sizeAngle, double sizeDegre) {
+  List<Angle> calcDrawAngle(CalcDraw calcDraw, double sizeAngle, double sizeDegre, double sizeMin) {
     List<Angle> z = new List<Angle>();
     // test null if file don't exist
     if (_angle != null) {
@@ -30,7 +30,8 @@ class CalcAngle {
         // 0° todo... colision detector
         Offset xy1 = calcDraw.getOffsetCenterPlanet(sizeAngle, calcDraw.pointTrigo(i.posCricle360, calcDraw.getRadiusCircle(4)));
         Offset xy2 = calcDraw.getOffsetCenterPlanet(sizeDegre, calcDraw.pointTrigo(i.posCricle360, calcDraw.getRadiusCircle(5)));
-        z.add(new Angle(i.id, i.sign, i.signPos, i.svg, i.svgDegre, i.posCricle360, xy1, xy2, i.color));
+        Offset xy3 = calcDraw.getOffsetCenterPlanet(sizeDegre, calcDraw.pointTrigo(i.posCricle360, calcDraw.getRadiusCircle(6)));
+        z.add(new Angle(i.id, i.sign, i.signPos, i.svg, i.svgDegre, i.svgMin, i.posCricle360, xy1, xy2, xy3, i.color));
       }
     }
     return z;

@@ -197,6 +197,7 @@ Future<void> testCallPython() async {
   List<Offset> _xyHouseSizeLine;
   List<Offset> _xyAngleSizeLine;
   List<Offset> _xyAngleDegSizeLine;
+  List<Offset> _xyAngleMinSizeLine;
   List<Offset> _xyPlanetSizeLine;
   List<Offset> _xyPlanetDegSizeLine;
 
@@ -246,6 +247,7 @@ Future<void> testCallPython() async {
     double whHouseSize;
     double whAngleSymbolSize;
     double whAngleDegSymbolSize;
+    double whAngleMinSymbolSize;
     double whPlanetSymbolSize;
     double whPlanetDegSymbolSize;
     if (_swLoaded) {
@@ -267,8 +269,10 @@ Future<void> testCallPython() async {
       _xyAngleDegSizeLine = calcDraw.lineTrigo(0, calcDraw.getRadiusCirclePlanetCIRCLE5INVISIBLEWithoutLine(), calcDraw.getRadiusCircle(0));
       whAngleDegSymbolSize = calcDraw.sizeAngle(_xyAngleDegSizeLine[0], _xyAngleDegSizeLine[1]);
       whAngleDegSymbolSize = (whAngleDegSymbolSize * 110) / 100;
-
-      _angle = _calcAngle.calcDrawAngle(calcDraw, whAngleSymbolSize, whAngleDegSymbolSize); // todo angle size for outside circle
+      _xyAngleMinSizeLine = calcDraw.lineTrigo(0, calcDraw.getRadiusCirclePlanetCIRCLE6INVISIBLEWithoutLine(), calcDraw.getRadiusCircle(0));
+      whAngleMinSymbolSize = calcDraw.sizeAngle(_xyAngleMinSizeLine[0], _xyAngleMinSizeLine[1]);
+      whAngleMinSymbolSize = (whAngleMinSymbolSize * 110) / 100;
+      _angle = _calcAngle.calcDrawAngle(calcDraw, whAngleSymbolSize, whAngleDegSymbolSize, whAngleMinSymbolSize); // todo angle size for outside circle
 
       _xyPlanetSizeLine = calcDraw.lineTrigo(0, calcDraw.getRadiusCirclePlanetCIRCLE4INVISIBLEWithoutLine(), calcDraw.getRadiusCircle(0));
       whPlanetSymbolSize = calcDraw.sizePlanet(_xyPlanetSizeLine[0], _xyPlanetSizeLine[1]);
@@ -276,7 +280,6 @@ Future<void> testCallPython() async {
       _xyPlanetDegSizeLine = calcDraw.lineTrigo(0, calcDraw.getRadiusCirclePlanetCIRCLE5INVISIBLEWithoutLine(), calcDraw.getRadiusCircle(0));
       whPlanetDegSymbolSize = calcDraw.sizePlanet(_xyPlanetDegSizeLine[0], _xyPlanetDegSizeLine[1]);
       whPlanetDegSymbolSize = (whPlanetDegSymbolSize * 110) / 100;
-
       _planet = _calcPlanet.calcDrawPlanet(calcDraw, whPlanetSymbolSize, whPlanetDegSymbolSize);
     }
     // This method is rerun every time setState is called, for instance as done
@@ -419,6 +422,32 @@ Future<void> testCallPython() async {
                         child: SvgPicture.asset(z.svgDegre,
                           width: whAngleDegSymbolSize,
                           height: whAngleDegSymbolSize,
+                          fit: BoxFit.scaleDown,
+                          allowDrawingOutsideViewBox: true,
+                          alignment: Alignment.center,
+                          color: z.color, 
+                          semanticsLabel: z.sign
+                        ),
+                      )
+                    ),
+                  ),
+              for (var z in _angle)
+                if (z.svg != '')
+                  Positioned( //.fill not identic
+                    left: z.xyMin.dx,
+                    top: z.xyMin.dy,
+                    child: new GestureDetector(
+                      onTap: () {
+                        print("onTap called. " + z.id + " " + z.svgDegre);
+                      },
+                      child: new Container(
+                        width: whAngleMinSymbolSize,
+                        height: whAngleMinSymbolSize,
+                        margin: const EdgeInsets.only(left: 0.0, right: 0.0),
+                        padding: const EdgeInsets.only(left: 0.0, right: 0.0),
+                        child: SvgPicture.asset(z.svgMin,
+                          width: whAngleMinSymbolSize,
+                          height: whAngleMinSymbolSize,
                           fit: BoxFit.scaleDown,
                           allowDrawingOutsideViewBox: true,
                           alignment: Alignment.center,
