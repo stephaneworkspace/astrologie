@@ -150,7 +150,7 @@ packages:
     source: hosted
     version: "1.9.3"
   starflut:
-    dependency: "direct dev"
+    dependency: "direct main"
     description:
       path: "../starflut_mod"
       relative: true

@@ -2,6 +2,8 @@
 
 by Stéphane Bressani
 
+![Alt text](relative/astrologie.png?raw=true "Screenshot")
+
 ## Getting Started
 
 ````

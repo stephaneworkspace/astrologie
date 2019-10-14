@@ -29,6 +29,8 @@ dependencies:
 
   #js: ^0.6.0
   flutter_svg: ^0.14.1
+  starflut: 
+    path: ../starflut_mod
   
 
 dev_dependencies:
@@ -36,8 +38,6 @@ dev_dependencies:
     sdk: flutter
   
   #starflut: ^0.6.0
-  starflut: 
-    path: ../starflut_mod
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
