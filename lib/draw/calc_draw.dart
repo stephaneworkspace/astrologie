@@ -9,6 +9,7 @@ const CIRC = 360.0;
 const CIRCLE0 = 35;
 const CIRCLE1 = 55;
 const CIRCLE2 = 60;
+const CIRCLE3INVISIBLE = 70;
 
 const DIVTRAITPETIT = 0.1;
 const DIVTRAITGRAND = 0.2;
@@ -41,6 +42,8 @@ class CalcDraw {
         return (getRadiusTotal() * CIRCLE1) / 100;
       case 2:
         return (getRadiusTotal() * CIRCLE2) / 100;
+      case 3:
+        return (getRadiusTotal() * CIRCLE3INVISIBLE) / 100; // For planet (no circle, outside of circle)
       default:
         return getRadiusTotal();
     }
@@ -58,8 +61,12 @@ class CalcDraw {
     return getRadiusRulesInsideCircleZodiac(TypeTrait.Grand);
   }
 
-  double getRadiusCircleZHouseCIRCLE2WithoutLine() {
+  double getRadiusCircleHouseCIRCLE2WithoutLine() {
     return (getRadiusTotal() * ((CIRCLE2 - CIRCLE1) + CIRCLE0)) / 100; // - CIRCLE2
+  }
+
+  double getRadiusCirclePlanetCIRCLE3INVISIBLEWithoutLine() {
+    return (getRadiusTotal() * ((CIRCLE3INVISIBLE - CIRCLE2) + CIRCLE0)) / 100; // - CIRCLE2
   }
 
   double getRadiusRulesInsideCircleZodiac(TypeTrait typeTrait) {
@@ -124,6 +131,11 @@ class CalcDraw {
   /// Center for the text house
   Offset getOffsetCenterHouse(double sizeHouse, Offset xy00) {
     return new Offset(xy00.dx - (sizeHouse / 2), xy00.dy - (sizeHouse / 2));
+  }
+
+  /// Todo varying with angular ?
+  Offset getOffsetCenterPlanet(double sizePlanet, Offset xy00) {
+    return new Offset(xy00.dx - (sizePlanet / 2), xy00.dy - (sizePlanet / 2));
   }
 
   // Trigonometry

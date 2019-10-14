@@ -10,6 +10,8 @@ import './draw_square.dart';
 import 'angle/calc_angle.dart';
 import 'angle/s_angle.dart';
 import 'house/s_house.dart';
+import 'planet/calc_planet.dart';
+import 'planet/s_planet.dart';
 import 'zodiac/s_zodiac.dart';
 
 void main() => runApp(MyApp());
@@ -188,9 +190,12 @@ Future<void> testCallPython() async {
   List<House> _house;
   CalcAngle _calcAngle;
   List<Angle> _angle;
+  CalcPlanet _calcPlanet;
+  List<Planet> _planet;
   int _counter = 0;
   List<Offset> _xyZodiacSizeLine; // size between 2 circle by point on 0° for the size of zodiac
   List<Offset> _xyHouseSizeLine;
+  List<Offset> _xyPlanetSizeLine;
 
   bool _swLoaded = false;
 
@@ -223,9 +228,12 @@ Future<void> testCallPython() async {
     _house = new List<House>();
     _calcAngle = new CalcAngle();
     _angle = new List<Angle>();
+    _calcPlanet = new CalcPlanet();
+    _planet = new List<Planet>();
     await _calcZodiac.parseJson();
     await _calcHouse.parseJson();
     await _calcAngle.parseJson();
+    await _calcPlanet.parseJson();
   }
 
   @override
@@ -233,6 +241,7 @@ Future<void> testCallPython() async {
     CalcDraw calcDraw;
     double whZodiacSize; // size zodiac by the line between 2 circle
     double whHouseSize;
+    double whPlanetSymbolSize;
     if (_swLoaded) {
       calcDraw = new CalcDraw(MediaQuery.of(context).size.width , MediaQuery.of(context).size.height);
       // At °0, no importance, ist juste for have the size of zodiac container care
@@ -240,11 +249,18 @@ Future<void> testCallPython() async {
       whZodiacSize = calcDraw.sizeZodiac(_xyZodiacSizeLine[0], _xyZodiacSizeLine[1]); 
       whZodiacSize = (whZodiacSize * 60) / 100;
       _zodiac = _calcZodiac.calcDrawZodiac(calcDraw, whZodiacSize);
-      _xyHouseSizeLine = calcDraw.lineTrigo(0, calcDraw.getRadiusCircleZHouseCIRCLE2WithoutLine(), calcDraw.getRadiusCircle(0));
+      
+      _xyHouseSizeLine = calcDraw.lineTrigo(0, calcDraw.getRadiusCircleHouseCIRCLE2WithoutLine(), calcDraw.getRadiusCircle(0));
       whHouseSize = calcDraw.sizeHouse(_xyHouseSizeLine[0], _xyHouseSizeLine[1]); 
-      whHouseSize = (whZodiacSize * 33) / 100;
+      whHouseSize = (whHouseSize * 70) / 100;
       _house = _calcHouse.calcDrawHouse(calcDraw, whHouseSize);
+      
       _angle = _calcAngle.calcDrawAngle(calcDraw, 0.0); // todo angle size for outside circle
+
+      _xyPlanetSizeLine = calcDraw.lineTrigo(0, calcDraw.getRadiusCirclePlanetCIRCLE3INVISIBLEWithoutLine(), calcDraw.getRadiusCircle(0));
+      whPlanetSymbolSize = calcDraw.sizeZodiac(_xyZodiacSizeLine[0], _xyZodiacSizeLine[1]);
+      whPlanetSymbolSize = (whPlanetSymbolSize * 40) / 100;
+      _planet = _calcPlanet.calcDrawPlanet(calcDraw, whHouseSize);
     }
     // This method is rerun every time setState is called, for instance as done
     // by the _incrementCounter method above.
@@ -340,6 +356,31 @@ Future<void> testCallPython() async {
                         semanticsLabel: z.sign
                       ),
                     ),
+                  ),
+                ),    
+              for (var z in _planet)
+                Positioned( //.fill not identic
+                  left: z.xyPlanet.dx,
+                  top: z.xyPlanet.dy,
+                  child: new GestureDetector(
+                    onTap: () {
+                      print("onTap called. " + z.id);
+                    },
+                    child: new Container(
+                      width: whPlanetSymbolSize,
+                      height: whPlanetSymbolSize,
+                      margin: const EdgeInsets.only(left: 0.0, right: 0.0),
+                      padding: const EdgeInsets.only(left: 0.0, right: 0.0),
+                      child: SvgPicture.asset(z.svg,
+                        width: whPlanetSymbolSize,
+                        height: whPlanetSymbolSize,
+                        fit: BoxFit.scaleDown,
+                        allowDrawingOutsideViewBox: true,
+                        alignment: Alignment.center,
+                        // color: z.element.color, 
+                        semanticsLabel: z.sign
+                      ),
+                    )
                   ),
                 ),
             ],
