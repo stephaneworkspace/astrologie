@@ -50,6 +50,10 @@ class CalcDraw {
     return (getRadiusTotal() * (((CIRCLE1 - CIRCLE0) / (2.0 + DIVTRAITGRAND)) + CIRCLE0)) / 100;
   }
 
+  double getRadiusCircleHouse() {
+    return (getRadiusTotal() * (((CIRCLE2 - CIRCLE1 + 0.3) / 2.0) + CIRCLE1)) / 100;
+  }
+
   double getRadiusCircleZodiacCIRCLE1WithoutLine() {
     return getRadiusRulesInsideCircleZodiac(TypeTrait.Grand);
   }
@@ -108,6 +112,11 @@ class CalcDraw {
   /// so this method is a helper for find the position of the sign
   Offset getOffsetCenterZodiac(double sizeZodiac, Offset xy00) {
     return new Offset(xy00.dx - (sizeZodiac / 2), xy00.dy - (sizeZodiac / 2));
+  }
+
+  /// Center for the text house
+  Offset getOffsetCenterHouse(double sizeHouse, Offset xy00) {
+    return new Offset(xy00.dx - (sizeHouse / 2), xy00.dy - (sizeHouse / 2));
   }
 
   // Trigonometry

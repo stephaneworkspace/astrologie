@@ -186,6 +186,7 @@ Future<void> testCallPython() async {
   List<House> _house;
   int _counter = 0;
   List<Offset> _xyZodiacSizeLine; // size between 2 circle by point on 0° for the size of zodiac
+  List<Offset> _xyHouseSizeLine;
 
   bool _swLoaded = false;
 
@@ -232,10 +233,10 @@ Future<void> testCallPython() async {
       whZodiacSize = calcDraw.sizeZodiac(_xyZodiacSizeLine[0], _xyZodiacSizeLine[1]); 
       whZodiacSize = (whZodiacSize * 60) / 100;
       _zodiac = _calcZodiac.calcDrawZodiac(calcDraw, whZodiacSize);
-      _xyZodiacSizeLine = calcDraw.lineTrigo(0, calcDraw.getRadiusCircleZHouseCIRCLE2WithoutLine(), calcDraw.getRadiusCircle(0));
-      whHouseSize = calcDraw.sizeZodiac(_xyZodiacSizeLine[0], _xyZodiacSizeLine[1]); 
-      whHouseSize = (whZodiacSize * 60) / 100;
-      _house = _calcHouse.calcDrawZodiac(calcDraw, whHouseSize);
+      _xyHouseSizeLine = calcDraw.lineTrigo(0, calcDraw.getRadiusCircleZHouseCIRCLE2WithoutLine(), calcDraw.getRadiusCircle(0));
+      whHouseSize = calcDraw.sizeZodiac(_xyHouseSizeLine[0], _xyHouseSizeLine[1]); 
+      whHouseSize = (whZodiacSize * 33) / 100;
+      _house = _calcHouse.calcDrawHouse(calcDraw, whHouseSize);
     }
     // This method is rerun every time setState is called, for instance as done
     // by the _incrementCounter method above.
@@ -307,7 +308,25 @@ Future<void> testCallPython() async {
                       ),
                     )
                   ),
-              ),
+                ),
+              for (var z in _house)
+                Positioned(
+                  left: z.xyHouse.dx,
+                  top: z.xyHouse.dy,
+                  child: new GestureDetector(
+                    onTap: () {
+                      print("onTap called. House " + z.id.toString());
+                    },
+                    child: new Container(
+                      //width: whHouseSize,
+                      //height: whHouseSize,
+                      margin: const EdgeInsets.only(left: 0.0, right: 0.0),
+                      padding: const EdgeInsets.only(left: 0.0, right: 0.0),
+                      child: Text(z.id.toString())
+                    ),
+                  )
+
+                ),
             ],
           ),
         floatingActionButton: FloatingActionButton(

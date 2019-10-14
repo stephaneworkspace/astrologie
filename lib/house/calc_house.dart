@@ -1,5 +1,6 @@
 import 'dart:async' show Future;
 import 'dart:convert';
+import 'dart:ui';
 import 'package:flutter/services.dart' show rootBundle;
 import '../draw/calc_draw.dart';
 import 's_house.dart'; 
@@ -15,24 +16,34 @@ class CalcHouse {
     // Order by Asc
     if (decoded != null) {
       for (var i in decoded['houses']) {
-        _house.add(new House(i['id'], i['id_by_asc'], i['sign'], i['pos_circle_360']));
+        _house.add(new House(i['id'], i['id_by_asc'], i['sign'], i['pos_circle_360'], new Offset(0.0, 0.0)));
       }
     }
   }
 
-  List<House> calcDrawZodiac(CalcDraw calcDraw, double size) {
+  List<House> calcDrawHouse(CalcDraw calcDraw, double size) {
     List<House> z = new List<House>();
+    Map<int, House> map = _house.asMap();
     // test null if file don't exist
     if (_house != null) {
       for (var i in _house) {
-        /*
-        // 0° + 15°
-        double degre15 = i.posCricle360 + 15.0;
-        if (degre15 > 360.0) {
-          degre15 -= 360.0;
+        // 0° -> to 0° next house
+        // 0° -> to 0° next house
+        double degreNext = 0.0;
+        switch (i.id) {
+          case 12:
+            degreNext = map[0].posCricle360;
+            break;
+          default:
+            degreNext = map[i.id].posCricle360;
+            break;
         }
-        Offset xy = calcDraw.getOffsetCenterZodiac(size, calcDraw.pointTrigo(degre15, calcDraw.getRadiusCircleZodiac()));*/
-        z.add(new House(i.id, i.idByAsc, i.sign, i.posCricle360));
+        double degreMid = i.posCricle360 + ((degreNext - i.posCricle360) / 2);
+        if (degreMid > 360.0) {
+          degreMid -= 360.0;
+        }
+        Offset xy = calcDraw.getOffsetCenterHouse(size, calcDraw.pointTrigo(degreMid, calcDraw.getRadiusCircleHouse()));
+        z.add(new House(i.id, i.idByAsc, i.sign, i.posCricle360, xy));
       }
     }
     return z;
