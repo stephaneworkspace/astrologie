@@ -6,6 +6,7 @@ import 'angle/s_angle.dart';
 import 'house/s_house.dart';
 import './draw/calc_draw.dart';
 import './draw/e_type_trait.dart';
+import 'planet/s_planet.dart';
 
 
 const EXT0 = 30.0;
@@ -18,12 +19,14 @@ class DrawAstro extends CustomPainter {
   List<Zodiac> _zodiac;
   List<House> _house;
   List<Angle> _angle;
+  List<Planet> _planet;
   CalcDraw _calcDraw;
 
-  DrawAstro(List<Zodiac> zodiac, List<House> house, List<Angle> angle) {
+  DrawAstro(List<Zodiac> zodiac, List<House> house, List<Angle> angle, List<Planet> planet) {
     _zodiac = zodiac;
     _house = house;
     _angle = angle;
+    _planet = planet;
   }
 
   @override
@@ -124,6 +127,16 @@ class DrawAstro extends CustomPainter {
       path.lineTo(xyT[1].dx, xyT[1].dy);
       path.close();
       canvas.drawPath(path, paint);
+    }
+    // Draw lines planet (todo detect colision)
+    for (var i in _planet) {
+      // 0°
+      paint = Paint()
+      ..color = Colors.black
+      ..style = PaintingStyle.stroke
+      ..strokeWidth = 1.0;
+      List<Offset> xy = _calcDraw.lineTrigo(i.posCricle360, _calcDraw.getRadiusCircle(3), _calcDraw.getRadiusCircle(2));
+      canvas.drawLine(xy[0], xy[1], paint);
     }
   }
 

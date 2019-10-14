@@ -10,6 +10,7 @@ const CIRCLE0 = 35;
 const CIRCLE1 = 55;
 const CIRCLE2 = 60;
 const CIRCLE3INVISIBLE = 70;
+const CIRCLE4INVISIBLE = 75;
 
 const DIVTRAITPETIT = 0.1;
 const DIVTRAITGRAND = 0.2;
@@ -44,6 +45,8 @@ class CalcDraw {
         return (getRadiusTotal() * CIRCLE2) / 100;
       case 3:
         return (getRadiusTotal() * CIRCLE3INVISIBLE) / 100; // For planet (no circle, outside of circle)
+      case 4: 
+        return (getRadiusTotal() * CIRCLE4INVISIBLE) / 100; // For planet (no circle, outside of circle)
       default:
         return getRadiusTotal();
     }
@@ -66,7 +69,11 @@ class CalcDraw {
   }
 
   double getRadiusCirclePlanetCIRCLE3INVISIBLEWithoutLine() {
-    return (getRadiusTotal() * ((CIRCLE3INVISIBLE - CIRCLE2) + CIRCLE0)) / 100; // - CIRCLE2
+    return (getRadiusTotal() * ((CIRCLE3INVISIBLE - CIRCLE2) + CIRCLE0)) / 100; // - CIRCLE3INVISIBLE
+  }
+
+  double getRadiusCirclePlanetCIRCLE4INVISIBLEWithoutLine() {
+    return (getRadiusTotal() * ((CIRCLE4INVISIBLE - CIRCLE3INVISIBLE) + CIRCLE0)) / 100; // - CIRCLE4INVISIBLE
   }
 
   double getRadiusRulesInsideCircleZodiac(TypeTrait typeTrait) {
@@ -120,6 +127,13 @@ class CalcDraw {
     return sqrt(a*a + b*b);
   }
 
+  // Theorem Pythagoras => Distance between 2 offset
+  double sizePlanet(Offset xy1, Offset xy2) {
+    double a = xy1.dx - xy2.dx;
+    double b = xy1.dy - xy2.dy;
+    return sqrt(a*a + b*b);
+  }
+
   /// Center for the svg zodiac
   /// 
   /// 0.0 - 0.0 = top left of the screen
@@ -133,7 +147,6 @@ class CalcDraw {
     return new Offset(xy00.dx - (sizeHouse / 2), xy00.dy - (sizeHouse / 2));
   }
 
-  /// Todo varying with angular ?
   Offset getOffsetCenterPlanet(double sizePlanet, Offset xy00) {
     return new Offset(xy00.dx - (sizePlanet / 2), xy00.dy - (sizePlanet / 2));
   }

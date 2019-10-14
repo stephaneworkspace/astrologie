@@ -257,10 +257,10 @@ Future<void> testCallPython() async {
       
       _angle = _calcAngle.calcDrawAngle(calcDraw, 0.0); // todo angle size for outside circle
 
-      _xyPlanetSizeLine = calcDraw.lineTrigo(0, calcDraw.getRadiusCirclePlanetCIRCLE3INVISIBLEWithoutLine(), calcDraw.getRadiusCircle(0));
-      whPlanetSymbolSize = calcDraw.sizeZodiac(_xyZodiacSizeLine[0], _xyZodiacSizeLine[1]);
-      whPlanetSymbolSize = (whPlanetSymbolSize * 40) / 100;
-      _planet = _calcPlanet.calcDrawPlanet(calcDraw, whHouseSize);
+      _xyPlanetSizeLine = calcDraw.lineTrigo(0, calcDraw.getRadiusCirclePlanetCIRCLE4INVISIBLEWithoutLine(), calcDraw.getRadiusCircle(0));
+      whPlanetSymbolSize = calcDraw.sizePlanet(_xyPlanetSizeLine[0], _xyPlanetSizeLine[1]);
+      whPlanetSymbolSize = (whPlanetSymbolSize * 150) / 100;
+      _planet = _calcPlanet.calcDrawPlanet(calcDraw, whPlanetSymbolSize);
     }
     // This method is rerun every time setState is called, for instance as done
     // by the _incrementCounter method above.
@@ -283,7 +283,7 @@ Future<void> testCallPython() async {
                   alignment: AlignmentDirectional.topCenter,
                   child: new CustomPaint(
                     size: Size(calcDraw.getSizeWH(), calcDraw.getSizeWH()), // 375, 736 max iphone6s
-                    painter: new DrawAstro(_zodiac, _house, _angle),
+                    painter: new DrawAstro(_zodiac, _house, _angle, _planet),
                   ),
                 )
               ),
