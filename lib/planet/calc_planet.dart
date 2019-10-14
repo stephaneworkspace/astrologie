@@ -58,21 +58,22 @@ class CalcPlanet {
           default:
             c = HexColor('#000000');
         }
-        _angle.add(new Planet(i['id'], i['sign'], i['sign_pos'], i['svg'], i['svg_degre'], i['pos_circle_360'], new Offset(0.0, 0.0), new Offset(0.0, 0.0), c));
+        _angle.add(new Planet(i['id'], i['sign'], i['sign_pos'], i['svg'], i['svg_degre'], i['svg_min'], i['pos_circle_360'], new Offset(0.0, 0.0), new Offset(0.0, 0.0), new Offset(0.0, 0.0), c));
       }
     }
   }
 
-  List<Planet> calcDrawPlanet(CalcDraw calcDraw, double sizePlanet, double sizeDegre) {
+  List<Planet> calcDrawPlanet(CalcDraw calcDraw, double sizePlanet, double sizeDegre, double sizeMin) {
     List<Planet> z = new List<Planet>();
     // test null if file don't exist
     if (_angle != null) {
       for (var i in _angle) {
         // 0° todo... colision detector
-        Offset xy1 = calcDraw.getOffsetCenterPlanet(sizePlanet, calcDraw.pointTrigo(i.posCricle360, calcDraw.getRadiusCircle(4)));
-        Offset xy2 = calcDraw.getOffsetCenterPlanet(sizeDegre, calcDraw.pointTrigo(i.posCricle360, calcDraw.getRadiusCircle(5)));
+        Offset xy1 = calcDraw.getOffsetCenterPlanet(sizePlanet, calcDraw.pointTrigo(i.posCricle360, calcDraw.getRadiusCircle(4))); // symbol
+        Offset xy2 = calcDraw.getOffsetCenterPlanet(sizeDegre, calcDraw.pointTrigo(i.posCricle360, calcDraw.getRadiusCircle(5))); // °
+        Offset xy3 = calcDraw.getOffsetCenterPlanet(sizeMin, calcDraw.pointTrigo(i.posCricle360, calcDraw.getRadiusCircle(6))); // '
         // todo, calc of position outside circle with text
-        z.add(new Planet(i.id, i.sign, i.signPos, i.svg, i.svgDegre, i.posCricle360, xy1, xy2, i.color));
+        z.add(new Planet(i.id, i.sign, i.signPos, i.svg, i.svgDegre, i.svgMin, i.posCricle360, xy1, xy2, xy3, i.color));
       }
     }
     return z;

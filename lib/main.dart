@@ -200,6 +200,7 @@ Future<void> testCallPython() async {
   List<Offset> _xyAngleMinSizeLine;
   List<Offset> _xyPlanetSizeLine;
   List<Offset> _xyPlanetDegSizeLine;
+  List<Offset> _xyPlanetMinSizeLine;
 
   bool _swLoaded = false;
 
@@ -250,6 +251,7 @@ Future<void> testCallPython() async {
     double whAngleMinSymbolSize;
     double whPlanetSymbolSize;
     double whPlanetDegSymbolSize;
+    double whPlanetMinSymbolSize;
     if (_swLoaded) {
       calcDraw = new CalcDraw(MediaQuery.of(context).size.width , MediaQuery.of(context).size.height);
       // At °0, no importance, ist juste for have the size of zodiac container care
@@ -271,7 +273,7 @@ Future<void> testCallPython() async {
       whAngleDegSymbolSize = (whAngleDegSymbolSize * 110) / 100;
       _xyAngleMinSizeLine = calcDraw.lineTrigo(0, calcDraw.getRadiusCirclePlanetCIRCLE6INVISIBLEWithoutLine(), calcDraw.getRadiusCircle(0));
       whAngleMinSymbolSize = calcDraw.sizeAngle(_xyAngleMinSizeLine[0], _xyAngleMinSizeLine[1]);
-      whAngleMinSymbolSize = (whAngleMinSymbolSize * 100) / 100;
+      whAngleMinSymbolSize = (whAngleMinSymbolSize * 80) / 100;
       _angle = _calcAngle.calcDrawAngle(calcDraw, whAngleSymbolSize, whAngleDegSymbolSize, whAngleMinSymbolSize); // todo angle size for outside circle
 
       _xyPlanetSizeLine = calcDraw.lineTrigo(0, calcDraw.getRadiusCirclePlanetCIRCLE4INVISIBLEWithoutLine(), calcDraw.getRadiusCircle(0));
@@ -280,7 +282,10 @@ Future<void> testCallPython() async {
       _xyPlanetDegSizeLine = calcDraw.lineTrigo(0, calcDraw.getRadiusCirclePlanetCIRCLE5INVISIBLEWithoutLine(), calcDraw.getRadiusCircle(0));
       whPlanetDegSymbolSize = calcDraw.sizePlanet(_xyPlanetDegSizeLine[0], _xyPlanetDegSizeLine[1]);
       whPlanetDegSymbolSize = (whPlanetDegSymbolSize * 110) / 100;
-      _planet = _calcPlanet.calcDrawPlanet(calcDraw, whPlanetSymbolSize, whPlanetDegSymbolSize);
+      _xyPlanetMinSizeLine = calcDraw.lineTrigo(0, calcDraw.getRadiusCirclePlanetCIRCLE6INVISIBLEWithoutLine(), calcDraw.getRadiusCircle(0));
+      whPlanetMinSymbolSize = calcDraw.sizeAngle(_xyPlanetMinSizeLine[0], _xyPlanetMinSizeLine[1]);
+      whPlanetMinSymbolSize = (whPlanetMinSymbolSize * 80) / 100;
+      _planet = _calcPlanet.calcDrawPlanet(calcDraw, whPlanetSymbolSize, whPlanetDegSymbolSize, whPlanetMinSymbolSize);
     }
     // This method is rerun every time setState is called, for instance as done
     // by the _incrementCounter method above.
@@ -412,7 +417,7 @@ Future<void> testCallPython() async {
                     top: z.xyDeg.dy,
                     child: new GestureDetector(
                       onTap: () {
-                        print("onTap called. " + z.id + " " + z.svgDegre);
+                        print("onTap called. " + z.id + " " + z.signPos);
                       },
                       child: new Container(
                         width: whAngleDegSymbolSize,
@@ -438,7 +443,7 @@ Future<void> testCallPython() async {
                     top: z.xyMin.dy,
                     child: new GestureDetector(
                       onTap: () {
-                        print("onTap called. " + z.id + " " + z.svgDegre);
+                        print("onTap called. " + z.id + " " + z.signPos);
                       },
                       child: new Container(
                         width: whAngleMinSymbolSize,
@@ -463,7 +468,7 @@ Future<void> testCallPython() async {
                   top: z.xyPlanet.dy,
                   child: new GestureDetector(
                     onTap: () {
-                      print("onTap called. " + z.id + " " + z.svgDegre);
+                      print("onTap called. " + z.id + " " + z.signPos);
                     },
                     child: new Container(
                       width: whPlanetSymbolSize,
@@ -488,7 +493,7 @@ Future<void> testCallPython() async {
                   top: z.xyDeg.dy,
                   child: new GestureDetector(
                     onTap: () {
-                      print("onTap called. " + z.id + " " + z.svgDegre);
+                      print("onTap called. " + z.id + " " + z.signPos);
                     },
                     child: new Container(
                       width: whPlanetDegSymbolSize,
@@ -498,6 +503,31 @@ Future<void> testCallPython() async {
                       child: SvgPicture.asset(z.svgDegre,
                         width: whPlanetDegSymbolSize,
                         height: whPlanetDegSymbolSize,
+                        fit: BoxFit.scaleDown,
+                        allowDrawingOutsideViewBox: true,
+                        alignment: Alignment.center,
+                        color: z.color, 
+                        semanticsLabel: z.sign
+                      ),
+                    )
+                  ),
+                ),
+              for (var z in _planet)
+                Positioned( //.fill not identic
+                  left: z.xyMin.dx,
+                  top: z.xyMin.dy,
+                  child: new GestureDetector(
+                    onTap: () {
+                      print("onTap called. " + z.id + " " + z.signPos);
+                    },
+                    child: new Container(
+                      width: whPlanetMinSymbolSize,
+                      height: whPlanetMinSymbolSize,
+                      margin: const EdgeInsets.only(left: 0.0, right: 0.0),
+                      padding: const EdgeInsets.only(left: 0.0, right: 0.0),
+                      child: SvgPicture.asset(z.svgMin,
+                        width: whPlanetMinSymbolSize,
+                        height: whPlanetMinSymbolSize,
                         fit: BoxFit.scaleDown,
                         allowDrawingOutsideViewBox: true,
                         alignment: Alignment.center,

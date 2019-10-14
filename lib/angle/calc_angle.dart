@@ -28,9 +28,9 @@ class CalcAngle {
     if (_angle != null) {
       for (var i in _angle) {
         // 0° todo... colision detector
-        Offset xy1 = calcDraw.getOffsetCenterPlanet(sizeAngle, calcDraw.pointTrigo(i.posCricle360, calcDraw.getRadiusCircle(4)));
-        Offset xy2 = calcDraw.getOffsetCenterPlanet(sizeDegre, calcDraw.pointTrigo(i.posCricle360, calcDraw.getRadiusCircle(5)));
-        Offset xy3 = calcDraw.getOffsetCenterPlanet(sizeDegre, calcDraw.pointTrigo(i.posCricle360, calcDraw.getRadiusCircle(6)));
+        Offset xy1 = calcDraw.getOffsetCenterPlanet(sizeAngle, calcDraw.pointTrigo(i.posCricle360, calcDraw.getRadiusCircle(4))); // symbol
+        Offset xy2 = calcDraw.getOffsetCenterPlanet(sizeDegre, calcDraw.pointTrigo(i.posCricle360, calcDraw.getRadiusCircle(5))); // °
+        Offset xy3 = calcDraw.getOffsetCenterPlanet(sizeDegre, calcDraw.pointTrigo(i.posCricle360, calcDraw.getRadiusCircle(6))); // '
         z.add(new Angle(i.id, i.sign, i.signPos, i.svg, i.svgDegre, i.svgMin, i.posCricle360, xy1, xy2, xy3, i.color));
       }
     }
