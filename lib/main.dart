@@ -385,7 +385,7 @@ Future<void> testCallPython() async {
                         fit: BoxFit.scaleDown,
                         allowDrawingOutsideViewBox: true,
                         alignment: Alignment.center,
-                        // color: z.element.color, 
+                        color: z.color, 
                         semanticsLabel: z.sign
                       ),
                     )
@@ -410,7 +410,7 @@ Future<void> testCallPython() async {
                         fit: BoxFit.scaleDown,
                         allowDrawingOutsideViewBox: true,
                         alignment: Alignment.center,
-                        // color: z.element.color, 
+                        color: z.color, 
                         semanticsLabel: z.sign
                       ),
                     )

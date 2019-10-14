@@ -10,5 +10,6 @@ class Planet {
   final double posCricle360; 
   final Offset xyPlanet; // Position of the svg planet symbol
   final Offset xyDeg; // Position of the svg deg ° symbol
-  const Planet(this.id, this.sign, this.signPos, this.svg, this.svgDegre, this.posCricle360, this.xyPlanet, this.xyDeg);
+  final Color color;
+  const Planet(this.id, this.sign, this.signPos, this.svg, this.svgDegre, this.posCricle360, this.xyPlanet, this.xyDeg, this.color);
 }

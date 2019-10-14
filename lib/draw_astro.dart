@@ -132,7 +132,7 @@ class DrawAstro extends CustomPainter {
     for (var i in _planet) {
       // 0°
       paint = Paint()
-      ..color = Colors.black
+      ..color = i.color
       ..style = PaintingStyle.stroke
       ..strokeWidth = 1.0;
       List<Offset> xy = _calcDraw.lineTrigo(i.posCricle360, _calcDraw.getRadiusCircle(3), _calcDraw.getRadiusCircle(1));

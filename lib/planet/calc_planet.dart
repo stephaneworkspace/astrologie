@@ -2,6 +2,7 @@ import 'dart:async' show Future;
 import 'dart:convert';
 import 'dart:ui';
 import 'package:flutter/services.dart' show rootBundle;
+import '../component/hex_color.dart';
 import '../draw/calc_draw.dart';
 import 's_planet.dart'; 
 
@@ -16,7 +17,48 @@ class CalcPlanet {
     // Order by Asc
     if (decoded != null) {
       for (var i in decoded['planets']) {
-        _angle.add(new Planet(i['id'], i['sign'], i['sign_pos'], i['svg'], i['svg_degre'], i['pos_circle_360'], new Offset(0.0, 0.0), new Offset(0.0, 0.0)));
+        Color c;
+        switch (i['id']) {
+          case 'Soleil':
+            c = HexColor('#d79a3f');
+            break;
+          case 'Lune':
+            c = HexColor('#a78500');
+            break;
+          case 'Mercure':
+            c = HexColor('#755175');
+            break;
+          case 'Venus':
+            c = HexColor('#c55d81');
+            break;
+          case 'Mars':
+            c = HexColor('#bd3036');
+            break;
+          case 'Jupiter':
+            c = HexColor('#478c89');
+            break;
+          case 'Saturne':
+            c = HexColor('#b44b45');
+            break;
+          case 'Uranus':
+            c = HexColor('#895349');
+            break;
+          case 'Neptune':
+            c = HexColor('#5e6d59');
+            break;
+          case 'Pluton':
+            c = HexColor('#db5053');
+            break;
+          case 'Chiron':
+          case 'Noeud nord':
+          case 'Noeud sud':
+          case 'Part de fortune':
+            c = HexColor('#7c7459');
+            break;
+          default:
+            c = HexColor('#000000');
+        }
+        _angle.add(new Planet(i['id'], i['sign'], i['sign_pos'], i['svg'], i['svg_degre'], i['pos_circle_360'], new Offset(0.0, 0.0), new Offset(0.0, 0.0), c));
       }
     }
   }
@@ -30,7 +72,7 @@ class CalcPlanet {
         Offset xy1 = calcDraw.getOffsetCenterPlanet(sizePlanet, calcDraw.pointTrigo(i.posCricle360, calcDraw.getRadiusCircle(4)));
         Offset xy2 = calcDraw.getOffsetCenterPlanet(sizePlanet, calcDraw.pointTrigo(i.posCricle360, calcDraw.getRadiusCircle(5)));
         // todo, calc of position outside circle with text
-        z.add(new Planet(i.id, i.sign, i.signPos, i.svg, i.svgDegre, i.posCricle360, xy1, xy2));
+        z.add(new Planet(i.id, i.sign, i.signPos, i.svg, i.svgDegre, i.posCricle360, xy1, xy2, i.color));
       }
     }
     return z;
