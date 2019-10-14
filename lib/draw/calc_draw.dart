@@ -19,18 +19,38 @@ const DIVTRAITGRAND = 0.2;
 
 const DIVTRAITPOINTER = 1.5;
 
+const APPBARHEIGHT = 50.0;
+const BOTTOMHEIGHTSPACING = 30.0;
+const FLOATINGACTIONBUTTON = 160.0;
+
 /// This draw class is optimized for circle in a care
 class CalcDraw {
   static double _sizeMinWorkingCanvasWidthHeight;
+  static double _sizeMediaHeight;
 
   CalcDraw(double mediaSizeWidth, double mediaSizeHeight) {
     _sizeMinWorkingCanvasWidthHeight = min(mediaSizeWidth , mediaSizeHeight);
+    _sizeMediaHeight = mediaSizeHeight;
   }
 
-  /// Size (Width Max - Height Max) -> The min value
+  /// Size (Width Max - Height Max) -> The min value for draw the main content
   double getSizeWH() {
     return _sizeMinWorkingCanvasWidthHeight;
   } 
+
+  double getSizeHBottom() {
+    return _sizeMediaHeight - getSizeWH();
+  }
+
+  // for background
+  double getSizeHWithFloatingButtonBottom() {
+    return _sizeMediaHeight - getSizeWH();
+  }
+
+  double getSizeHMinusFloatingButtonBottom() {
+    //print(_sizeMediaHeight.toString() + ' - ' + getSizeWH().toString());
+    return _sizeMediaHeight - getSizeWH() - FLOATINGACTIONBUTTON;
+  }
 
   double getRadiusTotal() {
     //_radiusTotal = min(size.width / 2, size.height / 2);

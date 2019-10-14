@@ -9,6 +9,7 @@ import './draw_astro.dart';
 import './draw_square.dart';
 import 'angle/calc_angle.dart';
 import 'angle/s_angle.dart';
+import 'component/hex_color.dart';
 import 'house/s_house.dart';
 import 'planet/calc_planet.dart';
 import 'planet/s_planet.dart';
@@ -295,15 +296,18 @@ Future<void> testCallPython() async {
     // than having to individually change instances of widgets.
     if (_swLoaded) {
       return Scaffold(
-        appBar: AppBar(
-          // Here we take the value from the MyHomePage object that was created by
-          // the App.build method, and use it to set our appbar title.
-          title: Text(widget.title),
+        appBar: PreferredSize(
+          preferredSize: Size.fromHeight(APPBARHEIGHT),
+          child: AppBar(
+            // Here we take the value from the MyHomePage object that was created by
+            // the App.build method, and use it to set our appbar title.
+            title: Text(widget.title),
+          )
         ),
         //body: Center(
           body: Stack(
             children: <Widget>[
-              Positioned(
+              new Positioned(
                 child: Align(
                   alignment: AlignmentDirectional.topCenter,
                   child: new CustomPaint(
@@ -334,7 +338,7 @@ Future<void> testCallPython() async {
                   )
                 ),*/
               for (var z in _zodiac)
-                Positioned( //.fill not identic
+                new Positioned( //.fill not identic
                   left: z.xyZodiac.dx,
                   top: z.xyZodiac.dy,
                   child: new GestureDetector(
@@ -359,7 +363,7 @@ Future<void> testCallPython() async {
                   ),
                 ),
               for (var z in _house)
-                Positioned(
+                new Positioned(
                   left: z.xyHouse.dx,
                   top: z.xyHouse.dy,
                   child: new GestureDetector(
@@ -385,7 +389,7 @@ Future<void> testCallPython() async {
                 ),  
               for (var z in _angle)
                 if (z.svg != '')
-                  Positioned(
+                  new Positioned(
                     left: z.xyAngle.dx,
                     top: z.xyAngle.dy,
                     child: new GestureDetector(
@@ -412,7 +416,7 @@ Future<void> testCallPython() async {
                   ),    
               for (var z in _angle)
                 if (z.svg != '')
-                  Positioned( //.fill not identic
+                  new Positioned( //.fill not identic
                     left: z.xyDeg.dx,
                     top: z.xyDeg.dy,
                     child: new GestureDetector(
@@ -438,7 +442,7 @@ Future<void> testCallPython() async {
                   ),
               for (var z in _angle)
                 if (z.svg != '')
-                  Positioned( //.fill not identic
+                  new Positioned( //.fill not identic
                     left: z.xyMin.dx,
                     top: z.xyMin.dy,
                     child: new GestureDetector(
@@ -463,7 +467,7 @@ Future<void> testCallPython() async {
                     ),
                   ),
               for (var z in _planet)
-                Positioned( //.fill not identic
+                new Positioned( //.fill not identic
                   left: z.xyPlanet.dx,
                   top: z.xyPlanet.dy,
                   child: new GestureDetector(
@@ -488,7 +492,7 @@ Future<void> testCallPython() async {
                   ),
                 ),
               for (var z in _planet)
-                Positioned( //.fill not identic
+                new Positioned( //.fill not identic
                   left: z.xyDeg.dx,
                   top: z.xyDeg.dy,
                   child: new GestureDetector(
@@ -513,7 +517,7 @@ Future<void> testCallPython() async {
                   ),
                 ),
               for (var z in _planet)
-                Positioned( //.fill not identic
+                new Positioned( //.fill not identic
                   left: z.xyMin.dx,
                   top: z.xyMin.dy,
                   child: new GestureDetector(
@@ -537,6 +541,49 @@ Future<void> testCallPython() async {
                     )
                   ),
                 ),
+              // Background
+              new Positioned(
+                top: calcDraw.getSizeWH(),
+                width: calcDraw.getSizeWH(),
+                child: Align(
+                  alignment: AlignmentDirectional.bottomCenter,
+                  child: new Container(
+                    height: calcDraw.getSizeHWithFloatingButtonBottom(),
+                    width: calcDraw.getSizeWH(),
+                    decoration: BoxDecoration(
+                      gradient: LinearGradient(
+                        begin: Alignment.topCenter,
+                        end: Alignment.bottomCenter,
+                        colors: [
+                          HexColor('#fafafa'),
+                          Colors.blue[50],
+                          Colors.blue[200],
+                          Colors.blue[300],
+                        ],
+                      )
+                    ),
+                  ),
+                )
+              ),
+              // Text scroll zone frame
+              new Positioned(
+                top: calcDraw.getSizeWH(),
+                width: calcDraw.getSizeWH(),
+                child: Align(
+                  alignment: AlignmentDirectional.bottomCenter,
+                  child: new Container(
+                    height: calcDraw.getSizeHMinusFloatingButtonBottom(),
+                    width: calcDraw.getSizeWH(),
+                    child: new SingleChildScrollView(
+                      //color: Colors.grey,/*
+                      /*child: new Text('test $_counter',
+                        style: new TextStyle(color: Colors.red)
+                      ),*/
+                      child: new Text('Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc ac justo pharetra dolor consequat sodales eu malesuada lacus. Praesent placerat ex ut ipsum lacinia finibus. Nunc sed mi nec magna dapibus semper. Sed quis nibh ac ex consequat scelerisque quis eu est. Sed sollicitudin laoreet dictum. Etiam pharetra volutpat sem et feugiat. Integer leo ex, condimentum sed sapien mattis, blandit bibendum dui. Phasellus et enim facilisis, rutrum arcu ut, mattis quam. Vivamus et tincidunt neque.\nLorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc ac justo pharetra dolor consequat sodales eu malesuada lacus. Praesent placerat ex ut ipsum lacinia finibus. Nunc sed mi nec magna dapibus semper. Sed quis nibh ac ex consequat scelerisque quis eu est. Sed sollicitudin laoreet dictum. Etiam pharetra volutpat sem et feugiat. Integer leo ex, condimentum sed sapien mattis, blandit bibendum dui. Phasellus et enim facilisis, rutrum arcu ut, mattis quam. Vivamus et tincidunt neque.'),
+                    ),
+                  ),
+                )
+              )
             ],
           ),
         floatingActionButton: FloatingActionButton(
