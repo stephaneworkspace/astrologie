@@ -16,7 +16,7 @@ class CalcHouse {
     // Order by Asc
     if (decoded != null) {
       for (var i in decoded['houses']) {
-        _house.add(new House(i['id'], i['id_by_asc'], i['sign'], i['pos_circle_360'], new Offset(0.0, 0.0)));
+        _house.add(new House(i['id'], i['id_by_asc'], i['sign'], i['svg'], i['pos_circle_360'], new Offset(0.0, 0.0)));
       }
     }
   }
@@ -49,7 +49,7 @@ class CalcHouse {
           degreMid -= 360.0;
         }
         Offset xy = calcDraw.getOffsetCenterHouse(size, calcDraw.pointTrigo(degreMid, calcDraw.getRadiusCircleHouse()));
-        z.add(new House(i.id, i.idByAsc, i.sign, i.posCricle360, xy));
+        z.add(new House(i.id, i.idByAsc, i.sign, i.svg, i.posCricle360, xy));
       }
     }
     return z;

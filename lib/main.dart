@@ -318,15 +318,21 @@ Future<void> testCallPython() async {
                       print("onTap called. House " + z.id.toString());
                     },
                     child: new Container(
-                      //width: whHouseSize,
-                      //height: whHouseSize,
+                      width: whHouseSize,
+                      height: whHouseSize,
                       margin: const EdgeInsets.only(left: 0.0, right: 0.0),
                       padding: const EdgeInsets.only(left: 0.0, right: 0.0),
-                      child: Text(z.id.toString(),
-                      )
+                      //child: Text(z.id.toString(),
+                      child: SvgPicture.asset(z.svg,
+                        width: whHouseSize,
+                        height: whHouseSize,
+                        fit: BoxFit.scaleDown,
+                        allowDrawingOutsideViewBox: true,
+                        alignment: Alignment.center, 
+                        semanticsLabel: z.sign
+                      ),
                     ),
-                  )
-
+                  ),
                 ),
             ],
           ),
