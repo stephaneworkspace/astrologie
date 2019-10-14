@@ -271,7 +271,7 @@ Future<void> testCallPython() async {
       whAngleDegSymbolSize = (whAngleDegSymbolSize * 110) / 100;
       _xyAngleMinSizeLine = calcDraw.lineTrigo(0, calcDraw.getRadiusCirclePlanetCIRCLE6INVISIBLEWithoutLine(), calcDraw.getRadiusCircle(0));
       whAngleMinSymbolSize = calcDraw.sizeAngle(_xyAngleMinSizeLine[0], _xyAngleMinSizeLine[1]);
-      whAngleMinSymbolSize = (whAngleMinSymbolSize * 110) / 100;
+      whAngleMinSymbolSize = (whAngleMinSymbolSize * 105) / 100;
       _angle = _calcAngle.calcDrawAngle(calcDraw, whAngleSymbolSize, whAngleDegSymbolSize, whAngleMinSymbolSize); // todo angle size for outside circle
 
       _xyPlanetSizeLine = calcDraw.lineTrigo(0, calcDraw.getRadiusCirclePlanetCIRCLE4INVISIBLEWithoutLine(), calcDraw.getRadiusCircle(0));
