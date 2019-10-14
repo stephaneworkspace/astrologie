@@ -86,7 +86,6 @@ class DrawAstro extends CustomPainter {
       bool swPointer = true;
       for (var j in _angle) {
         if (j.posCricle360 == i.posCricle360) {
-          print(j.posCricle360.toString() + ' ' + i.posCricle360.toString());
           swPointer = false;
         }
       }
@@ -103,6 +102,28 @@ class DrawAstro extends CustomPainter {
         path.close();
         canvas.drawPath(path, paint);
       }
+    }
+    // Draw lines angle
+    for (var i in _angle) {
+      // 0°
+      paint = Paint()
+      ..color = Colors.black
+      ..style = PaintingStyle.stroke
+      ..strokeWidth = 1.0;
+      List<Offset> xy = _calcDraw.lineTrigo(i.posCricle360, _calcDraw.getRadiusCircle(2), _calcDraw.getRadiusCircle(1));
+      canvas.drawLine(xy[0], xy[1], paint);
+      // Draw Big triangle
+      paint = Paint()
+        ..color = Colors.black
+        ..style = PaintingStyle.fill;
+        double angularPointer = 1.0;
+      List<Offset> xyT = _calcDraw.pathTrianglePointer(i.posCricle360, angularPointer, _calcDraw.getRadiusCircle(2), _calcDraw.getRadiusCircle(1));
+      Path path = new Path();
+      path.moveTo(xyT[2].dx, xyT[2].dy);
+      path.lineTo(xyT[0].dx, xyT[0].dy);
+      path.lineTo(xyT[1].dx, xyT[1].dy);
+      path.close();
+      canvas.drawPath(path, paint);
     }
   }
 
