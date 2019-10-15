@@ -594,6 +594,7 @@ Future<void> testCallPython() async {
                   child: Align(
                     alignment: AlignmentDirectional.bottomCenter,
                     child: new Container(
+                      margin: const EdgeInsets.only(left: 5.0, right: 5.0),
                       height: calcDraw.getSizeHMinusFloatingButtonBottom(),
                       width: calcDraw.getSizeWH(),
                       child: new SingleChildScrollView(
@@ -604,7 +605,7 @@ Future<void> testCallPython() async {
                               child: new Text('test'),
                             ),*/
                             SizedBox(
-                              height: 20.0,
+                              height: 25.0,
                               child: Container(
                                 child: new Text(_zodiacTextSelect.pictogramme.titre,
                                   textAlign: TextAlign.center,
@@ -613,7 +614,9 @@ Future<void> testCallPython() async {
                               ),
                             ),
                             Container(
-                              child: new Text(_zodiacTextSelect.pictogramme.contenu)
+                              child: new Text(_zodiacTextSelect.pictogramme.contenu,
+                              textAlign: TextAlign.justify
+                              )
                             ),
                           ]),
                         ),
