@@ -106,10 +106,14 @@ Future<void> testCallPython() async {
     print("initRaw = $_outputString");
 
     await srvGroup.runScript('python','print("This line will be printed.")', null);
-    await srvGroup.runScript('python', resPath + '/flutter_assets/starfiles/astro_py/flatlib/setup.py install', null);
-    await srvGroup.runScript('python', resPath + '/flutter_assets/starfiles/astro_py/setup.py install', null);
-		var result = await srvGroup.loadRawModule('python', '', resPath + '/flutter_assets/starfiles/astro_py/' + 'astro_py.py', false);
-    print('loadRawModule = $result');
+    //await srvGroup.runScript('python', resPath + '/flutter_assets/starfiles/astro_py/flatlib/setup.py install', null);
+    //await srvGroup.runScript('python', resPath + '/flutter_assets/starfiles/astro_py/setup.py install', null);
+    var result1 = await srvGroup.loadRawModule('python', 'install', resPath + '/flutter_assets/starfiles/astro_py/flatlib/' + 'setup.py', false);
+    var result2 = await srvGroup.loadRawModule('python', 'install', resPath + '/flutter_assets/starfiles/astro_py/' + 'setup.py', false);
+		var result3 = await srvGroup.loadRawModule('python', '', resPath + '/flutter_assets/starfiles/astro_py/astro_py/' + 'astro_py.py', false);
+    print('loadRawModule1 = $result1');
+    print('loadRawModule2 = $result2');
+    print('loadRawModule3 = $result3');
     StarObjectClass cAstroPy = await service.importRawContext('python', 'astro_py', true, '');
     StarObjectClass cAstroPyInstance = await cAstroPy.newObject(['2019/10/12', '23:00', '+02:00', '46n12', '6e9']);
     print(await cAstroPyInstance.getString());
