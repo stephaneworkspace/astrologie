@@ -626,8 +626,8 @@ Future<void> testCallPython() async {
                               else if (z.typeContent == TypeContent.TypeSvg)
                                 Container(
                                   child: SvgPicture.asset(z.contentSvg.asset,
-                                    width: 10.0,
-                                    height: 10.0,
+                                    width: 20.0,
+                                    height: 20.0,
                                     fit: BoxFit.scaleDown,
                                     allowDrawingOutsideViewBox: true,
                                     alignment: Alignment.center,
@@ -652,6 +652,16 @@ Future<void> testCallPython() async {
                               )
                             ),
 */
+
+
+/*
+  Container(
+   width:100,
+   height: 100,
+   decoration: BoxDecoration(
+     image: ImageDecoration: NetworkImage("youImageLink")
+   )
+   */
 
 
 

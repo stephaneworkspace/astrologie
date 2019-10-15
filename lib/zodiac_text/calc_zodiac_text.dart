@@ -48,22 +48,28 @@ class CalcZodiacText {
     while(swLoop) { 
       cn = _nextContent(s);
       if (cn.type == TypeContent.Null) {
+        print('cn null');
         s = '';
         swLoop = false;
       } else {
+        print('s.lenght: ' + s.length.toString() + ' cn.nextPos: ' + cn.nextPos.toString());
         if (s.length > cn.nextPos)
         {
           s = s.substring(cn.nextPos);
+          print('next: ' + s);
           switch (cn.type) {
             case TypeContent.TypeTitle:
+              print('Add title: ' + cn.content);
               ContentTitle itemTitle = new ContentTitle(cn.content, 18.0);
               l.add(new Content(TypeContent.TypeTitle, itemTitle, null, null));
               break;
             case TypeContent.TypeText:
+              print('Add text: ' + cn.content);
               ContentText itemText = new ContentText(cn.content);
               l.add(new Content(TypeContent.TypeText, null, itemText, null));
               break;
             case TypeContent.TypeSvg:
+              print('Add svg: ' + cn.content);
               ContentSvg itemSvg = new ContentSvg(cn.content);
               l.add(new Content(TypeContent.TypeSvg, null, null, itemSvg));
               break;
@@ -71,6 +77,7 @@ class CalcZodiacText {
               break;
           }
         } else {
+          print('cn end');
           s = '';
           swLoop = false;
         }
@@ -82,46 +89,52 @@ class CalcZodiacText {
   /// Next item detection
   /// Return a object ContentNext with the type of element and position in string
   ContentNext _nextContent(String s) {
-    int pos = 0;
+    // print('str: ' + s);
+    int pos = s.length;
     int nextPos = 0;
     String content = '';
     TypeContent type = TypeContent.Null;
     int startIndex = 0;
     int endIndex = 0;
-    startIndex = s.indexOf(STARTTAGTIT) + STARTTAGTIT.length;
+    startIndex = s.indexOf(STARTTAGTIT) == -1 ? 0 : s.indexOf(STARTTAGTIT) + STARTTAGTIT.length;
     endIndex = s.indexOf(ENDTAG, startIndex);
     bool swValidTitle = (startIndex > 0) && (endIndex - startIndex) > 0;
     if (!swValidTitle) {
       startIndex = 0;
       endIndex = 0;
     } else {
-      pos = startIndex;
-      nextPos = endIndex + ENDTAG.length;
-      content = s.substring(startIndex, endIndex);
-      type = TypeContent.TypeTitle;
+      if (pos > startIndex) {
+        pos = startIndex;
+        // print('A pos :' + startIndex.toString() + ' + ' + pos.toString());
+        nextPos = endIndex + ENDTAG.length;
+        content = s.substring(startIndex, endIndex);
+        type = TypeContent.TypeTitle;
+      }
     }
-    startIndex = s.indexOf(STARTTAGTEX) + STARTTAGTEX.length;
+    startIndex = s.indexOf(STARTTAGTEX) == -1 ? 0 : s.indexOf(STARTTAGTEX) + STARTTAGTEX.length;
     endIndex = s.indexOf(ENDTAG, startIndex);
     bool swValidText = (startIndex > 0) && (endIndex - startIndex) > 0;
     if (!swValidText) {
       startIndex = 0;
       endIndex = 0;
     } else {
-      if (startIndex > pos) {
+      // print('B pos :' + startIndex.toString()+ ' > ' + pos.toString());
+      if (pos > startIndex) {
         pos = startIndex;
         nextPos = endIndex + ENDTAG.length;
         content = s.substring(startIndex, endIndex);
         type = TypeContent.TypeText;
       }
     }
-    startIndex = s.indexOf(STARTTAGSVG) + STARTTAGSVG.length;
+    startIndex = s.indexOf(STARTTAGSVG) == -1 ? 0 : s.indexOf(STARTTAGSVG) + STARTTAGSVG.length;
     endIndex = s.indexOf(ENDTAG, startIndex);
     bool swValidSvg = (startIndex > 0) && (endIndex - startIndex) > 0;
     if (!swValidSvg) {
       startIndex = 0;
       endIndex = 0;
     } else {
-      if (startIndex > pos) {
+      // print('C pos :' + startIndex.toString()+ ' > ' + pos.toString());
+      if (pos > startIndex) {
         pos = startIndex;
         nextPos = endIndex + ENDTAG.length;
         content = 'assets/svg/astro_py_text/' + s.substring(startIndex, endIndex);
