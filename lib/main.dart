@@ -330,7 +330,7 @@ Future<void> testCallPython() async {
                   top: z.xyHouse.dy,
                   child: new GestureDetector(
                     onTap: () {
-                      testCallPython(); // for test
+                      // testCallPython(); // for test
                       print("onTap called. House " + z.id.toString());
                     },
                     child: new Container(
