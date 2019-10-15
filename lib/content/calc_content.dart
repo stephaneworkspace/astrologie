@@ -16,6 +16,10 @@ const ENDTAG = ':END#';
 const STARTTAGSIZ = '#SIZ:';
 const ENDTAGNES = ':_END#'; // End tag nested
 
+const TITLESIZ1 = 20.0;
+const TITLESIZ2 = 18.0;
+const TITLESIZ3 = 16.0;
+
 class CalcContent {
   List<Content> makeContent(String s) {
     List<Content> l = new List<Content>();
@@ -45,16 +49,16 @@ class CalcContent {
               } else {
                 switch (cn.content.substring(startIndex, endIndex)) {
                   case '1':
-                    size = 24.0;
+                    size = TITLESIZ1;
                     break;
                   case '2':
-                    size = 18.0;
+                    size = TITLESIZ2;
                     break;
                   case '3':
-                    size = 16.0;
+                    size = TITLESIZ3;
                     break;
                   default:
-                    size = 18.0;
+                    size = TITLESIZ2;
                 }
                 if (cn.content.length >= endIndex + ENDTAGNES.length)
                   content = cn.content.substring(endIndex + ENDTAGNES.length);

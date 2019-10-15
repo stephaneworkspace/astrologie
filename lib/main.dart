@@ -64,58 +64,8 @@ class MyHomePage extends StatefulWidget {
 
 
 class _MyHomePageState extends State<MyHomePage> {
-/*
-Future<void> testCallPython() async {
-    StarCoreFactory starcore = await Starflut.getFactory();
-    StarServiceClass service = await starcore.initSimple("test", "123", 0, 0, new List<String>());
-    await starcore.regMsgCallBackP(
-        (int serviceGroupID, int uMsg, Object wParam, Object lParam) async{
-      print("$serviceGroupID  $uMsg   $wParam   $lParam");
-      return null;
-    });
-    StarSrvGroupClass srvGroup = await service["_ServiceGroup"];
 
-    /*---script python--*/
-    bool isAndroid = await Starflut.isAndroid();
-    if( isAndroid == true ){
-      await Starflut.copyFileFromAssets("testpy.py", "flutter_assets/starfiles","flutter_assets/starfiles");
-      await Starflut.copyFileFromAssets("python3.6.zip", "flutter_assets/starfiles",null);  //desRelatePath must be null 
-      await Starflut.copyFileFromAssets("zlib.cpython-36m.so", null,null);
-      await Starflut.copyFileFromAssets("unicodedata.cpython-36m.so", null,null);
-      await Starflut.loadLibrary("libpython3.6m.so");
-    }
-
-    String docPath = await Starflut.getDocumentPath();
-    print("docPath = $docPath");
-
-    String resPath = await Starflut.getResourcePath();
-    print("resPath = $resPath");
-
-    String outputString;
-    bool isDisabled = true;
-    if( await srvGroup.initRaw("python36", service) == true) {
-      outputString = "init starcore and python 3.6 successfully";
-      isDisabled = false;
-    }else{
-      outputString = "init starcore and python 3.6 failed";
-    }
-    print(outputString);
-    if (!isDisabled) {
-      var result = await srvGroup.loadRawModule("python", "", resPath + "/flutter_assets/starfiles/" + "astro_py.py", false);
-      print("loadRawModule = $result");
-
-      dynamic python = await service.importRawContext("python", "", false, "");
-      print("python = "+ await python.getString());
-
-      StarObjectClass retobj = await python.call("astro", ["1986-4-3 ", "4:54", "+02:00", "46n12", "6e9"]);
-      print(retobj);
-    }
-    await srvGroup.clearService();
-		await starcore.moduleExit();
-  }
-*/
-
-
+/// Test call python with starcore - starflut
 Future<void> testCallPython() async {
     var _outputString = '';
     StarCoreFactory starcore = await Starflut.getFactory();
@@ -153,40 +103,20 @@ Future<void> testCallPython() async {
       _outputString = "init starcore and python 3.6 failed";
     }
 
-    setState(() {
-      _counter++;
-    });
+    print("initRaw = $_outputString");
+
+    await srvGroup.runScript('python','print("This line will be printed.")', null);
+    await srvGroup.runScript('python', resPath + '/flutter_assets/starfiles/astro_py/flatlib/setup.py install', null);
+    await srvGroup.runScript('python', resPath + '/flutter_assets/starfiles/astro_py/setup.py install', null);
+		var result = await srvGroup.loadRawModule('python', '', resPath + '/flutter_assets/starfiles/astro_py/' + 'astro_py.py', false);
+    print('loadRawModule = $result');
+    StarObjectClass cAstroPy = await service.importRawContext('python', 'astro_py', true, '');
+    StarObjectClass cAstroPyInstance = await cAstroPy.newObject(['2019/10/12', '23:00', '+02:00', '46n12', '6e9']);
+    print(await cAstroPyInstance.getString());
+    print(await cAstroPyInstance.call("helloworld", ['Stéphane', 'Bressani']));
+    await srvGroup.clearService();
+		await starcore.moduleExit();
   }
-
-    //dynamic rr1 = await SrvGroup.initRaw("python36", Service);
-    /*
-    print("initRaw = $rr1");
-
-    //await SrvGroup.runScript("python36",'print("This line will be printed.")', null);
-
-		var Result = await SrvGroup.loadRawModule("python", "", resPath + "/flutter_assets/starfiles/" + "testpy.py", false);
-    print("loadRawModule = $Result");
-
-		dynamic python = await Service.importRawContext("python", "", false, "");
-    print("python = "+ await python.getString());
-
-		StarObjectClass retobj = await python.call("tt", ["hello ", "world"]);
-    print(await retobj[0]);
-    print(await retobj[1]);
-
-    print(await python["g1"]);
-        
-    StarObjectClass yy = await python.call("yy", ["hello ", "world", 123]);
-    print(await yy.call("__len__",[]));
-
-    StarObjectClass multiply = await Service.importRawContext("python", "Multiply", true, "");
-    StarObjectClass multiply_inst = await multiply.newObject(["", "", 33, 44]);
-    print(await multiply_inst.getString());
-
-    print(await multiply_inst.call("multiply", [11, 22]));
-
-    await SrvGroup.clearService();
-		await starcore.moduleExit();*/
 
   CalcZodiac _calcZodiac;
   List<Zodiac> _zodiac;
@@ -222,7 +152,6 @@ Future<void> testCallPython() async {
       // _counter without calling setState(), then the build method would not be
       // called again, and so nothing would appear to happen.
       _counter++;
-      // testCallPython();
       if (_swFullScreen)
         _swFullScreen = false;
       else
@@ -397,6 +326,7 @@ Future<void> testCallPython() async {
                   top: z.xyHouse.dy,
                   child: new GestureDetector(
                     onTap: () {
+                      testCallPython(); // for test
                       print("onTap called. House " + z.id.toString());
                     },
                     child: new Container(
@@ -646,8 +576,8 @@ Future<void> testCallPython() async {
                                   margin: const EdgeInsets.only(left: 0.0, right: 0.0),
                                   padding: const EdgeInsets.only(left: 0.0, right: 0.0),*/
                                   child: SvgPicture.asset(z.contentSvg.asset,
-                                    width: (calcDraw.getSizeWH() * 35) / 100,
-                                    height: (calcDraw.getSizeWH() * 35) / 100,
+                                    width: (calcDraw.getSizeWH() * 30) / 100,
+                                    height: (calcDraw.getSizeWH() * 30) / 100,
                                     fit: BoxFit.scaleDown,
                                     allowDrawingOutsideViewBox: true,
                                     alignment: Alignment.center,
