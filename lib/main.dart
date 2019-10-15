@@ -208,6 +208,7 @@ Future<void> testCallPython() async {
   List<Offset> _xyPlanetDegSizeLine;
   List<Offset> _xyPlanetMinSizeLine;
 
+  bool _swFullScreen = false;
 
   bool _swLoaded = false;
   bool _swZodiacText = false; // to do a switch
@@ -223,7 +224,11 @@ Future<void> testCallPython() async {
       // _counter without calling setState(), then the build method would not be
       // called again, and so nothing would appear to happen.
       _counter++;
-      testCallPython();
+      // testCallPython();
+      if (_swFullScreen)
+        _swFullScreen = false;
+      else
+        _swFullScreen = true;
     });
   }
 
@@ -329,15 +334,16 @@ Future<void> testCallPython() async {
         //body: Center(
           body: Stack(
             children: <Widget>[
-              new Positioned(
-                child: Align(
-                  alignment: AlignmentDirectional.topCenter,
-                  child: new CustomPaint(
-                    size: Size(calcDraw.getSizeWH(), calcDraw.getSizeWH()), // 375, 736 max iphone6s
-                    painter: new DrawAstro(_zodiac, _house, _angle, _planet),
-                  ),
-                )
-              ),
+              if (!_swFullScreen)
+                new Positioned(
+                  child: Align(
+                    alignment: AlignmentDirectional.topCenter,
+                    child: new CustomPaint(
+                      size: Size(calcDraw.getSizeWH(), calcDraw.getSizeWH()), // 375, 736 max iphone6s
+                      painter: new DrawAstro(_zodiac, _house, _angle, _planet),
+                    ),
+                  )
+                ),
               /*
               Positioned(
                 child: Align(
@@ -359,6 +365,7 @@ Future<void> testCallPython() async {
                     decoration: new BoxDecoration(color: Colors.grey),
                   )
                 ),*/
+              if (!_swFullScreen)
               for (var z in _zodiac)
                 new Positioned( //.fill not identic
                   left: z.xyZodiac.dx,
@@ -385,6 +392,7 @@ Future<void> testCallPython() async {
                     )
                   ),
                 ),
+              if (!_swFullScreen)
               for (var z in _house)
                 new Positioned(
                   left: z.xyHouse.dx,
@@ -410,6 +418,7 @@ Future<void> testCallPython() async {
                     ),
                   ),
                 ),  
+              if (!_swFullScreen)
               for (var z in _angle)
                 if (z.svg != '')
                   new Positioned(
@@ -436,7 +445,8 @@ Future<void> testCallPython() async {
                         ),
                       ),
                     ),
-                  ),    
+                  ),  
+              if (!_swFullScreen)  
               for (var z in _angle)
                 if (z.svg != '')
                   new Positioned( //.fill not identic
@@ -463,6 +473,7 @@ Future<void> testCallPython() async {
                       )
                     ),
                   ),
+              if (!_swFullScreen)
               for (var z in _angle)
                 if (z.svg != '')
                   new Positioned( //.fill not identic
@@ -489,6 +500,7 @@ Future<void> testCallPython() async {
                       )
                     ),
                   ),
+              if (!_swFullScreen)
               for (var z in _planet)
                 new Positioned( //.fill not identic
                   left: z.xyPlanet.dx,
@@ -514,6 +526,7 @@ Future<void> testCallPython() async {
                     )
                   ),
                 ),
+              if (!_swFullScreen)
               for (var z in _planet)
                 new Positioned( //.fill not identic
                   left: z.xyDeg.dx,
@@ -539,6 +552,7 @@ Future<void> testCallPython() async {
                     )
                   ),
                 ),
+              if (!_swFullScreen)
               for (var z in _planet)
                 new Positioned( //.fill not identic
                   left: z.xyMin.dx,
@@ -588,16 +602,16 @@ Future<void> testCallPython() async {
                   ),
                 )
               ),
-              // Text scroll zone frame
+              // Text scroll zone frameif
               if (_swZodiacText) 
                 new Positioned(
-                  top: calcDraw.getSizeWH(),
+                  top: _swFullScreen ? 0.0 : calcDraw.getSizeWH(),
                   width: calcDraw.getSizeWH(),
                   child: Align(
                     alignment: AlignmentDirectional.bottomCenter,
                     child: new Container(
                       margin: const EdgeInsets.only(left: 5.0, right: 5.0),
-                      height: calcDraw.getSizeHMinusFloatingButtonBottom(),
+                      height: _swFullScreen ? (calcDraw.getSizeHMinusFloatingButtonBottom() + calcDraw.getSizeWH()) : calcDraw.getSizeHMinusFloatingButtonBottom(),
                       width: calcDraw.getSizeWH(),
                       child: new SingleChildScrollView(
                         child: IntrinsicHeight(
