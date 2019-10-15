@@ -1,8 +1,5 @@
 import 'dart:convert';
-
-import 'package:astrologie/zodiac_text/s_zodiac_text_pictogramme.dart';
 import 'package:flutter/services.dart';
-
 import 'e_type_content.dart';
 import 's_content.dart';
 import 's_content_next.dart';
@@ -29,7 +26,7 @@ class CalcZodiacText {
     // Order by Asc
     if (decoded != null) {
       for (var i in decoded['zodiac_text']) {
-        _zodiacText.add(new ZodiacText(i['sign'], new ZodiacTextPictogramme(i['struct']['pictogramme']['titre'], i['struct']['pictogramme']['contenu']), _makeContent(i['struct']['pictogramme']['contenu'])));
+        _zodiacText.add(new ZodiacText(i['sign'], _makeContent(i['content'])));
       }
     }
     return _zodiacText;

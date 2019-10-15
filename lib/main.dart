@@ -1,8 +1,6 @@
-
 import 'package:astrologie/house/calc_house.dart';
 import 'package:astrologie/zodiac_text/calc_zodiac_text.dart';
 import 'package:astrologie/zodiac_text/e_type_content.dart';
-import 'package:astrologie/zodiac_text/s_zodiac_text_pictogramme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:starflut/starflut.dart';
@@ -214,7 +212,7 @@ Future<void> testCallPython() async {
   bool _swZodiacText = false; // to do a switch
   CalcZodiacText _calcZodiacText;
   List<ZodiacText> _zodiacText;
-  ZodiacText _zodiacTextSelect = new ZodiacText('', new ZodiacTextPictogramme('', ''), null);
+  ZodiacText _zodiacTextSelect = new ZodiacText('', null);
 
   void _incrementCounter() {
     setState(() {
@@ -338,12 +336,12 @@ Future<void> testCallPython() async {
                 new Positioned(
                   child: Align(
                     alignment: AlignmentDirectional.topCenter,
-                    child: new CustomPaint(
-                      size: Size(calcDraw.getSizeWH(), calcDraw.getSizeWH()), // 375, 736 max iphone6s
-                      painter: new DrawAstro(_zodiac, _house, _angle, _planet),
-                    ),
-                  )
-                ),
+                      child: new CustomPaint(
+                        size: Size(calcDraw.getSizeWH(), calcDraw.getSizeWH()), // 375, 736 max iphone6s
+                        painter: new DrawAstro(_zodiac, _house, _angle, _planet),
+                      ),
+                    )
+                  ),
               /*
               Positioned(
                 child: Align(
