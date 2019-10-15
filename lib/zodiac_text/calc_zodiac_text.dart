@@ -9,11 +9,15 @@ import 's_content_texte.dart';
 import 's_content_title.dart';
 import 's_zodiac_text.dart';
 
-const STARTTAGTIT = '#TIT:';
-const STARTTAGTEX = '#TEX:';
-const STARTTAGSVG = '#SVG:';
+const STARTTAGTIT = '#TIT:'; // Title private repository
+const STARTTAGTEX = '#TEX:'; // Text private reposition
+const STARTTAGSVG = '#SVG:'; // SVG private preposition
+const STARTTAGSVZ = '#SVZ:'; // SVG Asset in this git repository
 const STARTTAGPNG = '#PNG:';
 const ENDTAG = ':END#';
+
+const STARTTAGSIZ = '#SIZ:';
+const ENDTAGNES = ':_END#'; // End tag nested
 
 class CalcZodiacText {
   static List<ZodiacText> _zodiacText = new List<ZodiacText>();
@@ -34,14 +38,6 @@ class CalcZodiacText {
 
   List<Content> _makeContent(String s) {
     List<Content> l = new List<Content>();
-    /*String startTag = "#IMG:";
-    String endTag = ":END#";
-    int startIndex = s.indexOf(startTag) + startTag.length;
-    int endIndex = s.indexOf(endTag, startIndex);
-    print('here: ' + (endIndex - startIndex).toString());
-    if (endIndex - startIndex > 0) {
-      print(s.substring(startIndex, endIndex));
-    }*/
     bool swLoop = true;
     ContentNext cn = new ContentNext(TypeContent.Null,0,'');
     while(swLoop) { 
@@ -55,7 +51,34 @@ class CalcZodiacText {
           s = s.substring(cn.nextPos);
           switch (cn.type) {
             case TypeContent.TypeTitle:
-              ContentTitle itemTitle = new ContentTitle(cn.content, 18.0);
+              String content = '';
+              double size = 18.0;
+              int startIndex = 0;
+              int endIndex = 0;
+              // Size
+              startIndex = s.indexOf(STARTTAGSIZ) == -1 ? 0 : s.indexOf(STARTTAGSIZ) + STARTTAGSIZ.length;
+              endIndex = s.indexOf(ENDTAGNES, startIndex);
+              bool swValidTitle = (startIndex > 0) && (endIndex - startIndex) > 0;
+              if (!swValidTitle) {
+                content = cn.content;
+              } else {
+                switch (cn.content.substring(startIndex, endIndex)) {
+                  case '1':
+                    size = 24.0;
+                    break;
+                  case '2':
+                    size = 18.0;
+                    break;
+                  case '3':
+                    size = 16.0;
+                    break;
+                  default:
+                    size = 18.0;
+                }
+                if (cn.content.length >= endIndex + 1)
+                  content = cn.content.substring(endIndex + 1);
+              }
+              ContentTitle itemTitle = new ContentTitle(content, size);
               l.add(new Content(TypeContent.TypeTitle, itemTitle, null, null, null));
               break;
             case TypeContent.TypeText:
@@ -134,6 +157,21 @@ class CalcZodiacText {
         pos = startIndex;
         nextPos = endIndex + ENDTAG.length;
         content = 'assets/svg/astro_py_text/' + s.substring(startIndex, endIndex);
+        type = TypeContent.TypeSvg;
+      }
+    }
+    // Svg Zodiac local
+    startIndex = s.indexOf(STARTTAGSVZ) == -1 ? 0 : s.indexOf(STARTTAGSVZ) + STARTTAGSVZ.length;
+    endIndex = s.indexOf(ENDTAG, startIndex);
+    bool swValidSvgz = (startIndex > 0) && (endIndex - startIndex) > 0;
+    if (!swValidSvgz) {
+      startIndex = 0;
+      endIndex = 0;
+    } else {
+      if (pos > startIndex) {
+        pos = startIndex;
+        nextPos = endIndex + ENDTAG.length;
+        content = 'assets/svg/zodiac/' + s.substring(startIndex, endIndex);
         type = TypeContent.TypeSvg;
       }
     }
