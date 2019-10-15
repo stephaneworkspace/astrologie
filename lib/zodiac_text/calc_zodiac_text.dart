@@ -57,18 +57,15 @@ class CalcZodiacText {
           switch (cn.type) {
             case TypeContent.TypeTitle:
               var item = new ContentTitle(cn.content, 18.0);
-              print('add title');
               l.add(new Content(TypeContent.TypeTitle, item, null, null));
               break;
             case TypeContent.TypeText:
               var item = new ContentText(cn.content);
-              print('add text');
-              l.add(new Content(TypeContent.TypeTitle, null, item, null));
+              l.add(new Content(TypeContent.TypeText, null, item, null));
               break;
             case TypeContent.TypeSvg:
               var item = new ContentSvg(cn.content);
-              print('add svg');
-              l.add(new Content(TypeContent.TypeTitle, null, null, item));
+              l.add(new Content(TypeContent.TypeSvg, null, null, item));
               break;
             default:
               break;
@@ -81,8 +78,6 @@ class CalcZodiacText {
     } 
     return l;
   }
-
-  
 
   /// Next item detection
   /// Return a object ContentNext with the type of element and position in string
@@ -112,7 +107,7 @@ class CalcZodiacText {
       startIndex = 0;
       endIndex = 0;
     } else {
-      if (startIndex < pos) {
+      if (startIndex > pos) {
         pos = startIndex;
         nextPos = endIndex + ENDTAG.length;
         content = s.substring(startIndex, endIndex);
@@ -126,10 +121,10 @@ class CalcZodiacText {
       startIndex = 0;
       endIndex = 0;
     } else {
-      if (startIndex < pos) {
+      if (startIndex > pos) {
         pos = startIndex;
         nextPos = endIndex + ENDTAG.length;
-        content = s.substring(startIndex, endIndex);
+        content = 'assets/svg/astro_py_text/' + s.substring(startIndex, endIndex);
         type = TypeContent.TypeSvg;
       }
     }
