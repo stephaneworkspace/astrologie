@@ -56,16 +56,16 @@ class CalcZodiacText {
           s = s.substring(cn.nextPos);
           switch (cn.type) {
             case TypeContent.TypeTitle:
-              var item = new ContentTitle(cn.content, 18.0);
-              l.add(new Content(TypeContent.TypeTitle, item, null, null));
+              ContentTitle itemTitle = new ContentTitle(cn.content, 18.0);
+              l.add(new Content(TypeContent.TypeTitle, itemTitle, null, null));
               break;
             case TypeContent.TypeText:
-              var item = new ContentText(cn.content);
-              l.add(new Content(TypeContent.TypeText, null, item, null));
+              ContentText itemText = new ContentText(cn.content);
+              l.add(new Content(TypeContent.TypeText, null, itemText, null));
               break;
             case TypeContent.TypeSvg:
-              var item = new ContentSvg(cn.content);
-              l.add(new Content(TypeContent.TypeSvg, null, null, item));
+              ContentSvg itemSvg = new ContentSvg(cn.content);
+              l.add(new Content(TypeContent.TypeSvg, null, null, itemSvg));
               break;
             default:
               break;
