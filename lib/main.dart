@@ -211,7 +211,7 @@ Future<void> testCallPython() async {
   bool _swZodiacText = false; // to do a switch
   CalcZodiacText _calcZodiacText;
   List<ZodiacText> _zodiacText;
-  ZodiacText _zodiacTextSelect = new ZodiacText('', new ZodiacTextPictogramme('', ''));
+  ZodiacText _zodiacTextSelect = new ZodiacText('', new ZodiacTextPictogramme('', ''), null);
 
   void _incrementCounter() {
     setState(() {
@@ -587,7 +587,7 @@ Future<void> testCallPython() async {
                 )
               ),
               // Text scroll zone frame
-              if (_swZodiacText)
+              if (_swZodiacText) 
                 new Positioned(
                   top: calcDraw.getSizeWH(),
                   width: calcDraw.getSizeWH(),
