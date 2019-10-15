@@ -722,7 +722,7 @@ Future<void> testCallPython() async {
         floatingActionButton: FloatingActionButton(
           onPressed: _incrementCounter,
           tooltip: 'Increment',
-          child: Icon(Icons.add),
+          child: Icon(_swFullScreen ? Icons.zoom_out : Icons.zoom_in),
         ), // This trailing comma makes auto-formatting nicer for build methods.
       );
     } else {
