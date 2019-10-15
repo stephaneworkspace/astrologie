@@ -1,4 +1,4 @@
-import 's_content.dart';
+import '../content/s_content.dart';
 
 // struct
 class ZodiacText {

@@ -1,6 +1,3 @@
-import 'package:astrologie/house/calc_house.dart';
-import 'package:astrologie/zodiac_text/calc_zodiac_text.dart';
-import 'package:astrologie/zodiac_text/e_type_content.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:starflut/starflut.dart';
@@ -15,8 +12,11 @@ import 'house/s_house.dart';
 import 'planet/calc_planet.dart';
 import 'planet/s_planet.dart';
 import 'zodiac/s_zodiac.dart';
-import 'zodiac_text/s_content.dart';
+import 'content/s_content.dart';
+import 'content/e_type_content.dart';
 import 'zodiac_text/s_zodiac_text.dart';
+import 'house/calc_house.dart';
+import 'zodiac_text/calc_zodiac_text.dart';
 
 void main() => runApp(MyApp());
 
