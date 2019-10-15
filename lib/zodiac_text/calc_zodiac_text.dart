@@ -53,7 +53,7 @@ class CalcZodiacText {
         s = '';
         swLoop = false;
       } else {
-        if (s.length > cn.nextPos)
+        if (s.length >= cn.nextPos)
         {
           s = s.substring(cn.nextPos);
           switch (cn.type) {
