@@ -1,6 +1,7 @@
 
 import 'package:astrologie/house/calc_house.dart';
 import 'package:astrologie/zodiac_text/calc_zodiac_text.dart';
+import 'package:astrologie/zodiac_text/e_type_content.dart';
 import 'package:astrologie/zodiac_text/s_zodiac_text_pictogramme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -16,6 +17,7 @@ import 'house/s_house.dart';
 import 'planet/calc_planet.dart';
 import 'planet/s_planet.dart';
 import 'zodiac/s_zodiac.dart';
+import 'zodiac_text/s_content.dart';
 import 'zodiac_text/s_zodiac_text.dart';
 
 void main() => runApp(MyApp());
@@ -604,6 +606,37 @@ Future<void> testCallPython() async {
                               color: Colors.red,
                               child: new Text('test'),
                             ),*/
+                            for (Content z in _zodiacTextSelect.content)
+                              if (z.typeContent == TypeContent.TypeTitle)
+                                SizedBox(
+                                  height: 25.0,
+                                  child: Container(
+                                    child: new Text(z.contentTitle.text,
+                                      textAlign: TextAlign.center,
+                                      style: TextStyle(fontSize: z.contentTitle.fontSize)
+                                    )
+                                  ),
+                                )
+                              else if (z.typeContent == TypeContent.TypeText)
+                                Container(
+                                  child: new Text(z.contentText.text,
+                                  textAlign: TextAlign.justify
+                                  )
+                                )
+                              else if (z.typeContent == TypeContent.TypeSvg)
+                                Container(
+                                  child: SvgPicture.asset(z.contentSvg.asset,
+                                    width: 10.0,
+                                    height: 10.0,
+                                    fit: BoxFit.scaleDown,
+                                    allowDrawingOutsideViewBox: true,
+                                    alignment: Alignment.center,
+                                    //color: z.color, 
+                                    //semanticsLabel: z.contentSvg.label
+                                  ),
+                                )
+                              ]),
+                          /*
                             SizedBox(
                               height: 25.0,
                               child: Container(
@@ -618,7 +651,13 @@ Future<void> testCallPython() async {
                               textAlign: TextAlign.justify
                               )
                             ),
-                          ]),
+*/
+
+
+
+
+
+ 
                         ),
                         //color: Colors.grey,/*
                         /*child: new Text('test $_counter',
