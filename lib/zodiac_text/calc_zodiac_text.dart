@@ -56,8 +56,8 @@ class CalcZodiacText {
               int startIndex = 0;
               int endIndex = 0;
               // Size
-              startIndex = s.indexOf(STARTTAGSIZ) == -1 ? 0 : s.indexOf(STARTTAGSIZ) + STARTTAGSIZ.length;
-              endIndex = s.indexOf(ENDTAGNES, startIndex);
+              startIndex = cn.content.indexOf(STARTTAGSIZ) == -1 ? 0 : cn.content.indexOf(STARTTAGSIZ) + STARTTAGSIZ.length;
+              endIndex = cn.content.indexOf(ENDTAGNES, startIndex);
               bool swValidTitle = (startIndex > 0) && (endIndex - startIndex) > 0;
               if (!swValidTitle) {
                 content = cn.content;
@@ -75,8 +75,8 @@ class CalcZodiacText {
                   default:
                     size = 18.0;
                 }
-                if (cn.content.length >= endIndex + 1)
-                  content = cn.content.substring(endIndex + 1);
+                if (cn.content.length >= endIndex + ENDTAGNES.length)
+                  content = cn.content.substring(endIndex + ENDTAGNES.length);
               }
               ContentTitle itemTitle = new ContentTitle(content, size);
               l.add(new Content(TypeContent.TypeTitle, itemTitle, null, null, null));

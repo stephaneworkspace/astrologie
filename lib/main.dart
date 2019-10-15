@@ -618,10 +618,13 @@ Future<void> testCallPython() async {
                               color: Colors.red,
                               child: new Text('test'),
                             ),*/
+                            SizedBox(
+                              height: 20.0,
+                            ),
                             for (Content z in _zodiacTextSelect.content)
                               if (z.typeContent == TypeContent.TypeTitle)
                                 SizedBox(
-                                  height: 25.0,
+                                  height: z.contentTitle.fontSize + 20.0,
                                   child: Container(
                                     child: new Text(z.contentTitle.text,
                                       textAlign: TextAlign.center,
