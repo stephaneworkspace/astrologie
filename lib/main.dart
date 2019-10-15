@@ -1,5 +1,7 @@
 
 import 'package:astrologie/house/calc_house.dart';
+import 'package:astrologie/zodiac_text/calc_zodiac_text.dart';
+import 'package:astrologie/zodiac_text/s_zodiac_text_pictogramme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:starflut/starflut.dart';
@@ -14,6 +16,7 @@ import 'house/s_house.dart';
 import 'planet/calc_planet.dart';
 import 'planet/s_planet.dart';
 import 'zodiac/s_zodiac.dart';
+import 'zodiac_text/s_zodiac_text.dart';
 
 void main() => runApp(MyApp());
 
@@ -203,7 +206,12 @@ Future<void> testCallPython() async {
   List<Offset> _xyPlanetDegSizeLine;
   List<Offset> _xyPlanetMinSizeLine;
 
+
   bool _swLoaded = false;
+  bool _swZodiacText = false; // to do a switch
+  CalcZodiacText _calcZodiacText;
+  List<ZodiacText> _zodiacText;
+  ZodiacText _zodiacTextSelect = new ZodiacText('', new ZodiacTextPictogramme('', ''));
 
   void _incrementCounter() {
     setState(() {
@@ -214,6 +222,14 @@ Future<void> testCallPython() async {
       // called again, and so nothing would appear to happen.
       _counter++;
       testCallPython();
+    });
+  }
+
+  void _zodiacClick(int id) {
+    setState(() {
+      _swZodiacText = true;
+      Map<int, ZodiacText> map = _zodiacText.asMap();
+      _zodiacTextSelect = map[id - 1];
     });
   }
 
@@ -240,6 +256,10 @@ Future<void> testCallPython() async {
     await _calcHouse.parseJson();
     await _calcAngle.parseJson();
     await _calcPlanet.parseJson();
+    // text
+    _zodiacText = new List<ZodiacText>();
+    _calcZodiacText = new CalcZodiacText();
+    _zodiacText = await _calcZodiacText.parseJson();
   }
 
   @override
@@ -343,6 +363,7 @@ Future<void> testCallPython() async {
                   top: z.xyZodiac.dy,
                   child: new GestureDetector(
                     onTap: () {
+                      _zodiacClick(z.idByAsc);
                       print("onTap called. " + z.sign);
                     },
                     child: new Container(
@@ -566,49 +587,56 @@ Future<void> testCallPython() async {
                 )
               ),
               // Text scroll zone frame
-              new Positioned(
-                top: calcDraw.getSizeWH(),
-                width: calcDraw.getSizeWH(),
-                child: Align(
-                  alignment: AlignmentDirectional.bottomCenter,
-                  child: new Container(
-                    height: calcDraw.getSizeHMinusFloatingButtonBottom(),
-                    width: calcDraw.getSizeWH(),
-                    child: new SingleChildScrollView(
-                      child: IntrinsicHeight(
-                        child: Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
-                          Expanded(child: Container(
-                              color: Colors.red, 
-                              child: new Text('Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc ac justo pharetra dolor consequat sodales eu malesuada lacus. Praesent placerat ex ut ipsum lacinia finibus. Nunc sed mi nec magna dapibus semper. Sed quis nibh ac ex consequat scelerisque quis eu est. Sed sollicitudin laoreet dictum. Etiam pharetra volutpat sem et feugiat. Integer leo ex, condimentum sed sapien mattis, blandit bibendum dui. Phasellus et enim facilisis, rutrum arcu ut, mattis quam. Vivamus et tincidunt neque.\nLorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc ac justo pharetra dolor consequat sodales eu malesuada lacus. Praesent placerat ex ut ipsum lacinia finibus. Nunc sed mi nec magna dapibus semper. Sed quis nibh ac ex consequat scelerisque quis eu est. Sed sollicitudin laoreet dictum. Etiam pharetra volutpat sem et feugiat. Integer leo ex, condimentum sed sapien mattis, blandit bibendum dui. Phasellus et enim facilisis, rutrum arcu ut, mattis quam. Vivamus et tincidunt neque.')
+              if (_swZodiacText)
+                new Positioned(
+                  top: calcDraw.getSizeWH(),
+                  width: calcDraw.getSizeWH(),
+                  child: Align(
+                    alignment: AlignmentDirectional.bottomCenter,
+                    child: new Container(
+                      height: calcDraw.getSizeHMinusFloatingButtonBottom(),
+                      width: calcDraw.getSizeWH(),
+                      child: new SingleChildScrollView(
+                        child: IntrinsicHeight(
+                          child: Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
+                            /*Container( // Expanded -> Container for divide by list
+                              color: Colors.red,
+                              child: new Text('test'),
+                            ),*/
+                            SizedBox(
+                              height: 20.0,
+                              child: Container(
+                                child: new Text(_zodiacTextSelect.pictogramme.titre,
+                                  textAlign: TextAlign.center,
+                                  style: TextStyle(fontSize: 18.0)
+                                )
+                              ),
                             ),
-                          ),
-                          Expanded(child: Container(
-                              color: Colors.blue, 
-                              child: new Text('test')
+                            Container(
+                              child: new Text(_zodiacTextSelect.pictogramme.contenu)
                             ),
-                          ),
-                        ]),
+                          ]),
+                        ),
+                        //color: Colors.grey,/*
+                        /*child: new Text('test $_counter',
+                          style: new TextStyle(color: Colors.red)
+                        ),*/
+                        /*
+                        child: Stack(
+                          children: <Widget>[
+                            new Container(
+                              child: new Text('test'),
+                            ),
+                            new Container(
+                              child: new Text('Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc ac justo pharetra dolor consequat sodales eu malesuada lacus. Praesent placerat ex ut ipsum lacinia finibus. Nunc sed mi nec magna dapibus semper. Sed quis nibh ac ex consequat scelerisque quis eu est. Sed sollicitudin laoreet dictum. Etiam pharetra volutpat sem et feugiat. Integer leo ex, condimentum sed sapien mattis, blandit bibendum dui. Phasellus et enim facilisis, rutrum arcu ut, mattis quam. Vivamus et tincidunt neque.\nLorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc ac justo pharetra dolor consequat sodales eu malesuada lacus. Praesent placerat ex ut ipsum lacinia finibus. Nunc sed mi nec magna dapibus semper. Sed quis nibh ac ex consequat scelerisque quis eu est. Sed sollicitudin laoreet dictum. Etiam pharetra volutpat sem et feugiat. Integer leo ex, condimentum sed sapien mattis, blandit bibendum dui. Phasellus et enim facilisis, rutrum arcu ut, mattis quam. Vivamus et tincidunt neque.'),
+                            )
+                          ]
+                        ),*/
+                        //child: new Text('Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc ac justo pharetra dolor consequat sodales eu malesuada lacus. Praesent placerat ex ut ipsum lacinia finibus. Nunc sed mi nec magna dapibus semper. Sed quis nibh ac ex consequat scelerisque quis eu est. Sed sollicitudin laoreet dictum. Etiam pharetra volutpat sem et feugiat. Integer leo ex, condimentum sed sapien mattis, blandit bibendum dui. Phasellus et enim facilisis, rutrum arcu ut, mattis quam. Vivamus et tincidunt neque.\nLorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc ac justo pharetra dolor consequat sodales eu malesuada lacus. Praesent placerat ex ut ipsum lacinia finibus. Nunc sed mi nec magna dapibus semper. Sed quis nibh ac ex consequat scelerisque quis eu est. Sed sollicitudin laoreet dictum. Etiam pharetra volutpat sem et feugiat. Integer leo ex, condimentum sed sapien mattis, blandit bibendum dui. Phasellus et enim facilisis, rutrum arcu ut, mattis quam. Vivamus et tincidunt neque.'),
                       ),
-                      //color: Colors.grey,/*
-                      /*child: new Text('test $_counter',
-                        style: new TextStyle(color: Colors.red)
-                      ),*/
-                      /*
-                      child: Stack(
-                        children: <Widget>[
-                          new Container(
-                            child: new Text('test'),
-                          ),
-                          new Container(
-                            child: new Text('Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc ac justo pharetra dolor consequat sodales eu malesuada lacus. Praesent placerat ex ut ipsum lacinia finibus. Nunc sed mi nec magna dapibus semper. Sed quis nibh ac ex consequat scelerisque quis eu est. Sed sollicitudin laoreet dictum. Etiam pharetra volutpat sem et feugiat. Integer leo ex, condimentum sed sapien mattis, blandit bibendum dui. Phasellus et enim facilisis, rutrum arcu ut, mattis quam. Vivamus et tincidunt neque.\nLorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc ac justo pharetra dolor consequat sodales eu malesuada lacus. Praesent placerat ex ut ipsum lacinia finibus. Nunc sed mi nec magna dapibus semper. Sed quis nibh ac ex consequat scelerisque quis eu est. Sed sollicitudin laoreet dictum. Etiam pharetra volutpat sem et feugiat. Integer leo ex, condimentum sed sapien mattis, blandit bibendum dui. Phasellus et enim facilisis, rutrum arcu ut, mattis quam. Vivamus et tincidunt neque.'),
-                          )
-                        ]
-                      ),*/
-                      //child: new Text('Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc ac justo pharetra dolor consequat sodales eu malesuada lacus. Praesent placerat ex ut ipsum lacinia finibus. Nunc sed mi nec magna dapibus semper. Sed quis nibh ac ex consequat scelerisque quis eu est. Sed sollicitudin laoreet dictum. Etiam pharetra volutpat sem et feugiat. Integer leo ex, condimentum sed sapien mattis, blandit bibendum dui. Phasellus et enim facilisis, rutrum arcu ut, mattis quam. Vivamus et tincidunt neque.\nLorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc ac justo pharetra dolor consequat sodales eu malesuada lacus. Praesent placerat ex ut ipsum lacinia finibus. Nunc sed mi nec magna dapibus semper. Sed quis nibh ac ex consequat scelerisque quis eu est. Sed sollicitudin laoreet dictum. Etiam pharetra volutpat sem et feugiat. Integer leo ex, condimentum sed sapien mattis, blandit bibendum dui. Phasellus et enim facilisis, rutrum arcu ut, mattis quam. Vivamus et tincidunt neque.'),
                     ),
-                  ),
+                  )
                 )
-              )
             ],
           ),
         floatingActionButton: FloatingActionButton(
