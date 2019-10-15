@@ -6,6 +6,7 @@ import 'package:flutter/services.dart';
 import 'e_type_content.dart';
 import 's_content.dart';
 import 's_content_next.dart';
+import 's_content_png.dart';
 import 's_content_svg.dart';
 import 's_content_texte.dart';
 import 's_content_title.dart';
@@ -14,6 +15,7 @@ import 's_zodiac_text.dart';
 const STARTTAGTIT = '#TIT:';
 const STARTTAGTEX = '#TEX:';
 const STARTTAGSVG = '#SVG:';
+const STARTTAGPNG = '#PNG:';
 const ENDTAG = ':END#';
 
 class CalcZodiacText {
@@ -48,36 +50,33 @@ class CalcZodiacText {
     while(swLoop) { 
       cn = _nextContent(s);
       if (cn.type == TypeContent.Null) {
-        print('cn null');
         s = '';
         swLoop = false;
       } else {
-        print('s.lenght: ' + s.length.toString() + ' cn.nextPos: ' + cn.nextPos.toString());
         if (s.length > cn.nextPos)
         {
           s = s.substring(cn.nextPos);
-          print('next: ' + s);
           switch (cn.type) {
             case TypeContent.TypeTitle:
-              print('Add title: ' + cn.content);
               ContentTitle itemTitle = new ContentTitle(cn.content, 18.0);
-              l.add(new Content(TypeContent.TypeTitle, itemTitle, null, null));
+              l.add(new Content(TypeContent.TypeTitle, itemTitle, null, null, null));
               break;
             case TypeContent.TypeText:
-              print('Add text: ' + cn.content);
               ContentText itemText = new ContentText(cn.content);
-              l.add(new Content(TypeContent.TypeText, null, itemText, null));
+              l.add(new Content(TypeContent.TypeText, null, itemText, null, null));
               break;
             case TypeContent.TypeSvg:
-              print('Add svg: ' + cn.content);
               ContentSvg itemSvg = new ContentSvg(cn.content);
-              l.add(new Content(TypeContent.TypeSvg, null, null, itemSvg));
+              l.add(new Content(TypeContent.TypeSvg, null, null, itemSvg, null));
+              break;
+            case TypeContent.TypePng:
+              ContentPng itemPng = new ContentPng(cn.content);
+              l.add(new Content(TypeContent.TypePng, null, null, null, itemPng));
               break;
             default:
               break;
           }
         } else {
-          print('cn end');
           s = '';
           swLoop = false;
         }
@@ -96,6 +95,7 @@ class CalcZodiacText {
     TypeContent type = TypeContent.Null;
     int startIndex = 0;
     int endIndex = 0;
+    // Title
     startIndex = s.indexOf(STARTTAGTIT) == -1 ? 0 : s.indexOf(STARTTAGTIT) + STARTTAGTIT.length;
     endIndex = s.indexOf(ENDTAG, startIndex);
     bool swValidTitle = (startIndex > 0) && (endIndex - startIndex) > 0;
@@ -105,12 +105,12 @@ class CalcZodiacText {
     } else {
       if (pos > startIndex) {
         pos = startIndex;
-        // print('A pos :' + startIndex.toString() + ' + ' + pos.toString());
         nextPos = endIndex + ENDTAG.length;
         content = s.substring(startIndex, endIndex);
         type = TypeContent.TypeTitle;
       }
     }
+    // Text
     startIndex = s.indexOf(STARTTAGTEX) == -1 ? 0 : s.indexOf(STARTTAGTEX) + STARTTAGTEX.length;
     endIndex = s.indexOf(ENDTAG, startIndex);
     bool swValidText = (startIndex > 0) && (endIndex - startIndex) > 0;
@@ -118,7 +118,6 @@ class CalcZodiacText {
       startIndex = 0;
       endIndex = 0;
     } else {
-      // print('B pos :' + startIndex.toString()+ ' > ' + pos.toString());
       if (pos > startIndex) {
         pos = startIndex;
         nextPos = endIndex + ENDTAG.length;
@@ -126,6 +125,7 @@ class CalcZodiacText {
         type = TypeContent.TypeText;
       }
     }
+    // Svg
     startIndex = s.indexOf(STARTTAGSVG) == -1 ? 0 : s.indexOf(STARTTAGSVG) + STARTTAGSVG.length;
     endIndex = s.indexOf(ENDTAG, startIndex);
     bool swValidSvg = (startIndex > 0) && (endIndex - startIndex) > 0;
@@ -133,12 +133,26 @@ class CalcZodiacText {
       startIndex = 0;
       endIndex = 0;
     } else {
-      // print('C pos :' + startIndex.toString()+ ' > ' + pos.toString());
       if (pos > startIndex) {
         pos = startIndex;
         nextPos = endIndex + ENDTAG.length;
         content = 'assets/svg/astro_py_text/' + s.substring(startIndex, endIndex);
         type = TypeContent.TypeSvg;
+      }
+    }
+    // Png
+    startIndex = s.indexOf(STARTTAGPNG) == -1 ? 0 : s.indexOf(STARTTAGPNG) + STARTTAGPNG.length;
+    endIndex = s.indexOf(ENDTAG, startIndex);
+    bool swValidPng = (startIndex > 0) && (endIndex - startIndex) > 0;
+    if (!swValidPng) {
+      startIndex = 0;
+      endIndex = 0;
+    } else {
+      if (pos > startIndex) {
+        pos = startIndex;
+        nextPos = endIndex + ENDTAG.length;
+        content = 'assets/png/astro_py_text/' + s.substring(startIndex, endIndex);
+        type = TypeContent.TypePng;
       }
     }
     return new ContentNext(type, nextPos, content);

@@ -53,6 +53,7 @@ flutter:
   # To add assets to your application, add an assets section, like this:
   assets:
     - assets/data/
+    - assets/png/astro_py_text/
     - assets/svg/angle/
     - assets/svg/aspect/
     - assets/svg/astro_py_text/

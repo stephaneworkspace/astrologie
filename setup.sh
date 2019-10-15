@@ -14,3 +14,7 @@ cd assets
 cd svg
 rm -rf ../../../../assets/svg/astro_py_text
 mv astro_py_text ../../../../assets/svg
+cd ..
+cd png
+rm -rf ../../../../assets/png/astro_py_text
+mv astro_py_text ../../../../assets/png/astro_py_text

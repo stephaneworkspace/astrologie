@@ -625,15 +625,29 @@ Future<void> testCallPython() async {
                                 )
                               else if (z.typeContent == TypeContent.TypeSvg)
                                 Container(
+                                  /*
+                                  width: (calcDraw.getSizeWH() * 35) / 100,
+                                  height: (calcDraw.getSizeWH() * 35) / 100,
+                                  margin: const EdgeInsets.only(left: 0.0, right: 0.0),
+                                  padding: const EdgeInsets.only(left: 0.0, right: 0.0),*/
                                   child: SvgPicture.asset(z.contentSvg.asset,
-                                    width: 20.0,
-                                    height: 20.0,
+                                    width: (calcDraw.getSizeWH() * 35) / 100,
+                                    height: (calcDraw.getSizeWH() * 35) / 100,
                                     fit: BoxFit.scaleDown,
                                     allowDrawingOutsideViewBox: true,
                                     alignment: Alignment.center,
                                     //color: z.color, 
                                     //semanticsLabel: z.contentSvg.label
                                   ),
+                                )
+                              else if (z.typeContent == TypeContent.TypePng)
+                                Container(
+                                  child: Image.asset(
+                                    z.contentPng.asset,
+                                    fit: BoxFit.contain,
+                                    width: (calcDraw.getSizeWH() * 35) / 100,
+                                    height: (calcDraw.getSizeWH() * 35) / 100,
+                                  )
                                 )
                               ]),
                           /*
