@@ -91,43 +91,45 @@ class CalcZodiacText {
     int nextPos = 0;
     String content = '';
     TypeContent type = TypeContent.Null;
-    int startIndexTitle = s.indexOf(STARTTAGTIT) + STARTTAGTIT.length;
-    int endIndexTitle = s.indexOf(ENDTAG, startIndexTitle);
-    bool swValidTitle = (startIndexTitle > 0) && (endIndexTitle - startIndexTitle) > 0;
+    int startIndex = 0;
+    int endIndex = 0;
+    startIndex = s.indexOf(STARTTAGTIT) + STARTTAGTIT.length;
+    endIndex = s.indexOf(ENDTAG, startIndex);
+    bool swValidTitle = (startIndex > 0) && (endIndex - startIndex) > 0;
     if (!swValidTitle) {
-      startIndexTitle = 0;
-      endIndexTitle = 0;
+      startIndex = 0;
+      endIndex = 0;
     } else {
-      pos = startIndexTitle;
-      nextPos = endIndexTitle + ENDTAG.length;
-      content = s.substring(startIndexTitle, endIndexTitle);
+      pos = startIndex;
+      nextPos = endIndex + ENDTAG.length;
+      content = s.substring(startIndex, endIndex);
       type = TypeContent.TypeTitle;
     }
-    int startIndexText = s.indexOf(STARTTAGTEX) + STARTTAGTEX.length;
-    int endIndexText = s.indexOf(ENDTAG, startIndexText);
-    bool swValidText = (startIndexText > 0) && (endIndexText - startIndexText) > 0;
+    startIndex = s.indexOf(STARTTAGTEX) + STARTTAGTEX.length;
+    endIndex = s.indexOf(ENDTAG, startIndex);
+    bool swValidText = (startIndex > 0) && (endIndex - startIndex) > 0;
     if (!swValidText) {
-      startIndexText = 0;
-      endIndexText = 0;
+      startIndex = 0;
+      endIndex = 0;
     } else {
-      if (startIndexText < pos) {
-        pos = startIndexText;
-        nextPos = endIndexText + ENDTAG.length;
-        content = s.substring(startIndexText, endIndexText);
+      if (startIndex < pos) {
+        pos = startIndex;
+        nextPos = endIndex + ENDTAG.length;
+        content = s.substring(startIndex, endIndex);
         type = TypeContent.TypeText;
       }
     }
-    int startIndexSvg = s.indexOf(STARTTAGSVG) + STARTTAGSVG.length;
-    int endIndexSvg = s.indexOf(ENDTAG, startIndexSvg);
-    bool swValidSvg = (startIndexSvg > 0) && (endIndexSvg - startIndexSvg) > 0;
+    startIndex = s.indexOf(STARTTAGSVG) + STARTTAGSVG.length;
+    endIndex = s.indexOf(ENDTAG, startIndex);
+    bool swValidSvg = (startIndex > 0) && (endIndex - startIndex) > 0;
     if (!swValidSvg) {
-      startIndexSvg = 0;
-      endIndexSvg = 0;
+      startIndex = 0;
+      endIndex = 0;
     } else {
-      if (startIndexSvg < pos) {
-        pos = startIndexSvg;
-        nextPos = endIndexSvg + ENDTAG.length;
-        content = s.substring(startIndexSvg, endIndexSvg);
+      if (startIndex < pos) {
+        pos = startIndex;
+        nextPos = endIndex + ENDTAG.length;
+        content = s.substring(startIndex, endIndex);
         type = TypeContent.TypeSvg;
       }
     }
