@@ -1,7 +1,7 @@
 import 'e_type_content.dart';
 import 's_content_png.dart';
 import 's_content_svg.dart';
-import 's_content_texte.dart';
+import 's_content_text.dart';
 import 's_content_title.dart';
 
 // struct

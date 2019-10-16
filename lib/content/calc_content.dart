@@ -1,20 +1,35 @@
+import 'package:astrologie/content/s_content_text_rich.dart';
+import 'package:flutter/material.dart';
+
 import '../content/e_type_content.dart';
 import '../content/s_content.dart';
 import '../content/s_content_next.dart';
 import '../content/s_content_png.dart';
 import '../content/s_content_svg.dart';
-import '../content/s_content_texte.dart';
+import '../content/s_content_text.dart';
 import '../content/s_content_title.dart';
+import 's_content_next_text_rich.dart';
 
-const STARTTAGTIT = '#TIT:'; // Title private repository
-const STARTTAGTEX = '#TEX:'; // Text private reposition
-const STARTTAGSVG = '#SVG:'; // SVG private preposition
-const STARTTAGSVZ = '#SVZ:'; // SVG Asset in this git repository
-const STARTTAGPNG = '#PNG:';
-const ENDTAG = ':END#';
+const STARTTAGTIT = '<TIT>'; // Title private repository
+const ENDTAGTIT = '</TIT>';
+const STARTTAGTEX = '<TEX>'; // Text private reposition
+const ENDTAGTEX = '</TEX>';
+const STARTTAGSVG = '<SVG>'; // SVG private preposition
+const ENDTAGSVG = '</SVG>';
+const STARTTAGSVZ = '<SVZ>'; // SVG Asset in this git repository
+const ENDTAGSVZ = '</SVZ>';
+const STARTTAGPNG = '<PNG>';
+const ENDTAGPNG = '</PNG>';
 
-const STARTTAGSIZ = '#SIZ:';
-const ENDTAGNES = ':_END#'; // End tag nested
+// Param at begin of <TIT>
+const STARTTAGSIZ = '<SIZ>';
+const ENDTAGNES = '</SIZ>';
+
+// Rich text inside <TEX>
+const STARTRICHNORMAL = '<N>';
+const ENDRICHNORMAL = '</N>';
+const STARTRICHITALIC = '<I>';
+const ENDRICHITALIC = '</I>';
 
 const TITLESIZ1 = 20.0;
 const TITLESIZ2 = 18.0;
@@ -67,7 +82,32 @@ class CalcContent {
               l.add(new Content(TypeContent.TypeTitle, itemTitle, null, null, null));
               break;
             case TypeContent.TypeText:
-              ContentText itemText = new ContentText(cn.content);
+              bool swLoop2 = true;
+              String string2 = cn.content;
+              List<ContentTextRich> listRich = new List<ContentTextRich>();
+              ContentNextTextRich cntr = new ContentNextTextRich(FontStyle.normal, 0, '');
+              while(swLoop2) {
+                if (cntr.fontStyle == null) {
+                  string2 = '';
+                  swLoop2 = false;
+                } else {
+                  if (string2.length >= cntr.nextPos)
+                  {
+                    string2 = string2.substring(cntr.nextPos); // Init at 0
+                    cntr = _nextContentRichText(string2);
+                    if (cntr.content != null)
+                      listRich.add(new ContentTextRich(cntr.content, cntr.fontStyle));
+                    else {
+                      string2 = '';
+                      swLoop2 = false;
+                    }
+                  } else {
+                    string2 = '';
+                    swLoop2 = false;
+                  }
+                }
+              }
+              ContentText itemText = new ContentText(listRich);
               l.add(new Content(TypeContent.TypeText, null, itemText, null, null));
               break;
             case TypeContent.TypeSvg:
@@ -102,7 +142,7 @@ class CalcContent {
     int endIndex = 0;
     // Title
     startIndex = s.indexOf(STARTTAGTIT) == -1 ? 0 : s.indexOf(STARTTAGTIT) + STARTTAGTIT.length;
-    endIndex = s.indexOf(ENDTAG, startIndex);
+    endIndex = s.indexOf(ENDTAGTIT, startIndex);
     bool swValidTitle = (startIndex > 0) && (endIndex - startIndex) > 0;
     if (!swValidTitle) {
       startIndex = 0;
@@ -110,14 +150,14 @@ class CalcContent {
     } else {
       if (pos > startIndex) {
         pos = startIndex;
-        nextPos = endIndex + ENDTAG.length;
+        nextPos = endIndex + ENDTAGTIT.length;
         content = s.substring(startIndex, endIndex);
         type = TypeContent.TypeTitle;
       }
     }
     // Text
     startIndex = s.indexOf(STARTTAGTEX) == -1 ? 0 : s.indexOf(STARTTAGTEX) + STARTTAGTEX.length;
-    endIndex = s.indexOf(ENDTAG, startIndex);
+    endIndex = s.indexOf(ENDTAGTEX, startIndex);
     bool swValidText = (startIndex > 0) && (endIndex - startIndex) > 0;
     if (!swValidText) {
       startIndex = 0;
@@ -125,14 +165,14 @@ class CalcContent {
     } else {
       if (pos > startIndex) {
         pos = startIndex;
-        nextPos = endIndex + ENDTAG.length;
+        nextPos = endIndex + ENDTAGTEX.length;
         content = s.substring(startIndex, endIndex);
         type = TypeContent.TypeText;
       }
     }
     // Svg
     startIndex = s.indexOf(STARTTAGSVG) == -1 ? 0 : s.indexOf(STARTTAGSVG) + STARTTAGSVG.length;
-    endIndex = s.indexOf(ENDTAG, startIndex);
+    endIndex = s.indexOf(ENDTAGSVG, startIndex);
     bool swValidSvg = (startIndex > 0) && (endIndex - startIndex) > 0;
     if (!swValidSvg) {
       startIndex = 0;
@@ -140,14 +180,14 @@ class CalcContent {
     } else {
       if (pos > startIndex) {
         pos = startIndex;
-        nextPos = endIndex + ENDTAG.length;
+        nextPos = endIndex + ENDTAGSVG.length;
         content = 'assets/svg/astro_py_text/' + s.substring(startIndex, endIndex);
         type = TypeContent.TypeSvg;
       }
     }
     // Svg Zodiac local
     startIndex = s.indexOf(STARTTAGSVZ) == -1 ? 0 : s.indexOf(STARTTAGSVZ) + STARTTAGSVZ.length;
-    endIndex = s.indexOf(ENDTAG, startIndex);
+    endIndex = s.indexOf(ENDTAGSVZ, startIndex);
     bool swValidSvgz = (startIndex > 0) && (endIndex - startIndex) > 0;
     if (!swValidSvgz) {
       startIndex = 0;
@@ -155,14 +195,14 @@ class CalcContent {
     } else {
       if (pos > startIndex) {
         pos = startIndex;
-        nextPos = endIndex + ENDTAG.length;
+        nextPos = endIndex + ENDTAGSVZ.length;
         content = 'assets/svg/zodiac/' + s.substring(startIndex, endIndex);
         type = TypeContent.TypeSvg;
       }
     }
     // Png
     startIndex = s.indexOf(STARTTAGPNG) == -1 ? 0 : s.indexOf(STARTTAGPNG) + STARTTAGPNG.length;
-    endIndex = s.indexOf(ENDTAG, startIndex);
+    endIndex = s.indexOf(ENDTAGPNG, startIndex);
     bool swValidPng = (startIndex > 0) && (endIndex - startIndex) > 0;
     if (!swValidPng) {
       startIndex = 0;
@@ -170,11 +210,55 @@ class CalcContent {
     } else {
       if (pos > startIndex) {
         pos = startIndex;
-        nextPos = endIndex + ENDTAG.length;
+        nextPos = endIndex + ENDTAGPNG.length;
         content = 'assets/png/astro_py_text/' + s.substring(startIndex, endIndex);
         type = TypeContent.TypePng;
       }
     }
     return new ContentNext(type, nextPos, content);
+  }
+
+  ContentNextTextRich _nextContentRichText(String s) {
+    // print('str: ' + s);
+    int pos = s.length;
+    int nextPos = 0;
+    String content = '';
+    FontStyle fontStyle = FontStyle.normal;
+    int startIndex = 0;
+    int endIndex = 0;
+    // Normal <N> -> STARTRICHNORMAL </N> -> ENDRICHNORMAL
+    startIndex = s.indexOf(STARTRICHNORMAL) == -1 ? 0 : s.indexOf(STARTRICHNORMAL) + STARTRICHNORMAL.length;
+    endIndex = s.indexOf(ENDRICHNORMAL, startIndex);
+    bool swValidN = (startIndex > 0) && (endIndex - startIndex) > 0;
+    if (!swValidN) {
+      startIndex = 0;
+      endIndex = 0;
+    } else {
+      if (pos > startIndex) {
+        pos = startIndex;
+        nextPos = endIndex + ENDRICHNORMAL.length;
+        content = s.substring(startIndex, endIndex);
+        fontStyle = FontStyle.normal;
+      }
+    }
+    // Italic <I> -> STARTRICHITALIC </> -> ENDRICHITALIC
+    startIndex = s.indexOf(STARTRICHITALIC) == -1 ? 0 : s.indexOf(STARTRICHITALIC) + STARTRICHITALIC.length;
+    endIndex = s.indexOf(ENDRICHITALIC, startIndex);
+    bool swValidI = (startIndex > 0) && (endIndex - startIndex) > 0;
+    if (!swValidI) {
+      startIndex = 0;
+      endIndex = 0;
+    } else {
+      if (pos > startIndex) {
+        pos = startIndex;
+        nextPos = endIndex + ENDRICHITALIC.length;
+        content = s.substring(startIndex, endIndex);
+        fontStyle = FontStyle.italic;
+      }
+    }
+    if (content == '') 
+      return new ContentNextTextRich(null, nextPos, content);
+    else
+      return new ContentNextTextRich(fontStyle, nextPos, content);
   }
 }

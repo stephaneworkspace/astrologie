@@ -567,11 +567,26 @@ Future<void> testCallPython() async {
                                   ),
                                 )
                               else if (z.typeContent == TypeContent.TypeText)
-                                Container(
-                                  child: new Text(z.contentText.text,
-                                  textAlign: TextAlign.justify
+                                //Container(
+                                Text.rich(
+                                  TextSpan(
+                                    style: TextStyle(fontSize: 12),
+                                    children: <TextSpan> [
+                                      for (var r in z.contentText.richText)
+                                        TextSpan(
+                                          text: r.text,
+                                          style: TextStyle(
+                                            //decoration: r.decoration,
+                                            fontStyle: r.fontStyle
+                                          )
+                                        )
+                                      ]
                                   )
                                 )
+                                  /*child: new Text(z.contentText.text,
+                                  textAlign: TextAlign.justify
+                                  )*/
+                                //)
                               else if (z.typeContent == TypeContent.TypeSvg)
                                 Container(
                                   /*
