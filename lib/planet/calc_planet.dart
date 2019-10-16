@@ -58,7 +58,7 @@ class CalcPlanet {
           default:
             c = HexColor('#000000');
         }
-        _angle.add(new Planet(i['id'], i['sign'], i['sign_pos'], i['svg'], i['svg_degre'], i['svg_min'], i['pos_circle_360'], new Offset(0.0, 0.0), new Offset(0.0, 0.0), new Offset(0.0, 0.0), c));
+        _angle.add(new Planet(i['id'], i['sign'], i['sign_pos'], i['svg'], i['svg_degre'], i['svg_min'], i['pos_circle_360'], new Offset(0.0, 0.0), new Offset(0.0, 0.0), new Offset(0.0, 0.0), c, i['movement'], i['sw_movement_is_retrograde']));
       }
     }
   }
@@ -73,7 +73,7 @@ class CalcPlanet {
         Offset xy2 = calcDraw.getOffsetCenterPlanet(sizeDegre, calcDraw.pointTrigo(i.posCricle360, calcDraw.getRadiusCircle(5))); // °
         Offset xy3 = calcDraw.getOffsetCenterPlanet(sizeMin, calcDraw.pointTrigo(i.posCricle360, calcDraw.getRadiusCircle(6))); // '
         // todo, calc of position outside circle with text
-        z.add(new Planet(i.id, i.sign, i.signPos, i.svg, i.svgDegre, i.svgMin, i.posCricle360, xy1, xy2, xy3, i.color));
+        z.add(new Planet(i.id, i.sign, i.signPos, i.svg, i.svgDegre, i.svgMin, i.posCricle360, xy1, xy2, xy3, i.color, i.movement, i.isRetrograde));
       }
     }
     return z;

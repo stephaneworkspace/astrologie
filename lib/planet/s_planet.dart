@@ -13,5 +13,7 @@ class Planet {
   final Offset xyDeg; // Position of the svg deg ° symbol
   final Offset xyMin; // Position of the svg deg ' symbol
   final Color color;
-  const Planet(this.id, this.sign, this.signPos, this.svg, this.svgDegre, this.svgMin, this.posCricle360, this.xyPlanet, this.xyDeg, this.xyMin, this.color);
+  final String movement;
+  final bool isRetrograde;
+  const Planet(this.id, this.sign, this.signPos, this.svg, this.svgDegre, this.svgMin, this.posCricle360, this.xyPlanet, this.xyDeg, this.xyMin, this.color, this.movement, this.isRetrograde);
 }
