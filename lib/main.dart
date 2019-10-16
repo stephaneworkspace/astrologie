@@ -611,7 +611,8 @@ Future<void> testCallPython() async {
                                           text: r.text,
                                           style: TextStyle(
                                             //decoration: r.decoration,
-                                            fontStyle: r.fontStyle
+                                            fontStyle: r.fontStyle,
+                                            fontWeight: r.fontWeight
                                           )
                                         )
                                       ]
