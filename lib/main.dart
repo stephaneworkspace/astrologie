@@ -570,7 +570,7 @@ Future<void> testCallPython() async {
                                 //Container(
                                 Text.rich(
                                   TextSpan(
-                                    style: TextStyle(fontSize: 12),
+                                    style: TextStyle(fontSize: 14),
                                     children: <TextSpan> [
                                       for (var r in z.contentText.richText)
                                         TextSpan(
