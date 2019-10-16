@@ -30,6 +30,8 @@ const STARTRICHNORMAL = '<N>';
 const ENDRICHNORMAL = '</N>';
 const STARTRICHITALIC = '<I>';
 const ENDRICHITALIC = '</I>';
+const STARTRICHBOLD = '<B>';
+const ENDRICHBOLD = '</B>';
 
 const TITLESIZ1 = 20.0;
 const TITLESIZ2 = 18.0;
@@ -85,9 +87,9 @@ class CalcContent {
               bool swLoop2 = true;
               String string2 = cn.content;
               List<ContentTextRich> listRich = new List<ContentTextRich>();
-              ContentNextTextRich cntr = new ContentNextTextRich(FontStyle.normal, 0, '');
+              ContentNextTextRich cntr = new ContentNextTextRich(FontStyle.normal, FontWeight.normal, 0, '');
               while(swLoop2) {
-                if (cntr.fontStyle == null) {
+                if (cntr.fontStyle == null || cntr.fontWeight == null) {
                   string2 = '';
                   swLoop2 = false;
                 } else {
@@ -96,7 +98,7 @@ class CalcContent {
                     string2 = string2.substring(cntr.nextPos); // Init at 0
                     cntr = _nextContentRichText(string2);
                     if (cntr.content != null)
-                      listRich.add(new ContentTextRich(cntr.content, cntr.fontStyle));
+                      listRich.add(new ContentTextRich(cntr.content, cntr.fontStyle, cntr.fontWeight));
                     else {
                       string2 = '';
                       swLoop2 = false;
@@ -224,6 +226,7 @@ class CalcContent {
     int nextPos = 0;
     String content = '';
     FontStyle fontStyle = FontStyle.normal;
+    FontWeight fontWeight = FontWeight.normal;
     int startIndex = 0;
     int endIndex = 0;
     // Normal <N> -> STARTRICHNORMAL </N> -> ENDRICHNORMAL
@@ -256,9 +259,24 @@ class CalcContent {
         fontStyle = FontStyle.italic;
       }
     }
+    // Italic <B> -> STARTRICHBOLD </> -> ENDRICHBOLD
+    startIndex = s.indexOf(STARTRICHBOLD) == -1 ? 0 : s.indexOf(STARTRICHBOLD) + STARTRICHBOLD.length;
+    endIndex = s.indexOf(ENDRICHBOLD, startIndex);
+    bool swValidB = (startIndex > 0) && (endIndex - startIndex) > 0;
+    if (!swValidB) {
+      startIndex = 0;
+      endIndex = 0;
+    } else {
+      if (pos > startIndex) {
+        pos = startIndex;
+        nextPos = endIndex + ENDRICHBOLD.length;
+        content = s.substring(startIndex, endIndex);
+        fontWeight = FontWeight.bold;
+      }
+    }
     if (content == '') 
-      return new ContentNextTextRich(null, nextPos, content);
+      return new ContentNextTextRich(null, null, nextPos, content);
     else
-      return new ContentNextTextRich(fontStyle, nextPos, content);
+      return new ContentNextTextRich(fontStyle, fontWeight, nextPos, content);
   }
 }
