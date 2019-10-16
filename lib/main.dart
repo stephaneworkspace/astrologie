@@ -20,6 +20,9 @@ import 'zodiac_text/calc_zodiac_text.dart';
 
 void main() => runApp(MyApp());
 
+const SVGRETROGRADE = 'assets/svg/planet/Retrograde.svg';
+const FONTSIZERICHTEXT = 14.0;
+
 class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
@@ -432,84 +435,115 @@ Future<void> testCallPython() async {
                       )
                     ),
                   ),
+              // Retrograde
               if (!_swFullScreen)
-              for (var z in _planet)
-                new Positioned( //.fill not identic
-                  left: z.xyPlanet.dx,
-                  top: z.xyPlanet.dy,
-                  child: new GestureDetector(
-                    onTap: () {
-                      print("onTap called. " + z.id + " " + z.signPos);
-                    },
-                    child: new Container(
-                      width: whPlanetSymbolSize,
-                      height: whPlanetSymbolSize,
-                      margin: const EdgeInsets.only(left: 0.0, right: 0.0),
-                      padding: const EdgeInsets.only(left: 0.0, right: 0.0),
-                      child: SvgPicture.asset(z.svg,
+                for (var z in _planet)
+                  if (z.isRetrograde)
+                    new Positioned( //.fill not identic
+                      left: z.xyPlanet.dx,
+                      top: z.xyPlanet.dy,
+                      child: new GestureDetector(
+                        onTap: () {
+                          print("onTap called. Retrograde " + z.id + " " + z.signPos);
+                        },
+                        child: new Container(
+                          width: whPlanetSymbolSize,
+                          height: whPlanetSymbolSize,
+                          margin: const EdgeInsets.only(left: 0.0, right: 0.0),
+                          padding: const EdgeInsets.only(left: 0.0, right: 0.0),
+                          child: SvgPicture.asset(SVGRETROGRADE,
+                            width: whPlanetSymbolSize,
+                            height: whPlanetSymbolSize,
+                            fit: BoxFit.scaleDown,
+                            allowDrawingOutsideViewBox: true,
+                            alignment: Alignment.center,
+                            color: z.color, 
+                            semanticsLabel: z.sign
+                          ),
+                        )
+                      ),
+                    ),
+              // Planet 
+              if (!_swFullScreen)
+                for (var z in _planet)
+                  new Positioned( //.fill not identic
+                    left: z.xyPlanet.dx,
+                    top: z.xyPlanet.dy,
+                    child: new GestureDetector(
+                      onTap: () {
+                        print("onTap called. " + z.id + " " + z.signPos);
+                      },
+                      child: new Container(
                         width: whPlanetSymbolSize,
                         height: whPlanetSymbolSize,
-                        fit: BoxFit.scaleDown,
-                        allowDrawingOutsideViewBox: true,
-                        alignment: Alignment.center,
-                        color: z.color, 
-                        semanticsLabel: z.sign
-                      ),
-                    )
+                        margin: const EdgeInsets.only(left: 0.0, right: 0.0),
+                        padding: const EdgeInsets.only(left: 0.0, right: 0.0),
+                        child: SvgPicture.asset(z.svg,
+                          width: whPlanetSymbolSize,
+                          height: whPlanetSymbolSize,
+                          fit: BoxFit.scaleDown,
+                          allowDrawingOutsideViewBox: true,
+                          alignment: Alignment.center,
+                          color: z.color, 
+                          semanticsLabel: z.sign
+                        ),
+                      )
+                    ),
                   ),
-                ),
+              // °
               if (!_swFullScreen)
-              for (var z in _planet)
-                new Positioned( //.fill not identic
-                  left: z.xyDeg.dx,
-                  top: z.xyDeg.dy,
-                  child: new GestureDetector(
-                    onTap: () {
-                      print("onTap called. " + z.id + " " + z.signPos);
-                    },
-                    child: new Container(
-                      width: whPlanetDegSymbolSize,
-                      height: whPlanetDegSymbolSize,
-                      margin: const EdgeInsets.only(left: 0.0, right: 0.0),
-                      padding: const EdgeInsets.only(left: 0.0, right: 0.0),
-                      child: SvgPicture.asset(z.svgDegre,
+                for (var z in _planet)
+                  new Positioned( //.fill not identic
+                    left: z.xyDeg.dx,
+                    top: z.xyDeg.dy,
+                    child: new GestureDetector(
+                      onTap: () {
+                        print("onTap called. " + z.id + " " + z.signPos);
+                      },
+                      child: new Container(
                         width: whPlanetDegSymbolSize,
                         height: whPlanetDegSymbolSize,
-                        fit: BoxFit.scaleDown,
-                        allowDrawingOutsideViewBox: true,
-                        alignment: Alignment.center,
-                        color: z.color, 
-                        semanticsLabel: z.sign
-                      ),
-                    )
+                        margin: const EdgeInsets.only(left: 0.0, right: 0.0),
+                        padding: const EdgeInsets.only(left: 0.0, right: 0.0),
+                        child: SvgPicture.asset(z.svgDegre,
+                          width: whPlanetDegSymbolSize,
+                          height: whPlanetDegSymbolSize,
+                          fit: BoxFit.scaleDown,
+                          allowDrawingOutsideViewBox: true,
+                          alignment: Alignment.center,
+                          color: z.color, 
+                          semanticsLabel: z.sign
+                        ),
+                      )
+                    ),
                   ),
-                ),
+              // '
               if (!_swFullScreen)
-              for (var z in _planet)
-                new Positioned( //.fill not identic
-                  left: z.xyMin.dx,
-                  top: z.xyMin.dy,
-                  child: new GestureDetector(
-                    onTap: () {
-                      print("onTap called. " + z.id + " " + z.signPos);
-                    },
-                    child: new Container(
-                      width: whPlanetMinSymbolSize,
-                      height: whPlanetMinSymbolSize,
-                      margin: const EdgeInsets.only(left: 0.0, right: 0.0),
-                      padding: const EdgeInsets.only(left: 0.0, right: 0.0),
-                      child: SvgPicture.asset(z.svgMin,
+                for (var z in _planet)
+                  new Positioned( //.fill not identic
+                    left: z.xyMin.dx,
+                    top: z.xyMin.dy,
+                    child: new GestureDetector(
+                      onTap: () {
+                        print("onTap called. " + z.id + " " + z.signPos);
+                      },
+                      child: new Container(
                         width: whPlanetMinSymbolSize,
                         height: whPlanetMinSymbolSize,
-                        fit: BoxFit.scaleDown,
-                        allowDrawingOutsideViewBox: true,
-                        alignment: Alignment.center,
-                        color: z.color, 
-                        semanticsLabel: z.sign
-                      ),
-                    )
+                        margin: const EdgeInsets.only(left: 0.0, right: 0.0),
+                        padding: const EdgeInsets.only(left: 0.0, right: 0.0),
+                        child: SvgPicture.asset(z.svgMin,
+                          width: whPlanetMinSymbolSize,
+                          height: whPlanetMinSymbolSize,
+                          fit: BoxFit.scaleDown,
+                          allowDrawingOutsideViewBox: true,
+                          alignment: Alignment.center,
+                          color: z.color, 
+                          semanticsLabel: z.sign
+                        ),
+                      )
+                    ),
                   ),
-                ),
               // Background
               new Positioned(
                 top: calcDraw.getSizeWH(),
@@ -570,7 +604,7 @@ Future<void> testCallPython() async {
                                 //Container(
                                 Text.rich(
                                   TextSpan(
-                                    style: TextStyle(fontSize: 14),
+                                    style: TextStyle(fontSize: FONTSIZERICHTEXT),
                                     children: <TextSpan> [
                                       for (var r in z.contentText.richText)
                                         TextSpan(
