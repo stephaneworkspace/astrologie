@@ -62,6 +62,7 @@ flutter:
     - assets/svg/planet/
     - assets/svg/zodiac/
     - flutter_assets/starfiles/
+
   #  - images/a_dot_burr.jpeg
   #  - images/a_dot_ham.jpeg
 

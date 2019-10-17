@@ -111,16 +111,25 @@ Future<void> testCallPython() async {
     await srvGroup.runScript('python','print("This line will be printed.")', null);
     //await srvGroup.runScript('python', resPath + '/flutter_assets/starfiles/astro_py/flatlib/setup.py install', null);
     //await srvGroup.runScript('python', resPath + '/flutter_assets/starfiles/astro_py/setup.py install', null);
-    var result1 = await srvGroup.loadRawModule('python', 'install', resPath + '/flutter_assets/starfiles/astro_py/flatlib/' + 'setup.py', false);
+    /*var result1 = await srvGroup.loadRawModule('python', 'install', resPath + '/flutter_assets/starfiles/astro_py/flatlib/' + 'setup.py', false);
     var result2 = await srvGroup.loadRawModule('python', 'install', resPath + '/flutter_assets/starfiles/astro_py/' + 'setup.py', false);
-		var result3 = await srvGroup.loadRawModule('python', '', resPath + '/flutter_assets/starfiles/astro_py/astro_py/' + 'astro_py.py', false);
-    print('loadRawModule1 = $result1');
+		var result3 = await srvGroup.loadRawModule('python', '', resPath + '/flutter_assets/starfiles/astro_py/astro_py/' + 'astro_py.py', false);*/
+    /*print('loadRawModule1 = $result1');
     print('loadRawModule2 = $result2');
-    print('loadRawModule3 = $result3');
-    StarObjectClass cAstroPy = await service.importRawContext('python', 'astro_py', true, '');
+    print('loadRawModule3 = $result3');*/
+
+
+		var result = await srvGroup.loadRawModule("python", "", resPath + "/flutter_assets/starfiles/" + "testpy.py", false);
+    print("loadRawModule = $result");
+
+    StarObjectClass cAstroPy = await service.importRawContext('python', 'Multiply', true, '');
+    StarObjectClass cAstroPyInstance = await cAstroPy.newObject(new List<dynamic>());
+    print(await cAstroPyInstance.call("get_data", new List<dynamic>()));
+    /*StarObjectClass cAstroPy = await service.importRawContext('python', 'astropyfr', true, '');
     StarObjectClass cAstroPyInstance = await cAstroPy.newObject(['2019/10/12', '23:00', '+02:00', '46n12', '6e9']);
     print(await cAstroPyInstance.getString());
     print(await cAstroPyInstance.call("helloworld", ['Stéphane', 'Bressani']));
+    print(await cAstroPyInstance.call("get_data", new List<dynamic>()));*/
     await srvGroup.clearService();
 		await starcore.moduleExit();
   }
@@ -168,6 +177,7 @@ Future<void> testCallPython() async {
 
   void _zodiacClick(int id) {
     setState(() {
+      //testCallPython();
       _swZodiacText = true;
       Map<int, ZodiacText> map = _zodiacText.asMap();
       _zodiacTextSelect = map[id - 1];
